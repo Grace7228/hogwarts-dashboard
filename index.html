@@ -284,9 +284,13 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
     <div class="nlist" id="notesList" style="flex:1"><div class="empty" id="notesEmpty">👆 在「知识幻境」中选择</div></div>
     <div class="addrow"><textarea id="addNoteInput" placeholder="记录……" rows="1"></textarea><button class="btn" onclick="addNote()">✨</button></div>
   </div>
-  <div class="card"><div class="ctitle"><span class="icon">🎚️</span> 调律</div>
-    <div class="sgroup"><div class="slabel"><span>🧹</span><span class="sval" id="focusVal">70%</span></div><input type="range" class="mslider" min="0" max="100" value="70" id="focusSlider" oninput="document.getElementById('focusVal').textContent=this.value+'%';save()"></div>
-    <div class="sgroup"><div class="slabel"><span>🕯️</span><span class="sval" id="ambVal">85%</span></div><input type="range" class="mslider" min="0" max="100" value="85" id="ambSlider" oninput="document.getElementById('ambVal').textContent=this.value+'%';save()"></div>
+  <div class="card" style="text-align:center">
+    <div style="font-size:20px;color:var(--gold-light);font-weight:bold;letter-spacing:1px" id="sideClock">00:00</div>
+    <div style="font-size:9px;color:var(--dim);margin-top:2px" id="sideDate">——</div>
+  </div>
+  <div class="card">
+    <div class="ctitle"><span class="icon">📋</span> 最近笔记</div>
+    <div id="recentNotesList" style="max-height:140px;overflow-y:auto;font-size:10px"></div>
   </div>
 </div>
 
@@ -928,7 +932,16 @@ async function syncToNotion(){const k=document.getElementById('notionKey').value
 window.syncToNotion=syncToNotion;
 
 // ==================== 时钟 ====================
-function updClock(){const n=new Date();document.getElementById('clock').textContent=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')}`;document.getElementById('dateDisplay').textContent=`${n.getFullYear()}年${n.getMonth()+1}月${n.getDate()}日 周${'日一二三四五六'[n.getDay()]}`}
+function updClock(){
+  const n=new Date();
+  const t=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')}`;
+  const d=`${n.getFullYear()}年${n.getMonth()+1}月${n.getDate()}日 周${'日一二三四五六'[n.getDay()]}`;
+  const el1=document.getElementById('clock'),el2=document.getElementById('dateDisplay');
+  if(el1)el1.textContent=t;if(el2)el2.textContent=d;
+  const sc=document.getElementById('sideClock'),sd=document.getElementById('sideDate');
+  if(sc)sc.textContent=t;if(sd)sd.textContent=d;
+  renderRecentNotes();
+}
 
 // ==================== 启动 ====================
 load();
@@ -939,6 +952,15 @@ document.getElementById('notionKey').value=localStorage.getItem('nk_h')||'';
 document.querySelectorAll('.navtab').forEach(t=>{t.addEventListener('click',()=>{switchView(t.dataset.view)})});
 
 updClock();setInterval(updClock,1000);
+
+function renderRecentNotes(){
+  const el=document.getElementById('recentNotesList');if(!el)return;
+  const all=[];realms.forEach(r=>{(D.notes[r.id]||[]).forEach(n=>all.push({text:n.content,time:n.time,realm:r.name}))});
+  all.sort((a,b)=>b.time-a.time);const latest=all.slice(0,6);
+  if(latest.length===0){el.innerHTML='<div class="empty" style="font-size:10px">暂无笔记</div>';return}
+  el.innerHTML=latest.map(n=>`<div class="nitem" style="font-size:10px"><div class="ncont">${eh(n.text.slice(0,50)+(n.text.length>50?'…':''))} <span style="color:var(--gold-light);font-size:8px">· ${n.realm}</span></div><span class="nmeta">${ft(n.time)}</span></div>`).join('');
+}
+
 switchView('travel');
 
 // Globe click handler
