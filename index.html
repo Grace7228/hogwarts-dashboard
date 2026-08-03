@@ -17,7 +17,7 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 .moon{position:fixed;top:5%;right:8%;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,rgba(240,214,138,0.1),rgba(240,214,138,0.02)40%,transparent 70%);pointer-events:none;z-index:0;animation:moonPulse 8s ease-in-out infinite}
 @keyframes moonPulse{0%,100%{opacity:0.4;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
 
-.main{position:relative;z-index:10;max-width:1500px;margin:0 auto;padding:10px 18px 40px;display:grid;grid-template-columns:1fr 280px;grid-template-rows:auto auto 1fr;gap:8px;min-height:100vh}
+.main{position:relative;z-index:10;max-width:1200px;margin:0 auto;padding:10px 14px 40px;display:grid;grid-template-columns:1fr 260px;grid-template-rows:auto auto 1fr;gap:8px;min-height:100vh;overflow-x:auto}
 
 .topbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:6px 14px;background:rgba(12,10,24,0.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(212,168,83,0.1);border-radius:8px}
 .top-left{display:flex;align-items:baseline;gap:5px}.crest{font-size:18px}.tname{font-size:13px;font-weight:bold;color:var(--gold);letter-spacing:1px}.tsub{font-size:7px;color:var(--dim)}
