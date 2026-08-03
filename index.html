@@ -49,7 +49,7 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 .asset-stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-bottom:8px}
 .asset-stat{background:rgba(0,0,0,0.25);border-radius:6px;padding:8px 10px;text-align:center}
 .asset-stat-value{font-size:16px;font-weight:bold;color:var(--gold-light)}.asset-stat-label{font-size:7px;color:var(--dim);margin-top:2px}
-.asset-item-card{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.2);border-radius:7px;padding:8px 12px;margin-bottom:6px;border:1px solid rgba(255,255,255,0.03);transition:all 0.2s}.asset-item-card:hover{border-color:rgba(212,168,83,0.15)}
+.asset-item-card{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.2);border-radius:7px;padding:8px 12px;margin-bottom:6px;border:1px solid rgba(255,255,255,0.03);transition:all 0.2s;position:relative}.asset-item-card:hover{border-color:rgba(212,168,83,0.15)}
 .asset-item-icon{font-size:22px;flex-shrink:0;width:36px;text-align:center}
 .asset-item-info{flex:1}.asset-item-name{font-size:11px;font-weight:bold;color:var(--text)}.asset-item-detail{font-size:8px;color:var(--dim);line-height:1.5}
 .asset-item-meta{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0}
@@ -683,7 +683,7 @@ function renderAssetItems(){
     const days=a.buyDate?Math.max(1,Math.floor((Date.now()-new Date(a.buyDate).getTime())/864e5)):0;
     const daily=a.buyDate?a.price/days:0;
     const sl={inuse:'使用中',idle:'闲置',sold:'已出'}[a.status]||'使用中';
-    return`<div class="asset-item-card"><div class="asset-item-icon">${a.status==='inuse'?'💻':a.status==='idle'?'📦':'📤'}</div><div class="asset-item-info"><div class="asset-item-name">${eh(a.name)}</div><div class="asset-item-detail">${eh(a.brand||'')} · ${eh(a.spec||'')} · 购入${a.buyDate||'—'} · 持有${days}天</div></div><div class="asset-item-meta"><div class="asset-item-price">¥${a.price.toLocaleString()}</div><div class="asset-item-daily">日均¥${daily.toFixed(2)}</div><span class="asset-item-status status-${a.status}">${sl}</span></div><button class="ndel" onclick="delAsset('${a.id}')" style="position:absolute;top:4px;right:4px">✕</button></div>`;
+    return`<div class="asset-item-card"><div class="asset-item-icon">${a.status==='inuse'?'💻':a.status==='idle'?'📦':'📤'}</div><div class="asset-item-info"><div class="asset-item-name">${eh(a.name)}</div><div class="asset-item-detail">${eh(a.brand||'')} · ${eh(a.spec||'')} · 购入${a.buyDate||'—'} · 持有${days}天</div></div><div class="asset-item-meta"><div class="asset-item-price">¥${a.price.toLocaleString()}</div><div class="asset-item-daily">日均¥${daily.toFixed(2)}</div><span class="asset-item-status status-${a.status}">${sl}</span></div><button class="ndel" onclick="if(confirm('确定删除「${eh(a.name)}」吗？'))delAsset('${a.id}')" title="删除此物品" style="position:absolute;top:4px;right:4px;font-size:14px;width:22px;height:22px;border-radius:50%;background:rgba(200,80,80,0.15);color:#e08070;display:flex;align-items:center;justify-content:center;z-index:2">✕</button></div>`;
   }).join('');
 }
 window.addAsset=function(){
