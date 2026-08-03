@@ -663,7 +663,7 @@ function renderScheduleHTML(){
   h+='<input id="schTime" placeholder="时间 如09:00" style="width:90px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
   h+='<input id="schSubject" placeholder="课程名" style="flex:1;min-width:100px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
   h+='<input id="schProf" placeholder="教授/来源" style="width:110px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
-  h+='<select id="schHouse" style="background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none"><option value="ravenclaw">拉文克劳</option><option value="gryffindor">格兰芬多</option><option value="slytherin">斯莱特林</option><option value="hufflepuff">赫奇帕奇</option></select>';
+  h+='<select id="schHouse" style="background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none"><option value="拉文克劳">拉文克劳</option><option value="格兰芬多">格兰芬多</option><option value="斯莱特林">斯莱特林</option><option value="赫奇帕奇">赫奇帕奇</option><option value="__custom__">✏️ 自定义…</option></select>';
   h+='<button class="btn" onclick="addScheduleItem()">➕ 添加</button></div></div></div>';
   return h;
 }
@@ -673,12 +673,34 @@ window.switchScheduleDay=switchScheduleDay;
 
 function getSchedule(){if(D.schedule&&D.schedule.length)return D.schedule;return defaultSchedule}
 
+function getHouseStyle(house){
+  const palette=[
+    {bg:'rgba(212,168,83,0.18)',color:'#f0d68a'},
+    {bg:'rgba(174,0,1,0.3)',color:'#e07060'},
+    {bg:'rgba(34,47,91,0.4)',color:'#7a9ec0'},
+    {bg:'rgba(26,71,42,0.4)',color:'#5aaa6e'},
+    {bg:'rgba(236,185,57,0.2)',color:'#e8c547'},
+    {bg:'rgba(180,140,220,0.2)',color:'#b48cdc'},
+    {bg:'rgba(100,180,180,0.2)',color:'#64b4b4'},
+    {bg:'rgba(200,100,100,0.2)',color:'#dc8c8c'},
+  ];
+  let idx=0;for(let i=0;i<house.length;i++)idx=(idx+house.charCodeAt(i))%palette.length;
+  const st=palette[idx];
+  return `background:${st.bg};color:${st.color}`;
+}
+
 function addScheduleItem(){
   const time=document.getElementById('schTime').value.trim();
   const subject=document.getElementById('schSubject').value.trim();
   if(!time||!subject){toast('请填写时间和课程名');return}
   const prof=document.getElementById('schProf').value.trim()||'—';
-  const house=document.getElementById('schHouse').value;
+  const houseSel=document.getElementById('schHouse').value;
+  let house=houseSel;
+  if(houseSel==='__custom__'){
+    const custom=prompt('输入自定义学院/领域名称');
+    if(!custom){toast('已取消');return}
+    house=custom;
+  }
   const day=D.settings.currentDay;
   if(!D.schedule||!D.schedule.length)D.schedule=JSON.parse(JSON.stringify(defaultSchedule));
   D.schedule.push({id:uid(),day,time,subject,prof,house});
@@ -886,7 +908,7 @@ window.addNote=addNote;
 function delNote(rid,nid){D.notes[rid]=D.notes[rid].filter(n=>n.id!==nid);save();renderRealmNotes()}
 
 // ==================== 课表 ====================
-function renderSchedule(day){D.settings.currentDay=day;save();const ds=getSchedule().filter(s=>s.day===day).sort((a,b)=>a.time.localeCompare(b.time));const tb=document.getElementById('scheduleBody');if(!tb)return;if(ds.length===0){tb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:10px;color:var(--dim);font-style:italic">🛌 无课</td></tr>';return}tb.innerHTML=ds.map(s=>`<tr><td class="stime">${s.time}</td><td>${eh(s.subject)}</td><td class="sprof">${eh(s.prof)}</td><td><span class="hbadge h-${s.house}">${s.house[0].toUpperCase()}</span></td><td><div style="display:flex;gap:3px"><button class="ndel" onclick="editScheduleItem('${s.id}')" title="编辑" style="color:#8ad4a0">✏️</button><button class="ndel" onclick="if(confirm('删除「${eh(s.subject)}」？'))delScheduleItem('${s.id}')" title="删除" style="color:#e08070">✕</button></div></td></tr>`).join('');document.querySelectorAll('.daybtn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.day)===day))}
+function renderSchedule(day){D.settings.currentDay=day;save();const ds=getSchedule().filter(s=>s.day===day).sort((a,b)=>a.time.localeCompare(b.time));const tb=document.getElementById('scheduleBody');if(!tb)return;if(ds.length===0){tb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:10px;color:var(--dim);font-style:italic">🛌 无课</td></tr>';return}tb.innerHTML=ds.map(s=>`<tr><td class="stime">${s.time}</td><td>${eh(s.subject)}</td><td class="sprof">${eh(s.prof)}</td><td><span class="hbadge" style="${getHouseStyle(s.house)}">${s.house.slice(0,2)}</span></td><td><div style="display:flex;gap:3px"><button class="ndel" onclick="editScheduleItem('${s.id}')" title="编辑" style="color:#8ad4a0">✏️</button><button class="ndel" onclick="if(confirm('删除「${eh(s.subject)}」？'))delScheduleItem('${s.id}')" title="删除" style="color:#e08070">✕</button></div></td></tr>`).join('');document.querySelectorAll('.daybtn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.day)===day))}
 
 // ==================== 导出/导入/Notion ====================
 function exportJSON(){const b=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);const n=new Date();a.download=`h-${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}.json`;a.click();toast('📥')}
