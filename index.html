@@ -720,9 +720,10 @@ function editScheduleItem(id){
   const newTime=prompt('修改时间（如 09:00）',item.time);if(newTime===null)return;
   const newSubject=prompt('修改课程名',item.subject);if(newSubject===null)return;
   const newProf=prompt('修改教授/来源',item.prof);if(newProf===null)return;
+  const newHouse=prompt('修改学院/领域（当前：'+item.house+'，留空不变）',item.house);if(newHouse===null)return;
   if(!D.schedule||!D.schedule.length)D.schedule=JSON.parse(JSON.stringify(defaultSchedule));
   const it=D.schedule.find(s=>s.id===id);
-  if(it){it.time=newTime;it.subject=newSubject;it.prof=newProf}
+  if(it){it.time=newTime;it.subject=newSubject;it.prof=newProf;if(newHouse.trim())it.house=newHouse.trim()}
   save();renderSchedule(D.settings.currentDay);toast('✏️ 课程已修改');
 }
 window.editScheduleItem=editScheduleItem;
