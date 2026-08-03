@@ -484,18 +484,18 @@ const realms=[
   {id:'agent-spells',name:'Agent法术',icon:'⚡',hname:'斯莱特林'},
 ];
 const defaultSchedule=[
-  {day:0,time:'08:00',subject:'《好能量》',prof:'Casey Means',house:'ravenclaw'},
-  {day:0,time:'10:30',subject:'仓颉 Skill',prof:'袋鼠帝',house:'slytherin'},
-  {day:0,time:'14:00',subject:'选题拆解',prof:'Notion',house:'gryffindor'},
-  {day:0,time:'16:30',subject:'策略复盘',prof:'STEPPS',house:'hufflepuff'},
-  {day:1,time:'08:00',subject:'《认知红利》',prof:'谢春霖',house:'ravenclaw'},
-  {day:2,time:'08:00',subject:'《影响力》',prof:'Cialdini',house:'slytherin'},
-  {day:3,time:'08:00',subject:'《1000个铁粉》',prof:'伍越歌',house:'gryffindor'},
-  {day:4,time:'08:00',subject:'《第一性原理》',prof:'李善友',house:'ravenclaw'},
-  {day:5,time:'14:00',subject:'周复盘',prof:'Obsidian',house:'gryffindor'},
+  {id:'ds0',day:0,time:'08:00',subject:'《好能量》',prof:'Casey Means',house:'ravenclaw'},
+  {id:'ds1',day:0,time:'10:30',subject:'仓颉 Skill',prof:'袋鼠帝',house:'slytherin'},
+  {id:'ds2',day:0,time:'14:00',subject:'选题拆解',prof:'Notion',house:'gryffindor'},
+  {id:'ds3',day:0,time:'16:30',subject:'策略复盘',prof:'STEPPS',house:'hufflepuff'},
+  {id:'ds4',day:1,time:'08:00',subject:'《认知红利》',prof:'谢春霖',house:'ravenclaw'},
+  {id:'ds5',day:2,time:'08:00',subject:'《影响力》',prof:'Cialdini',house:'slytherin'},
+  {id:'ds6',day:3,time:'08:00',subject:'《1000个铁粉》',prof:'伍越歌',house:'gryffindor'},
+  {id:'ds7',day:4,time:'08:00',subject:'《第一性原理》',prof:'李善友',house:'ravenclaw'},
+  {id:'ds8',day:5,time:'14:00',subject:'周复盘',prof:'Obsidian',house:'gryffindor'},
 ];
 
-let D={selectedRealm:0,currentView:'travel',notes:{},missionTasks:[],missionLog:[],points:0,assets:[],healthLog:[],travelLog:[],archive:[],reflections:[],readings:[],quotes:[],thoughts:[],settings:{focus:70,ambience:85,currentDay:0}};
+let D={selectedRealm:0,currentView:'travel',notes:{},missionTasks:[],missionLog:[],points:0,assets:[],healthLog:[],travelLog:[],archive:[],reflections:[],readings:[],quotes:[],thoughts:[],schedule:null,settings:{focus:70,ambience:85,currentDay:0}};
 
 function load(){
   try{const r=localStorage.getItem(SK);if(r)D={...D,...JSON.parse(r)}}catch(e){}
@@ -657,10 +657,53 @@ function initRealmsEvents(){}
 
 function renderScheduleHTML(){
   let h='<div class="card"><div class="ctitle"><span class="icon">📜</span> 课表</div><div class="daynav">';
-  ['周一','周二','周三','周四','周五','周六','周日'].forEach((d,i)=>h+=`<button class="daybtn${i===D.settings.currentDay?' active':''}" data-day="${i}">${d}</button>`);
-  h+='</div><table class="stable"><thead><tr><th>时辰</th><th>课程</th><th>教授</th><th>学院</th></tr></thead><tbody id="scheduleBody"></tbody></table></div>';
+  ['周一','周二','周三','周四','周五','周六','周日'].forEach((d,i)=>h+=`<button class="daybtn${i===D.settings.currentDay?' active':''}" data-day="${i}" onclick="switchScheduleDay(${i})">${d}</button>`);
+  h+='</div><table class="stable"><thead><tr><th>时辰</th><th>课程</th><th>教授</th><th>学院</th><th>操作</th></tr></thead><tbody id="scheduleBody"></tbody></table>';
+  h+='<div style="border-top:1px solid rgba(255,255,255,0.04);margin-top:8px;padding-top:8px"><div style="font-size:9px;color:var(--dim);margin-bottom:4px">➕ 添加课程到当前星期</div><div class="addrow" style="flex-wrap:wrap;gap:4px">';
+  h+='<input id="schTime" placeholder="时间 如09:00" style="width:90px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
+  h+='<input id="schSubject" placeholder="课程名" style="flex:1;min-width:100px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
+  h+='<input id="schProf" placeholder="教授/来源" style="width:110px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
+  h+='<select id="schHouse" style="background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none"><option value="ravenclaw">拉文克劳</option><option value="gryffindor">格兰芬多</option><option value="slytherin">斯莱特林</option><option value="hufflepuff">赫奇帕奇</option></select>';
+  h+='<button class="btn" onclick="addScheduleItem()">➕ 添加</button></div></div></div>';
   return h;
 }
+
+function switchScheduleDay(day){D.settings.currentDay=day;save();renderSchedule(day)}
+window.switchScheduleDay=switchScheduleDay;
+
+function getSchedule(){if(D.schedule&&D.schedule.length)return D.schedule;return defaultSchedule}
+
+function addScheduleItem(){
+  const time=document.getElementById('schTime').value.trim();
+  const subject=document.getElementById('schSubject').value.trim();
+  if(!time||!subject){toast('请填写时间和课程名');return}
+  const prof=document.getElementById('schProf').value.trim()||'—';
+  const house=document.getElementById('schHouse').value;
+  const day=D.settings.currentDay;
+  if(!D.schedule||!D.schedule.length)D.schedule=JSON.parse(JSON.stringify(defaultSchedule));
+  D.schedule.push({id:uid(),day,time,subject,prof,house});
+  save();renderSchedule(day);toast('📜 课程已添加');
+}
+window.addScheduleItem=addScheduleItem;
+
+function delScheduleItem(id){
+  if(!D.schedule||!D.schedule.length)D.schedule=JSON.parse(JSON.stringify(defaultSchedule));
+  D.schedule=D.schedule.filter(s=>s.id!==id);
+  save();renderSchedule(D.settings.currentDay);toast('🗑️ 课程已删除');
+}
+window.delScheduleItem=delScheduleItem;
+
+function editScheduleItem(id){
+  const item=getSchedule().find(s=>s.id===id);if(!item)return;
+  const newTime=prompt('修改时间（如 09:00）',item.time);if(newTime===null)return;
+  const newSubject=prompt('修改课程名',item.subject);if(newSubject===null)return;
+  const newProf=prompt('修改教授/来源',item.prof);if(newProf===null)return;
+  if(!D.schedule||!D.schedule.length)D.schedule=JSON.parse(JSON.stringify(defaultSchedule));
+  const it=D.schedule.find(s=>s.id===id);
+  if(it){it.time=newTime;it.subject=newSubject;it.prof=newProf}
+  save();renderSchedule(D.settings.currentDay);toast('✏️ 课程已修改');
+}
+window.editScheduleItem=editScheduleItem;
 
 function renderAssetsHTML(){
   let h='<div class="card"><div class="ctitle"><span class="icon">🟠</span> 资产舱</div><div class="asset-stats-row">';
@@ -843,7 +886,7 @@ window.addNote=addNote;
 function delNote(rid,nid){D.notes[rid]=D.notes[rid].filter(n=>n.id!==nid);save();renderRealmNotes()}
 
 // ==================== 课表 ====================
-function renderSchedule(day){D.settings.currentDay=day;save();const ds=defaultSchedule.filter(s=>s.day===day);const tb=document.getElementById('scheduleBody');if(!tb)return;if(ds.length===0){tb.innerHTML='<tr><td colspan="4" style="text-align:center;padding:10px;color:var(--dim);font-style:italic">🛌 无课</td></tr>';return}tb.innerHTML=ds.map(s=>`<tr><td class="stime">${s.time}</td><td>${s.subject}</td><td class="sprof">${s.prof}</td><td><span class="hbadge h-${s.house}">${s.house[0].toUpperCase()}</span></td></tr>`).join('');document.querySelectorAll('.daybtn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.day)===day))}
+function renderSchedule(day){D.settings.currentDay=day;save();const ds=getSchedule().filter(s=>s.day===day).sort((a,b)=>a.time.localeCompare(b.time));const tb=document.getElementById('scheduleBody');if(!tb)return;if(ds.length===0){tb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:10px;color:var(--dim);font-style:italic">🛌 无课</td></tr>';return}tb.innerHTML=ds.map(s=>`<tr><td class="stime">${s.time}</td><td>${eh(s.subject)}</td><td class="sprof">${eh(s.prof)}</td><td><span class="hbadge h-${s.house}">${s.house[0].toUpperCase()}</span></td><td><div style="display:flex;gap:3px"><button class="ndel" onclick="editScheduleItem('${s.id}')" title="编辑" style="color:#8ad4a0">✏️</button><button class="ndel" onclick="if(confirm('删除「${eh(s.subject)}」？'))delScheduleItem('${s.id}')" title="删除" style="color:#e08070">✕</button></div></td></tr>`).join('');document.querySelectorAll('.daybtn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.day)===day))}
 
 // ==================== 导出/导入/Notion ====================
 function exportJSON(){const b=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);const n=new Date();a.download=`h-${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}.json`;a.click();toast('📥')}
