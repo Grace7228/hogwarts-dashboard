@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hogwarts · 知识圣殿</title>
 <script type="importmap">
-{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
 </script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -394,7 +394,7 @@ function initGlobe(){
   // 地球
   const geo=new THREE.SphereGeometry(1,64,64);
   const texLoader=new THREE.TextureLoader();
-  texLoader.load('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg',
+  texLoader.load('https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/land_shallow_topo_2048.jpg',
     texture=>{
       document.getElementById('globeLoading').style.display='none';
       const mat=new THREE.MeshPhongMaterial({map:texture,specular:0x333333,shininess:5});
