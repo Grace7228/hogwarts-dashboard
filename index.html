@@ -17,7 +17,7 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 .moon{position:fixed;top:5%;right:8%;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle,rgba(240,214,138,0.1),rgba(240,214,138,0.02)40%,transparent 70%);pointer-events:none;z-index:0;animation:moonPulse 8s ease-in-out infinite}
 @keyframes moonPulse{0%,100%{opacity:0.4;transform:scale(1)}50%{opacity:1;transform:scale(1.05)}}
 
-.main{position:relative;z-index:10;max-width:1200px;margin:0 auto;padding:10px 14px 40px;display:grid;grid-template-columns:380px 1fr;grid-template-rows:auto auto 1fr;gap:8px;min-height:100vh;overflow-x:auto}
+.main{position:relative;z-index:10;max-width:1200px;margin:0 auto;padding:10px 14px 40px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto 1fr auto;gap:8px;min-height:100vh;overflow-x:auto}
 
 .topbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:6px 14px;background:rgba(12,10,24,0.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(212,168,83,0.1);border-radius:8px}
 .top-left{display:flex;align-items:baseline;gap:5px}.crest{font-size:18px}.tname{font-size:13px;font-weight:bold;color:var(--gold);letter-spacing:1px}.tsub{font-size:7px;color:var(--dim)}
@@ -80,7 +80,7 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 .travel-card-actions button{background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px;padding:2px 4px;transition:color 0.2s}
 .travel-card-actions button:hover{color:var(--gold-light)}
 
-.other-views{grid-column:2;grid-row:2/4;display:flex;flex-direction:column;gap:8px}
+.other-views{grid-column:2;grid-row:3/4;display:flex;flex-direction:column;gap:8px}
 .sgroup{margin-bottom:5px}.slabel{display:flex;justify-content:space-between;font-size:9px;color:var(--dim);margin-bottom:2px}.sval{color:var(--gold-light);font-weight:bold}
 .mslider{-webkit-appearance:none;appearance:none;width:100%;height:2px;border-radius:1px;background:linear-gradient(90deg,rgba(155,122,46,0.3),rgba(212,168,83,0.5));outline:none;cursor:pointer}
 .mslider::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;border-radius:50%;background:var(--gold);border:2px solid var(--gold-light);box-shadow:0 0 6px rgba(212,168,83,0.3);cursor:pointer}
@@ -150,10 +150,10 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 
 .foot{grid-column:1/-1;display:flex;gap:8px;padding:4px 10px;background:rgba(12,10,24,0.5);backdrop-filter:blur(8px);border:1px solid rgba(212,168,83,0.05);border-radius:5px;font-size:8px;color:var(--dim)}.fitem{display:flex;align-items:center;gap:3px}.fval{color:var(--gold-light)}
 
-.rpanel{grid-column:1;grid-row:2/4;display:flex;flex-direction:column;gap:7px;max-height:calc(100vh - 110px);overflow-y:auto}
+.rpanel{grid-column:1;grid-row:3/4;display:flex;flex-direction:column;gap:7px;max-height:calc(100vh - 110px);overflow-y:auto}
 .rpanel::-webkit-scrollbar{width:3px;background:transparent}.rpanel::-webkit-scrollbar-thumb{background:rgba(212,168,83,0.1);border-radius:2px}
 
-@media(max-width:1300px){.mission-grid{grid-template-columns:1fr}.mission-right{display:grid;grid-template-columns:1fr 1fr;gap:6px}}@media(max-width:1000px){.mission-grid,.asset-stats-row{grid-template-columns:1fr}.mission-right{grid-template-columns:1fr}.mission-grid{overflow-x:auto;scrollbar-width:thin}.main{grid-template-columns:1fr;grid-template-rows:auto auto auto 1fr}.rpanel{grid-column:1;grid-row:auto;max-height:none}.other-views{grid-column:1;grid-row:auto}}
+@media(max-width:1300px){.mission-grid{grid-template-columns:1fr}.mission-right{display:grid;grid-template-columns:1fr 1fr;gap:6px}}@media(max-width:900px){.mission-grid,.asset-stats-row{grid-template-columns:1fr}.mission-right{grid-template-columns:1fr}.mission-grid{overflow-x:auto;scrollbar-width:thin}.main{grid-template-columns:1fr;grid-template-rows:auto auto auto auto 1fr}.rpanel{grid-column:1;grid-row:auto;max-height:none}.other-views{grid-column:1;grid-row:auto}}
 @media(max-width:600px){.asset-stats-row{grid-template-columns:1fr 1fr}.main{padding:6px;gap:5px}}
 </style>
 </head>
@@ -613,12 +613,6 @@ window.selectTravelCity=selectTravelCity;
 function switchView(v){
   D.currentView=v;save();
   document.querySelectorAll('.navtab').forEach(t=>t.classList.toggle('active',t.dataset.view===v));
-  const otherViews=document.getElementById('otherViews');
-  // 右侧面板只在知识幻境显示，其余视图占满全宽
-  const rp=document.querySelector('.rpanel');
-  if(rp)rp.style.display=(v==='realms')?'flex':'none';
-  const mainEl=document.querySelector('.main');
-  if(mainEl)mainEl.style.gridTemplateColumns=(v==='realms')?'380px 1fr':'1fr';
   // 清除其他视图内容
   ['dashboard','mission','realms','schedule','assets','health','travel','archive','settings'].forEach(vid=>{
     const el=document.getElementById('view-'+vid);if(!el)return;
