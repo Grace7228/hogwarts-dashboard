@@ -219,6 +219,18 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
       </div>
     </div>
   </div>
+  <div class="card">
+    <div class="ctitle"><span class="icon">🗓️</span> 旅行笔记热力图 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">每个方块代表一周 · 颜色越深笔记越多</span></div>
+    <div id="travelHeatmap" style="display:flex;flex-wrap:wrap;gap:2px;padding:4px 0"></div>
+    <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;margin-top:4px;font-size:8px;color:var(--dim)">
+      <span>少</span>
+      <div style="width:10px;height:10px;background:rgba(212,168,83,0.1);border-radius:2px"></div>
+      <div style="width:10px;height:10px;background:rgba(212,168,83,0.25);border-radius:2px"></div>
+      <div style="width:10px;height:10px;background:rgba(212,168,83,0.45);border-radius:2px"></div>
+      <div style="width:10px;height:10px;background:rgba(240,180,60,0.7);border-radius:2px"></div>
+      <span>多</span>
+    </div>
+  </div>
 </div>
 
 <!-- 其他视图占位 -->
@@ -547,11 +559,30 @@ function renderTravel(){
   document.getElementById('travelCities').textContent=cities.size;
   document.getElementById('travelLast').textContent=last?last.city:'—';
   renderTravelCards();
+  renderTravelHeatmap();
   requestAnimationFrame(()=>{
     if(!globeScene)initGlobe();
     else addGlobeMarkers();
   });
 }
+
+function renderTravelHeatmap(){
+  const el=document.getElementById('travelHeatmap');if(!el)return;
+  const travels=D.travelLog||[];
+  const now=new Date();
+  const weeks=[];
+  // 过去 52 周
+  for(let i=51;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-d.getDay()-i*7);weeks.push({start:new Date(d),notes:0})}
+  travels.forEach(t=>{weeks.forEach(w=>{const ws=w.start.getTime(),we=ws+7*864e5;if(t.time>=ws&&t.time<we)w.notes++})});
+  const maxN=Math.max(1,...weeks.map(w=>w.notes));
+  el.innerHTML=weeks.map(w=>{
+    const p=w.notes/maxN;
+    const bg=p===0?'rgba(255,255,255,0.04)':`rgba(${180+Math.round(p*75)},${140+Math.round(p*70)},${40+Math.round(p*60)},${0.1+p*0.6})`;
+    const title=w.notes>0?`${w.start.getMonth()+1}/${w.start.getDate()} · ${w.notes} 条笔记`:`${w.start.getMonth()+1}/${w.start.getDate()} · 无笔记`;
+    return `<div style="width:12px;height:12px;background:${bg};border-radius:2px;cursor:default" title="${title}"></div>`;
+  }).join('');
+}
+window.renderTravelHeatmap=renderTravelHeatmap;
 window.renderTravel=renderTravel;
 
 function renderTravelCards(){
