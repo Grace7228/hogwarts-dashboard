@@ -176,6 +176,7 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
   <button class="navtab" data-view="health"><span class="navtab-icon">🔴</span>生命</button>
   <button class="navtab active" data-view="travel"><span class="navtab-icon">🌍</span>航行</button>
   <button class="navtab" data-view="archive"><span class="navtab-icon">📦</span>记忆</button>
+  <button class="navtab" data-view="time"><span class="navtab-icon">⏳</span>时光机</button>
   <button class="navtab" data-view="settings"><span class="navtab-icon">⚙️</span>设置</button>
 </nav>
 
@@ -296,6 +297,13 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 <div id="view-settings" style="display:none">
   <div class="card"><div class="ctitle"><span class="icon">💾</span> 备份</div><div class="btn-row"><button class="btn" onclick="exportJSON()">📥 导出</button><button class="btn" onclick="document.getElementById('importFile').click()">📤 导入</button><input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(this)"></div></div>
   <div class="card"><div class="ctitle"><span class="icon">📡</span> Notion</div><input class="small-input" id="notionKey" placeholder="API Key" type="password"><div class="btn-row"><button class="btn btn-green" onclick="syncToNotion()">📡</button><button class="btn" onclick="testNotion()">🔍</button></div><div id="notionStatus" style="font-size:8px;color:var(--dim);margin-top:2px"></div></div>
+</div>
+
+<!-- 时光机 iframe 视图 -->
+<div id="view-time" style="display:none;flex-direction:column;gap:8px;height:calc(100vh - 160px)">
+  <div class="card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden">
+    <iframe src="time-machine.html" style="flex:1;width:100%;border:none;background:#121a26;border-radius:8px" title="时光机"></iframe>
+  </div>
 </div>
 
 </div>
@@ -670,12 +678,14 @@ function switchView(v){
   D.currentView=v;save();
   document.querySelectorAll('.navtab').forEach(t=>t.classList.toggle('active',t.dataset.view===v));
   // 清除其他视图内容
-  ['dashboard','mission','realms','schedule','assets','health','travel','archive','settings'].forEach(vid=>{
+  ['dashboard','mission','realms','schedule','assets','health','travel','archive','time','settings'].forEach(vid=>{
     const el=document.getElementById('view-'+vid);if(!el)return;
-    if(vid!=='travel')el.style.display=vid===v?'block':'none';
+    if(vid!=='travel'&&vid!=='time')el.style.display=vid===v?'block':'none';
   });
-  // 特殊处理travel（已经可见）
+  // 特殊处理travel/time（flex 布局）
   document.getElementById('view-travel').style.display=v==='travel'?'flex':'none';
+  const timeEl=document.getElementById('view-time');
+  if(timeEl)timeEl.style.display=v==='time'?'flex':'none';
   
   if(v==='dashboard')renderDashboard();
   if(v==='mission'){document.getElementById('view-mission').innerHTML=renderMissionHTML();setupMissionEvents()}
@@ -1040,8 +1050,9 @@ document.addEventListener('click',e=>{
 document.addEventListener('keydown',e=>{
   if(e.ctrlKey||e.metaKey){
     if(e.key==='n'){e.preventDefault();switchView('realms');setTimeout(()=>document.getElementById('addNoteInput').focus(),100)}
-    const vm=['dashboard','mission','realms','schedule','assets','health','travel','archive','settings'];
-    if(e.key>='1'&&e.key<='9'){e.preventDefault();switchView(vm[parseInt(e.key)-1])}
+    const vm=['dashboard','mission','realms','schedule','assets','health','travel','archive','time','settings'];
+    const kidx=e.key>='1'&&e.key<='9'?parseInt(e.key)-1:(e.key==='0'?9:-1);
+    if(kidx>=0&&kidx<vm.length){e.preventDefault();switchView(vm[kidx])}
   }
 });
 
