@@ -246,15 +246,14 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 </div>
 
 <!-- 其他视图占位 -->
-<div id="view-dashboard" style="display:none">
+<div id="view-dashboard" style="display:none;flex-direction:column;gap:8px">
   <div class="card"><div class="ctitle"><span class="icon">🟢</span> 舰桥总览</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px" id="dashStats"></div>
   </div>
-  <div class="card">
-    <div class="ctitle"><span class="icon">⏳</span> 时光机 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">今日计时记录 · 点击右下角进入完整版</span></div>
-    <div style="height:340px;border-radius:8px;overflow:hidden;border:1px solid rgba(212,168,83,0.12);position:relative">
+  <div class="card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden">
+    <div class="ctitle" style="padding:8px 14px 0"><span class="icon">⏳</span> 时光机 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">完整版 · 计时/待办/时间轴/日记</span></div>
+    <div style="flex:1;min-height:600px;border-radius:8px;overflow:hidden;border:1px solid rgba(212,168,83,0.12);margin:8px 10px 10px">
       <iframe src="time-machine.html" id="tmFrameDash" style="width:100%;height:100%;border:none;background:#0a0a0f" title="时光机"></iframe>
-      <button onclick="switchView('time')" style="position:absolute;right:8px;bottom:8px;padding:6px 14px;border-radius:8px;border:1px solid rgba(212,168,83,0.4);background:rgba(20,18,30,0.85);color:#f0d68a;font-family:inherit;font-size:11px;cursor:pointer">⏳ 进入时光机</button>
     </div>
   </div>
 </div>
@@ -802,12 +801,14 @@ function switchView(v){
   // 清除其他视图内容
   ['dashboard','mission','realms','schedule','assets','health','travel','archive','time','settings'].forEach(vid=>{
     const el=document.getElementById('view-'+vid);if(!el)return;
-    if(vid!=='travel'&&vid!=='time')el.style.display=vid===v?'block':'none';
+    if(vid!=='travel'&&vid!=='time'&&vid!=='dashboard')el.style.display=vid===v?'block':'none';
   });
-  // 特殊处理travel/time（flex 布局）
+  // 特殊处理 travel/time/dashboard（flex 布局）
   document.getElementById('view-travel').style.display=v==='travel'?'flex':'none';
   const timeEl=document.getElementById('view-time');
   if(timeEl)timeEl.style.display=v==='time'?'flex':'none';
+  const dashEl=document.getElementById('view-dashboard');
+  if(dashEl)dashEl.style.display=v==='dashboard'?'flex':'none';
   
   if(v==='dashboard'){renderDashboard();setTimeout(()=>{const f=document.getElementById('tmFrameDash');if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'tm-query'},'*')},800)}
   if(v==='mission'){document.getElementById('view-mission').innerHTML=renderMissionHTML();setupMissionEvents()}
