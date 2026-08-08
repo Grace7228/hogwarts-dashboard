@@ -302,7 +302,7 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 <!-- 时光机 iframe 视图 -->
 <div id="view-time" style="display:none;flex-direction:column;gap:8px;height:calc(100vh - 160px)">
   <div class="card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden">
-    <iframe src="time-machine.html" style="flex:1;width:100%;border:none;background:#121a26;border-radius:8px" title="时光机"></iframe>
+    <iframe src="time-machine.html" id="tmFrame" style="flex:1;width:100%;border:none;background:#121a26;border-radius:8px" title="时光机"></iframe>
   </div>
 </div>
 
@@ -538,7 +538,7 @@ const defaultSchedule=[
   {id:'ds8',day:5,time:'14:00',subject:'周复盘',prof:'Obsidian',house:'gryffindor'},
 ];
 
-let D={selectedRealm:0,currentView:'travel',notes:{},missionTasks:[],missionLog:[],points:0,assets:[],healthLog:[],travelLog:[],archive:[],reflections:[],readings:[],quotes:[],thoughts:[],schedule:null,settings:{focus:70,ambience:85,currentDay:0}};
+let D={selectedRealm:0,currentView:'travel',notes:{},missionTasks:[],missionLog:[],points:0,assets:[],healthLog:[],travelLog:[],archive:[],reflections:[],readings:[],quotes:[],thoughts:[],schedule:null,scheduleLog:{},settings:{currentDay:0}};
 
 function load(){
   try{const r=localStorage.getItem(SK);if(r)D={...D,...JSON.parse(r)}}catch(e){}
@@ -1000,7 +1000,16 @@ window.addNote=addNote;
 function delNote(rid,nid){D.notes[rid]=D.notes[rid].filter(n=>n.id!==nid);save();renderRealmNotes()}
 
 // ==================== 课表 ====================
-function renderSchedule(day){D.settings.currentDay=day;save();const ds=getSchedule().filter(s=>s.day===day).sort((a,b)=>a.time.localeCompare(b.time));const tb=document.getElementById('scheduleBody');if(!tb)return;if(ds.length===0){tb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:10px;color:var(--dim);font-style:italic">🛌 无课</td></tr>';return}tb.innerHTML=ds.map(s=>`<tr><td class="stime">${s.time}</td><td>${eh(s.subject)}</td><td class="sprof">${eh(s.prof)}</td><td><span class="hbadge" style="${getHouseStyle(s.house)}">${s.house.slice(0,2)}</span></td><td><div style="display:flex;gap:3px"><button class="ndel" onclick="editScheduleItem('${s.id}')" title="编辑" style="color:#8ad4a0">✏️</button><button class="ndel" onclick="if(confirm('删除「${eh(s.subject)}」？'))delScheduleItem('${s.id}')" title="删除" style="color:#e08070">✕</button></div></td></tr>`).join('');document.querySelectorAll('.daybtn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.day)===day))}
+function renderSchedule(day){D.settings.currentDay=day;save();const ds=getSchedule().filter(s=>s.day===day).sort((a,b)=>a.time.localeCompare(b.time));const tb=document.getElementById('scheduleBody');if(!tb)return;if(ds.length===0){tb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:10px;color:var(--dim);font-style:italic">🛌 无课</td></tr>';return}tb.innerHTML=ds.map(s=>{const st=D.scheduleLog&&D.scheduleLog[s.id];const badge=st==='running'?'<span style="font-size:8px;color:var(--gold-light);background:rgba(212,168,83,0.2);border-radius:4px;padding:1px 5px">⏳计时中</span>':st==='done'?'<span style="font-size:8px;color:#8ad4a0;background:rgba(80,180,120,0.15);border-radius:4px;padding:1px 5px">✓已计时</span>':'';return `<tr><td class="stime">${s.time}</td><td>${eh(s.subject)} ${badge}</td><td class="sprof">${eh(s.prof)}</td><td><span class="hbadge" style="${getHouseStyle(s.house)}">${s.house.slice(0,2)}</span></td><td><div style="display:flex;gap:3px;align-items:center"><button class="ndel" onclick="tmStartFromSchedule('${s.id}')" title="在时光机开始计时" style="color:var(--gold-light);font-size:13px">⏱</button><button class="ndel" onclick="editScheduleItem('${s.id}')" title="编辑" style="color:#8ad4a0">✏️</button><button class="ndel" onclick="if(confirm('删除「${eh(s.subject)}」？'))delScheduleItem('${s.id}')" title="删除" style="color:#e08070">✕</button></div></td></tr>`}).join('');document.querySelectorAll('.daybtn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.day)===day))}
+function tmStartFromSchedule(id){
+  const item=getSchedule().find(s=>s.id===id);if(!item)return;
+  const f=document.getElementById('tmFrame');
+  if(!f||!f.contentWindow){toast('请先打开时光机页面');return}
+  f.contentWindow.postMessage({source:'hogwarts',type:'tm-start',name:item.subject+' · '+item.time,note:item.prof},'*');
+  if(!D.scheduleLog)D.scheduleLog={};D.scheduleLog[id]='running';save();
+  toast('⏱ 已在时光机开始计时：'+item.subject);
+}
+window.tmStartFromSchedule=tmStartFromSchedule;
 
 // ==================== 导出/导入/Notion ====================
 function exportJSON(){const b=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);const n=new Date();a.download=`h-${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}.json`;a.click();toast('📥')}
@@ -1045,6 +1054,24 @@ switchView('travel');
 // Globe click handler
 document.addEventListener('click',e=>{
   if(e.target.closest('#globeContainer canvas'))handleGlobeClick(e);
+});
+
+// 时光机 ↔ 课表联动：监听时光机消息
+window.addEventListener('message',e=>{
+  const d=e.data||{};
+  if(d.source!=='timemachine')return;
+  if(d.type==='tm-started'){
+    toast('⏳ 时光机开始计时：'+(d.name||''));
+    // 尝试匹配课表：找到名称相同且未计时的课程标记为计时中
+    if(D.scheduleLog){Object.keys(D.scheduleLog).forEach(k=>{if(D.scheduleLog[k]==='running')D.scheduleLog[k]='done'})}
+    renderSchedule(D.settings.currentDay);
+  }
+  if(d.type==='tm-stopped'){
+    toast('⏹ 时光机已停止计时');
+    // 把所有计时中的课标记为已完成
+    if(D.scheduleLog){Object.keys(D.scheduleLog).forEach(k=>{if(D.scheduleLog[k]==='running')D.scheduleLog[k]='done'})}
+    save();renderSchedule(D.settings.currentDay);
+  }
 });
 
 document.addEventListener('keydown',e=>{

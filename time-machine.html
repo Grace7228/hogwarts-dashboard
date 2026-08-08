@@ -1408,6 +1408,28 @@ pre.sync{white-space:pre-wrap;word-break:break-all;background:#111827;color:#e5e
     if(!typing && e.key==='/' ){ e.preventDefault(); openQuickCapture(); }
   });
 
+  // ==== 与知识圣殿联动（课表 ↔ 计时）====
+  window.addEventListener('message', function(e){
+    var d = e.data || {};
+    if(d.source !== 'hogwarts') return;
+    if(d.type === 'tm-start'){
+      startTimer([], d.name || '', d.note || '');
+    }
+    if(d.type === 'tm-query'){
+      try{ e.source.postMessage({source:'timemachine', type:'tm-state', running: !!S.running, name: S.running ? S.running.name : null}, '*'); }catch(err){}
+    }
+  });
+  var _origStart = startTimer;
+  startTimer = function(tags, name, note){
+    _origStart(tags, name, note);
+    try{ parent.postMessage({source:'timemachine', type:'tm-started', name: S.running ? S.running.name : ''}, '*'); }catch(err){}
+  };
+  var _origStop = stopTimer;
+  stopTimer = function(silent){
+    _origStop(silent);
+    try{ parent.postMessage({source:'timemachine', type:'tm-stopped'}, '*'); }catch(err){}
+  };
+
 })();
 </script>
 </body>
