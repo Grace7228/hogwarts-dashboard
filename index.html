@@ -1016,8 +1016,6 @@ function updClock(){
 
 // ==================== 启动 ====================
 load();
-document.getElementById('focusSlider').value=D.settings.focus;document.getElementById('ambSlider').value=D.settings.ambience;
-document.getElementById('focusVal').textContent=D.settings.focus+'%';document.getElementById('ambVal').textContent=D.settings.ambience+'%';
 document.getElementById('notionKey').value=localStorage.getItem('nk_h')||'';
 
 document.querySelectorAll('.navtab').forEach(t=>{t.addEventListener('click',()=>{switchView(t.dataset.view)})});
