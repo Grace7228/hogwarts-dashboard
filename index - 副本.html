@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hogwarts · 知识圣殿</title>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{--gold:#d4a853;--gold-light:#f0d68a;--dark:#0a0a0f;--card-bg:rgba(20,18,30,0.55);--card-border:rgba(212,168,83,0.18);--text:#e0d5c0;--dim:#8a8070;--accent:rgba(232,120,48,0.7)}
@@ -330,9 +333,7 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 </footer>
 </div>
 
-<script src="lib/three.min.js"></script>
-<script src="lib/OrbitControls.js"></script>
-<script>
+<script type="module">
 // ==================== 星空 ====================
 (function(){
   const c=document.getElementById('starsCanvas'),ctx=c.getContext('2d');
@@ -358,6 +359,8 @@ const cityCoords={
 };
 
 // ==================== 3D 地球仪 ====================
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 let globeScene=null,globeCamera=null,globeRenderer=null,globeControls=null;
 let globeMesh=null,globeMarkers=[],globeRings=[],globeRaycaster=null;
@@ -391,7 +394,7 @@ function initGlobe(){
   // 地球
   const geo=new THREE.SphereGeometry(1,64,64);
   const texLoader=new THREE.TextureLoader();
-  texLoader.load('assets/earth.jpg',
+  texLoader.load('https://eoimages.gsfc.nasa.gov/images/imagerecords/57000/57723/land_shallow_topo_2048.jpg',
     texture=>{
       document.getElementById('globeLoading').style.display='none';
       const mat=new THREE.MeshPhongMaterial({map:texture,specular:0x333333,shininess:5});
