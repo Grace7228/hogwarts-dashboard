@@ -374,7 +374,7 @@ function initGlobe(){
   globeRenderer.setSize(w,h);globeRenderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
   container.appendChild(globeRenderer.domElement);
 
-  globeControls=new OrbitControls(globeCamera,globeRenderer.domElement);
+  globeControls=new THREE.OrbitControls(globeCamera,globeRenderer.domElement);
   globeControls.enableDamping=true;globeControls.dampingFactor=0.08;
   globeControls.minDistance=0.05;globeControls.maxDistance=10;
   globeControls.rotateSpeed=0.5;globeControls.autoRotate=true;globeControls.autoRotateSpeed=0.3;
