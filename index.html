@@ -460,6 +460,15 @@ function initGlobe2D(){
   cv.addEventListener('touchstart',e=>{dragging=true;lastX=e.touches[0].clientX});
   window.addEventListener('touchmove',e=>{if(dragging){globe2D.rot+=(e.touches[0].clientX-lastX)*0.01;lastX=e.touches[0].clientX}});
   window.addEventListener('touchend',()=>{dragging=false});
+  // 滚轮缩放
+  globe2D.zoom=1;
+  cv.addEventListener('wheel',e=>{
+    e.preventDefault();e.stopPropagation();
+    const factor=e.deltaY<0?1.1:0.9;
+    globe2D.zoom=Math.max(0.8,Math.min(3.5,globe2D.zoom*factor));
+  },{passive:false});
+  // 双击放大
+  cv.addEventListener('dblclick',()=>{globe2D.zoom=Math.min(3.5,globe2D.zoom*1.5)});
   // 点击城市
   cv.addEventListener('click',e=>{
     const rect=cv.getBoundingClientRect();
@@ -479,7 +488,7 @@ function animateGlobe2D(){
   requestAnimationFrame(animateGlobe2D);
   const {ctx,cv,w,h}=globe2D;
   ctx.clearRect(0,0,w,h);
-  const r=Math.min(w,h)/2-20;
+  const r=(Math.min(w,h)/2-20)*globe2D.zoom;
   const cx=w/2,cy=h/2;
   if(!globe2D.dragging)globe2D.rot+=0.002;
   // 大气光晕
