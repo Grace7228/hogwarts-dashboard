@@ -370,54 +370,156 @@ const cityCoords={
 let globeScene=null,globeCamera=null,globeRenderer=null,globeControls=null;
 let globeMesh=null,globeMarkers=[],globeRings=[],globeRaycaster=null;
 let selectedTravelId=null,flyTarget=null,flyStart=null,flyProgress=0;
+let globe2D=null,webglFailed=false;
 
 function initGlobe(){
+  try{
+    const container=document.getElementById('globeContainer');
+    const w=container.clientWidth,h=container.clientHeight;
+    globeScene=new THREE.Scene();
+    globeCamera=new THREE.PerspectiveCamera(45,w/h,0.1,1000);
+    globeCamera.position.set(0,0.5,2.8);
+
+    globeRenderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+    globeRenderer.setSize(w,h);globeRenderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    container.appendChild(globeRenderer.domElement);
+
+    globeControls=new THREE.OrbitControls(globeCamera,globeRenderer.domElement);
+    globeControls.enableDamping=true;globeControls.dampingFactor=0.08;
+    globeControls.minDistance=0.05;globeControls.maxDistance=10;
+    globeControls.rotateSpeed=0.5;globeControls.autoRotate=true;globeControls.autoRotateSpeed=0.3;
+
+    globeRaycaster=new THREE.Raycaster();
+
+    // 星空背景
+    const starsGeo=new THREE.BufferGeometry();const starsVerts=[];
+    for(let i=0;i<500;i++){starsVerts.push((Math.random()-0.5)*20,(Math.random()-0.5)*20,(Math.random()-0.5)*20)}
+    starsGeo.setAttribute('position',new THREE.Float32BufferAttribute(starsVerts,3));
+    const starsMat=new THREE.PointsMaterial({color:0xffffff,size:0.02,transparent:true,opacity:0.6});
+    globeScene.add(new THREE.Points(starsGeo,starsMat));
+
+    // 地球
+    const geo=new THREE.SphereGeometry(1,64,64);
+    const texLoader=new THREE.TextureLoader();
+    texLoader.load('assets/earth.jpg',
+      texture=>{
+        document.getElementById('globeLoading').style.display='none';
+        const mat=new THREE.MeshPhongMaterial({map:texture,specular:0x333333,shininess:5});
+        globeMesh=new THREE.Mesh(geo,mat);globeScene.add(globeMesh);
+        // 光照
+        globeScene.add(new THREE.AmbientLight(0x444444));
+        const dirLight=new THREE.DirectionalLight(0xffffff,1.2);
+        dirLight.position.set(5,3,5);globeScene.add(dirLight);
+        // 标记
+        addGlobeMarkers();
+      },
+      undefined,()=>{document.getElementById('globeLoading').textContent='⚠️ 纹理加载失败，地球显示为线框模式';}
+    );
+
+    // 滚动到地球仪时处理
+    container.addEventListener('wheel',e=>{e.stopPropagation()},{passive:false});
+
+    animateGlobe();
+  }catch(err){
+    // WebGL 不可用（远程桌面/虚拟机/驱动问题）→ 降级 2D 旋转地球
+    webglFailed=true;
+    document.getElementById('globeLoading').textContent='WebGL 不可用，切换到 2D 模式…';
+    setTimeout(()=>{initGlobe2D()},50);
+  }
+}
+function initGlobe2D(){
   const container=document.getElementById('globeContainer');
+  if(globe2D){return}
   const w=container.clientWidth,h=container.clientHeight;
-  globeScene=new THREE.Scene();
-  globeCamera=new THREE.PerspectiveCamera(45,w/h,0.1,1000);
-  globeCamera.position.set(0,0.5,2.8);
-
-  globeRenderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
-  globeRenderer.setSize(w,h);globeRenderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-  container.appendChild(globeRenderer.domElement);
-
-  globeControls=new THREE.OrbitControls(globeCamera,globeRenderer.domElement);
-  globeControls.enableDamping=true;globeControls.dampingFactor=0.08;
-  globeControls.minDistance=0.05;globeControls.maxDistance=10;
-  globeControls.rotateSpeed=0.5;globeControls.autoRotate=true;globeControls.autoRotateSpeed=0.3;
-
-  globeRaycaster=new THREE.Raycaster();
-
-  // 星空背景
-  const starsGeo=new THREE.BufferGeometry();const starsVerts=[];
-  for(let i=0;i<500;i++){starsVerts.push((Math.random()-0.5)*20,(Math.random()-0.5)*20,(Math.random()-0.5)*20)}
-  starsGeo.setAttribute('position',new THREE.Float32BufferAttribute(starsVerts,3));
-  const starsMat=new THREE.PointsMaterial({color:0xffffff,size:0.02,transparent:true,opacity:0.6});
-  globeScene.add(new THREE.Points(starsGeo,starsMat));
-
-  // 地球
-  const geo=new THREE.SphereGeometry(1,64,64);
-  const texLoader=new THREE.TextureLoader();
-  texLoader.load('assets/earth.jpg',
-    texture=>{
-      document.getElementById('globeLoading').style.display='none';
-      const mat=new THREE.MeshPhongMaterial({map:texture,specular:0x333333,shininess:5});
-      globeMesh=new THREE.Mesh(geo,mat);globeScene.add(globeMesh);
-      // 光照
-      globeScene.add(new THREE.AmbientLight(0x444444));
-      const dirLight=new THREE.DirectionalLight(0xffffff,1.2);
-      dirLight.position.set(5,3,5);globeScene.add(dirLight);
-      // 标记
-      addGlobeMarkers();
-    },
-    undefined,()=>{document.getElementById('globeLoading').textContent='⚠️ 纹理加载失败，地球显示为线框模式';}
-  );
-
-  // 滚动到地球仪时处理
-  container.addEventListener('wheel',e=>{e.stopPropagation()},{passive:false});
-
-  animateGlobe();
+  // 清掉原来的 loading
+  const loading=document.getElementById('globeLoading');
+  if(loading)loading.style.display='none';
+  // 移除已有 canvas（如果 Three 曾创建）
+  container.querySelectorAll('canvas').forEach(c=>c.remove());
+  const cv=document.createElement('canvas');
+  cv.style.width='100%';cv.style.height='100%';
+  container.appendChild(cv);
+  const ctx=cv.getContext('2d');
+  cv.width=w;cv.height=h;
+  globe2D={ctx,cv,w,h,rot:0,markers:[],img:null,imgReady:false};
+  const img=new Image();
+  img.onload=()=>{globe2D.img=img;globe2D.imgReady=true;globe2D.imgW=img.width;globe2D.imgH=img.height;toast('🌍 2D 地球就绪');};
+  img.onerror=()=>{globe2D.imgReady=false;toast('⚠️ 贴图加载失败，显示经纬线球');};
+  img.src='assets/earth.jpg';
+  // 添加城市标记（球面坐标）
+  (D.travelLog||[]).forEach(t=>{
+    const lat=parseFloat(t.lat),lng=parseFloat(t.lng);
+    if(isNaN(lat)||isNaN(lng))return;
+    globe2D.markers.push({id:t.id,city:t.city,lat,lng});
+  });
+  // 拖拽旋转
+  let dragging=false,lastX=0;
+  cv.addEventListener('mousedown',e=>{dragging=true;lastX=e.clientX});
+  window.addEventListener('mousemove',e=>{if(dragging){globe2D.rot+=(e.clientX-lastX)*0.01;lastX=e.clientX}});
+  window.addEventListener('mouseup',()=>{dragging=false});
+  cv.addEventListener('touchstart',e=>{dragging=true;lastX=e.touches[0].clientX});
+  window.addEventListener('touchmove',e=>{if(dragging){globe2D.rot+=(e.touches[0].clientX-lastX)*0.01;lastX=e.touches[0].clientX}});
+  window.addEventListener('touchend',()=>{dragging=false});
+  // 点击城市
+  cv.addEventListener('click',e=>{
+    const rect=cv.getBoundingClientRect();
+    const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+    let best=null,bd=1e9;
+    globe2D.markers.forEach(m=>{
+      if(m.sx===undefined)return;
+      const d=Math.hypot(m.sx-mx,m.sy-my);
+      if(d<bd&&d<30){bd=d;best=m}
+    });
+    if(best){selectTravelCity(best.id);toast('📍 '+best.city)}
+  });
+  animateGlobe2D();
+}
+function animateGlobe2D(){
+  if(!globe2D)return;
+  requestAnimationFrame(animateGlobe2D);
+  const {ctx,cv,w,h}=globe2D;
+  ctx.clearRect(0,0,w,h);
+  const r=Math.min(w,h)/2-20;
+  const cx=w/2,cy=h/2;
+  if(!globe2D.dragging)globe2D.rot+=0.002;
+  // 大气光晕
+  const g=ctx.createRadialGradient(cx,cy,r*0.9,cx,cy,r*1.15);
+  g.addColorStop(0,'rgba(212,168,83,0.10)');g.addColorStop(1,'rgba(212,168,83,0)');
+  ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,r*1.15,0,Math.PI*2);ctx.fill();
+  if(globe2D.imgReady&&globe2D.img){
+    // 逐列绘制旋转贴图球
+    for(let x=Math.floor(cx-r);x<=cx+r;x++){
+      const nx=(x-cx)/r;
+      if(nx<-1||nx>1)continue;
+      const depth=Math.sqrt(1-nx*nx);
+      const lon=Math.asin(nx)+globe2D.rot;
+      const imgW=globe2D.imgW,imgH=globe2D.imgH;
+      let sx=((lon/(2*Math.PI))%1+1)%1*imgW;
+      const colW=Math.max(0.8,depth*2);
+      ctx.drawImage(globe2D.img,sx,0,colW,imgH,x-colW/2,cy-r*depth,colW,r*depth*2);
+    }
+  }else{
+    // 经纬线球
+    ctx.strokeStyle='rgba(212,168,83,0.35)';ctx.lineWidth=1;
+    for(let i=0;i<12;i++){const a=i/12*Math.PI*2+globe2D.rot;ctx.beginPath();ctx.ellipse(cx,cy,r,r*0.45,a,0,Math.PI*2);ctx.stroke()}
+    for(let i=1;i<8;i++){const y=cy-r+i*r/4;ctx.beginPath();ctx.ellipse(cx,y,r*Math.sqrt(1-((i-4)/4)**2),r/4,0,Math.PI*2);ctx.stroke()}
+  }
+  // 城市标记（正交投影）
+  globe2D.markers.forEach(m=>{
+    const phi=(90-m.lat)*Math.PI/180;
+    const theta=(m.lng+180)*Math.PI/180+globe2D.rot;
+    const x3=Math.sin(phi)*Math.cos(theta);
+    const y3=Math.cos(phi);
+    const z3=Math.sin(phi)*Math.sin(theta);
+    m.sx=cx+x3*r;m.sy=cy-y3*r;
+    if(z3<0)return; // 背面不画
+    const sel=m.id===selectedTravelId;
+    ctx.beginPath();ctx.arc(m.sx,m.sy,sel?5:3,0,Math.PI*2);
+    ctx.fillStyle=sel?'#ff6644':'#f0d68a';
+    ctx.shadowColor='rgba(240,214,138,0.8)';ctx.shadowBlur=8;ctx.fill();ctx.shadowBlur=0;
+    ctx.fillStyle='#f0d68a';ctx.font='9px sans-serif';ctx.textAlign='center';
+    ctx.fillText(m.city,m.sx,m.sy-8);
+  });
 }
 
 function latLngToVec3(lat,lng,r){
