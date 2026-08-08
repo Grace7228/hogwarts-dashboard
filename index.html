@@ -504,15 +504,15 @@ function animateGlobe2D(){
     for(let i=0;i<12;i++){const a=i/12*Math.PI*2+globe2D.rot;ctx.beginPath();ctx.ellipse(cx,cy,r,r*0.45,a,0,Math.PI*2);ctx.stroke()}
     for(let i=1;i<8;i++){const y=cy-r+i*r/4;ctx.beginPath();ctx.ellipse(cx,y,r*Math.sqrt(1-((i-4)/4)**2),r/4,0,Math.PI*2);ctx.stroke()}
   }
-  // 城市标记（正交投影）
+  // 城市标记（与贴图绘制一致的投影：nx=sin(rel)，深度=cos(rel)，纬度线性映射）
   globe2D.markers.forEach(m=>{
-    const phi=(90-m.lat)*Math.PI/180;
-    const theta=(m.lng+180)*Math.PI/180+globe2D.rot;
-    const x3=Math.sin(phi)*Math.cos(theta);
-    const y3=Math.cos(phi);
-    const z3=Math.sin(phi)*Math.sin(theta);
-    m.sx=cx+x3*r;m.sy=cy-y3*r;
-    if(z3<0)return; // 背面不画
+    const lonM=(m.lng+180)*Math.PI/180;
+    let rel=lonM-globe2D.rot;
+    rel=((rel+Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-Math.PI; // 归一化到 [-π,π]
+    if(rel>Math.PI/2||rel<-Math.PI/2)return; // 背面不画
+    const depth=Math.cos(rel);
+    m.sx=cx+r*Math.sin(rel);
+    m.sy=cy-(m.lat/90)*r*depth;
     const sel=m.id===selectedTravelId;
     ctx.beginPath();ctx.arc(m.sx,m.sy,sel?5:3,0,Math.PI*2);
     ctx.fillStyle=sel?'#ff6644':'#f0d68a';
