@@ -1024,10 +1024,10 @@ updClock();setInterval(updClock,1000);
 
 function renderRecentNotes(){
   const el=document.getElementById('recentNotesList');if(!el)return;
-  const all=[];realms.forEach(r=>{(D.notes[r.id]||[]).forEach(n=>all.push({text:n.content,time:n.time,realm:r.name}))});
+  const all=[];realms.forEach(r=>{(D.notes[r.id]||[]).forEach(n=>all.push({id:n.id,realmId:r.id,text:n.content,time:n.time,realm:r.name}))});
   all.sort((a,b)=>b.time-a.time);const latest=all.slice(0,6);
   if(latest.length===0){el.innerHTML='<div class="empty" style="font-size:10px">暂无笔记</div>';return}
-  el.innerHTML=latest.map(n=>`<div class="nitem" style="font-size:10px"><div class="ncont">${eh(n.text.slice(0,50)+(n.text.length>50?'…':''))} <span style="color:var(--gold-light);font-size:8px">· ${n.realm}</span></div><span class="nmeta">${ft(n.time)}</span></div>`).join('');
+  el.innerHTML=latest.map(n=>`<div class="nitem" style="font-size:10px"><div class="ncont">${eh(n.text.slice(0,50)+(n.text.length>50?'…':''))} <span style="color:var(--gold-light);font-size:8px">· ${n.realm}</span></div><span class="nmeta">${ft(n.time)}</span><button class="ndel" onclick="if(confirm('删除这条笔记？'))delNote('${n.realmId}','${n.id}')" title="删除" style="color:#e08070;font-size:12px">✕</button></div>`).join('');
 }
 
 switchView('travel');
