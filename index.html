@@ -247,12 +247,9 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 
 <!-- 其他视图占位 -->
 <div id="view-dashboard" style="display:none;flex-direction:column;gap:8px">
-  <div class="card"><div class="ctitle"><span class="icon">🟢</span> 舰桥总览</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px" id="dashStats"></div>
-  </div>
   <div class="card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden">
     <div class="ctitle" style="padding:8px 14px 0"><span class="icon">⏳</span> 时光机 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">完整版 · 计时/待办/时间轴/日记</span></div>
-    <div style="flex:1;min-height:600px;border-radius:8px;overflow:hidden;border:1px solid rgba(212,168,83,0.12);margin:8px 10px 10px">
+    <div style="flex:1;min-height:calc(100vh - 260px);border-radius:8px;overflow:hidden;border:1px solid rgba(212,168,83,0.12);margin:8px 10px 10px">
       <iframe src="time-machine.html" id="tmFrameDash" style="width:100%;height:100%;border:none;background:#0a0a0f" title="时光机"></iframe>
     </div>
   </div>
@@ -320,6 +317,10 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 
 <!-- 右侧面板 -->
 <div class="rpanel">
+  <div class="card" style="padding:8px 10px">
+    <div class="ctitle" style="margin-bottom:6px"><span class="icon">🟢</span> 舰桥总览</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px" id="dashMini"></div>
+  </div>
   <div class="card" style="flex:1;display:flex;flex-direction:column;min-height:140px">
     <div class="ctitle"><span class="icon">📋</span> <span id="realmNotesTitle">选择领域</span></div>
     <div class="nlist" id="notesList" style="flex:1"><div class="empty" id="notesEmpty">👆 在「知识幻境」中选择</div></div>
@@ -811,6 +812,7 @@ function switchView(v){
   if(dashEl)dashEl.style.display=v==='dashboard'?'flex':'none';
   
   if(v==='dashboard'){renderDashboard();setTimeout(()=>{const f=document.getElementById('tmFrameDash');if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'tm-query'},'*')},800)}
+  renderDashMini();
   if(v==='mission'){document.getElementById('view-mission').innerHTML=renderMissionHTML();setupMissionEvents()}
   if(v==='realms'){document.getElementById('view-realms').innerHTML=renderRealmsHTML();renderRealmNotes();initRealmsEvents()}
   if(v==='schedule'){document.getElementById('view-schedule').innerHTML=renderScheduleHTML();renderSchedule(D.settings.currentDay)}
@@ -823,16 +825,18 @@ window.switchView=switchView;
 
 // ==================== 舰桥 ====================
 function renderDashboard(){
-  const el=document.getElementById('dashStats');if(!el)return;
+  renderDashMini();
+  setTimeout(()=>{const f=document.getElementById('tmFrameDash');if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'tm-query'},'*')},800)
+}
+function renderDashMini(){
+  const el=document.getElementById('dashMini');if(!el)return;
   const tn=Object.values(D.notes||{}).reduce((a,b)=>a+b.length,0);
   const tc=(D.missionTasks||[]).filter(t=>!t.done).length;
-  const ar=D.assets||[];const hp=D.healthLog||[];const tr=D.travelLog||[];const am=D.archive||[];
   const stats=[
     ['📚 笔记',tn],['✅ 待办',tc],['⭐ 积分',D.points||0],
-    ['💰 资产',ar.length],['❤️ 健康',hp.length],['🌍 旅行',tr.length],
-    ['📦 记忆',am.length],['📝 复盘',(D.reflections||[]).length],['⏳ 时光机','已嵌入'],
+    ['💰 资产',(D.assets||[]).length],['❤️ 健康',(D.healthLog||[]).length],['🌍 旅行',(D.travelLog||[]).length],
   ];
-  el.innerHTML=stats.map(s=>`<div style="background:rgba(0,0,0,0.2);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;color:var(--gold-light);font-weight:bold">${s[1]}</div><div style="font-size:9px;color:var(--dim);margin-top:2px">${s[0]}</div></div>`).join('');
+  el.innerHTML=stats.map(s=>`<div style="background:rgba(0,0,0,0.2);border-radius:6px;padding:6px 4px;text-align:center"><div style="font-size:15px;color:var(--gold-light);font-weight:bold">${s[1]}</div><div style="font-size:8px;color:var(--dim);margin-top:1px">${s[0]}</div></div>`).join('');
 }
 
 // ==================== HTML渲染器 ====================
