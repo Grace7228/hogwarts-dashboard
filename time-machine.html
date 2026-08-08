@@ -205,6 +205,81 @@ pre.sync{white-space:pre-wrap;word-break:break-all;background:#111827;color:#e5e
 
 
 </style>
+<style>
+/* ===== 黑金主题覆盖层（与知识圣殿配色统一） ===== */
+:root{
+  --bg:#0a0a0f;--card:rgba(20,18,30,.55);--line:rgba(212,168,83,.18);--text:#e0d5c0;--muted:rgba(224,213,192,.55);
+  --g:#d4a853;--o:#f0d68a;--b:#d4a853;--p:#e8c547;
+}
+body{background:#0a0a0f}
+.app{background:linear-gradient(180deg,#12101c,#0a0a0f);max-width:100%}
+.brand .h{color:#f0d68a}
+.pill{border-color:rgba(212,168,83,.25);color:var(--muted)}
+.pill.ok{color:#f0d68a;border-color:rgba(212,168,83,.45)}
+.ibtn{border-color:rgba(212,168,83,.25);background:rgba(20,18,30,.6)}
+.stat,.timer,.qbtn,.cbtn,.mod,.chip{border-color:rgba(212,168,83,.15);background:rgba(20,18,30,.55)}
+.stat .n{color:#f0d68a}
+.badge{border-color:rgba(212,168,83,.5);background:rgba(212,168,83,.14);color:#f0d68a}
+.chip.g{border-color:rgba(212,168,83,.45);color:#f0d68a}.chip.o{border-color:rgba(240,214,138,.5);color:#f0d68a}.chip.b{border-color:rgba(212,168,83,.45);color:#e0d5c0}.chip.p{border-color:rgba(232,197,71,.5);color:#e8c547}
+.elapsed{color:#f0d68a}
+.note-btn{border-color:rgba(212,168,83,.45);background:rgba(212,168,83,.1);color:#f0d68a}
+.note-btn.has{border-color:rgba(212,168,83,.55);background:rgba(212,168,83,.18);color:#f0d68a}
+.panel{background:rgba(0,0,0,.25)}
+.tag{border-color:rgba(212,168,83,.2);background:rgba(255,255,255,.04)}
+.tag.on,.tag.g.on,.tag.o.on,.tag.b.on,.tag.p.on{background:rgba(212,168,83,.18);border-color:rgba(212,168,83,.5);color:#f0d68a}
+.panel .acts .ok{background:#9b7a2e;color:#fff}
+.panel .acts .ghost{background:rgba(255,255,255,.08)}
+.mods{background:transparent}
+.foot{background:rgba(10,10,15,.92);border-top-color:rgba(212,168,83,.1)}
+.foot button,.foot .links button{border-color:rgba(212,168,83,.2);background:rgba(20,18,30,.6);color:#e0d5c0}
+.app.mode-tl{background:#0a0a0f}
+.modebar button{border-color:rgba(212,168,83,.2);background:rgba(20,18,30,.6)}
+.modebar button.on{border-color:rgba(212,168,83,.55);background:rgba(212,168,83,.15);color:#f0d68a}
+/* 时间轴浅色区 → 深色 */
+.tl-view{background:linear-gradient(180deg,#12101c,#0d0b16);color:#e0d5c0;border-radius:14px;border:1px solid rgba(212,168,83,.12)}
+.tl-head{color:var(--muted)}.tl-head b{color:#f0d68a}
+.tl-axis::before{background:rgba(212,168,83,.15)}
+.tl-day{color:var(--muted)}.tl-day span{background:rgba(18,16,28,.95);border-color:rgba(212,168,83,.15)}
+.tl-card{background:rgba(20,18,30,.7);border-color:rgba(212,168,83,.12);box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.tl-card .t{color:#e0d5c0}.tl-card .sub{color:var(--muted)}.tl-card .when{color:var(--muted)}
+.tl-card .chip{background:rgba(255,255,255,.05);color:#c9bda8;border-color:rgba(212,168,83,.15)}
+.tl-card .todos label{color:#d9cdb8}
+.tl-ico{border-color:#12101c}
+.tl-ico.timer{background:#9b7a2e}.tl-ico.note{background:#6b5a2e}.tl-ico.todo{background:#8a6d1e}.tl-ico.event{background:#7a6a2a}.tl-ico.live{background:#b8860b}
+.tl-actions button{border-color:rgba(212,168,83,.2);background:rgba(20,18,30,.6);color:#e0d5c0}
+.tl-empty{color:var(--muted)}
+.tl-tools{background:rgba(18,16,28,.96);border-bottom-color:rgba(212,168,83,.12)}
+.tl-search input{background:rgba(10,10,15,.8);border-color:rgba(212,168,83,.2);color:#e0d5c0}
+.tl-search input:focus{border-color:rgba(212,168,83,.5);box-shadow:0 0 0 3px rgba(212,168,83,.12)}
+.tl-search .cnt{color:var(--muted)}
+.tl-chip{background:rgba(20,18,30,.6);border-color:rgba(212,168,83,.2);color:#c9bda8}
+.tl-chip.on{background:#9b7a2e;border-color:#d4a853;color:#fff}
+.tl-tag-select{background:rgba(10,10,15,.8);border-color:rgba(212,168,83,.2);color:#c9bda8}
+/* 底部操作面板浅色区 → 深色 */
+.mask{background:rgba(0,0,0,.7)}
+.sheet{background:#14121e;color:#e0d5c0}
+.sheet h3{color:#f0d68a}.sheet .sub{color:var(--muted)}
+.adj{background:rgba(20,18,30,.7);border-color:rgba(212,168,83,.15)}
+.big{color:#f0d68a}
+.step{background:rgba(10,10,15,.8);border-color:rgba(212,168,83,.25);color:#e0d5c0}
+.quick button,.sact button{border-color:rgba(212,168,83,.25);background:rgba(20,18,30,.7);color:#e0d5c0}
+.sact .primary{background:#9b7a2e;color:#fff}.sact .ok{background:#9b7a2e;color:#fff}.sact .ghost{background:rgba(255,255,255,.1);color:#e0d5c0}.sact .danger{background:rgba(200,100,80,.15);color:#e08070}
+.drag{color:var(--muted);border-color:rgba(212,168,83,.25)}
+.field label{color:var(--muted)}
+.field input,.field textarea{background:rgba(10,10,15,.8);border-color:rgba(212,168,83,.2);color:#e0d5c0}
+.list .item{background:rgba(20,18,30,.7);border-color:rgba(212,168,83,.12)}
+.item .t{color:#e0d5c0}.item .d{color:var(--muted)}
+.empty{color:var(--muted)}
+pre.sync{background:#0a0a0f;color:#f0d68a;border-color:rgba(212,168,83,.2)}
+/* 快速捕捉面板 */
+.qc-preview{background:rgba(212,168,83,.08);border-color:rgba(212,168,83,.3);color:#f0d68a}
+.qc-cmds button{background:rgba(20,18,30,.7);border-color:rgba(212,168,83,.2);color:#e0d5c0}
+.qc-hint{color:var(--muted)}
+.tl-card .rep{background:rgba(212,168,83,.12);color:#f0d68a;border-color:rgba(212,168,83,.3)}
+/* 待办浅色区 */
+.todo-actions button{border-color:rgba(212,168,83,.2);background:rgba(20,18,30,.6);color:#e0d5c0}
+.mem-banner{border-color:rgba(212,168,83,.4);color:#f0d68a;background:rgba(212,168,83,.1)}
+</style>
 </head>
 <body>
 <div class="app" id="app">
