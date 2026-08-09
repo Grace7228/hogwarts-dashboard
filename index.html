@@ -24,11 +24,12 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 .top-left{display:flex;align-items:baseline;gap:5px}.crest{font-size:18px}.tname{font-size:13px;font-weight:bold;color:var(--gold);letter-spacing:1px}.tsub{font-size:7px;color:var(--dim)}
 .top-right{text-align:right}.clock{font-size:16px;color:var(--gold-light);font-weight:bold}.date{font-size:8px;color:var(--dim)}
 
-.navtabs{grid-column:1/-1;display:flex;gap:3px;flex-wrap:wrap;padding:2px 6px;background:rgba(20,22,28,0.35);backdrop-filter:blur(8px);border-radius:6px;border:1px solid rgba(212,168,83,0.05)}
-.navtab{display:flex;align-items:center;gap:3px;padding:5px 10px;border-radius:5px;border:1px solid transparent;background:transparent;color:var(--dim);font-family:inherit;font-size:11px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.navtabs{grid-column:1/-1;display:flex;gap:3px;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;padding:2px 6px;background:rgba(20,22,28,0.35);backdrop-filter:blur(8px);border-radius:6px;border:1px solid rgba(212,168,83,0.05);scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.navtab{display:flex;align-items:center;gap:3px;padding:5px 10px;border-radius:5px;border:1px solid transparent;background:transparent;color:var(--dim);font-family:inherit;font-size:11px;cursor:pointer;transition:all 0.2s;white-space:nowrap;flex-shrink:0}
 .navtab:hover{border-color:rgba(212,168,83,0.2);color:var(--text)}
 .navtab.active{background:rgba(212,168,83,0.12);border-color:rgba(212,168,83,0.4);color:var(--gold-light)}
 .navtab-icon{font-size:13px}
+.navtabs::-webkit-scrollbar{display:none}
 
 .card{background:var(--card-bg);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--card-border);border-radius:8px;padding:9px 13px;overflow:hidden}
 .ctitle{font-size:10px;font-weight:bold;color:var(--gold);letter-spacing:1px;margin-bottom:6px;display:flex;align-items:center;gap:4px}.ctitle .icon{font-size:11px}
@@ -259,7 +260,7 @@ body.theme-day .theme-btn{border-color:var(--btn-border);background:var(--btn-bg
   <button class="navtab" data-view="archive"><span class="navtab-icon">📦</span>记忆</button>
   <button class="navtab" data-view="time"><span class="navtab-icon">⏳</span>时光机</button>
   <button class="navtab" data-view="settings"><span class="navtab-icon">⚙️</span>设置</button>
-  <div style="position:relative"><button class="theme-btn" id="themeToggle" onclick="toggleThemePanel()" title="切换主题">🎨 主题</button><div class="theme-panel" id="themePanel"></div></div>
+  <div style="position:relative;flex-shrink:0;margin-left:auto"><button class="theme-btn" id="themeToggle" onclick="toggleThemePanel()" title="切换主题">🎨 主题</button><div class="theme-panel" id="themePanel"></div></div>
 </nav>
 
 <div class="other-views" id="otherViews" style="display:flex;flex-direction:column;gap:8px">
