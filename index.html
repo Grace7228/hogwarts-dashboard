@@ -204,7 +204,8 @@ body.theme-day #tmFrameDash,body.theme-day #tmFrame,body.theme-oat #tmFrameDash,
 .theme-btn{display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:6px;border:1px solid rgba(212,168,83,.25);background:rgba(212,168,83,.08);color:var(--gold-light);font-family:inherit;font-size:10px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .theme-btn:hover{background:rgba(212,168,83,.16)}
 body.theme-day .theme-btn,body.theme-oat .theme-btn,body.theme-matcha .theme-btn,body.theme-mist .theme-btn{border-color:var(--btn-border);background:var(--btn-bg);color:var(--btn-color)}
-.theme-panel{position:absolute;top:calc(100% + 6px);right:0;z-index:999;width:220px;background:rgba(18,20,26,.97);border:1px solid rgba(212,168,83,.25);border-radius:10px;padding:10px;display:none;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+body.theme-day .theme-panel,body.theme-oat .theme-panel,body.theme-matcha .theme-panel,body.theme-mist .theme-panel{background:rgba(250,247,240,.97);border-color:var(--card-border);color:var(--text)}
+.theme-panel{position:fixed;top:64px;right:16px;z-index:9999;width:230px;background:rgba(18,20,26,.97);border:1px solid rgba(212,168,83,.25);border-radius:10px;padding:10px;display:none;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 12px 40px rgba(0,0,0,.5);max-height:70vh;overflow-y:auto}
 .theme-panel.show{display:block}
 .theme-panel .tp-sec{font-size:9px;color:var(--dim);letter-spacing:1px;margin:6px 2px 4px}
 .theme-panel .tp-row{display:grid;grid-template-columns:1fr 1fr;gap:4px}
@@ -1316,7 +1317,21 @@ function applyTheme(idx,silent){
 function cycleTheme(){applyTheme((getThemeIdx()+1)%THEMES.length)}
 function toggleThemePanel(){
   const p=document.getElementById('themePanel');
-  if(p)p.classList.toggle('show');
+  if(!p)return;
+  p.classList.toggle('show');
+  if(p.classList.contains('show')){
+    const btn=document.getElementById('themeToggle');
+    if(btn){
+      const r=btn.getBoundingClientRect();
+      const pw=230;
+      let left=r.right-pw;
+      if(left<8)left=8;
+      p.style.top=(r.bottom+8)+'px';
+      p.style.left=left+'px';
+      p.style.right='auto';
+    }
+    renderThemePanel();
+  }
 }
 function renderThemePanel(){
   const p=document.getElementById('themePanel');
