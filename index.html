@@ -259,7 +259,7 @@ body.theme-day .theme-btn{border-color:var(--btn-border);background:var(--btn-bg
   <button class="navtab" data-view="archive"><span class="navtab-icon">📦</span>记忆</button>
   <button class="navtab" data-view="time"><span class="navtab-icon">⏳</span>时光机</button>
   <button class="navtab" data-view="settings"><span class="navtab-icon">⚙️</span>设置</button>
-  <div style="position:relative"><button class="theme-btn" id="themeToggle" onclick="toggleThemePanel()" title="切换主题">🌙 炭灰</button><div class="theme-panel" id="themePanel"></div></div>
+  <div style="position:relative"><button class="theme-btn" id="themeToggle" onclick="toggleThemePanel()" title="切换主题">🎨 主题</button><div class="theme-panel" id="themePanel"></div></div>
 </nav>
 
 <div class="other-views" id="otherViews" style="display:flex;flex-direction:column;gap:8px">
@@ -1285,17 +1285,17 @@ document.addEventListener('click',e=>{
 
 // ==================== 主题切换（多主题选择器）====================
 const THEMES=[
-  {key:'night',label:'🌙 炭灰',cls:'',dark:true},
-  {key:'indigo',label:'🌌 靛蓝',cls:'theme-indigo',dark:true},
-  {key:'violet',label:'🍇 紫夜',cls:'theme-violet',dark:true},
-  {key:'forest',label:'🫒 墨绿',cls:'theme-forest',dark:true},
-  {key:'coffee',label:'🟤 咖棕',cls:'theme-coffee',dark:true},
-  {key:'bluegray',label:'🔷 蓝灰',cls:'theme-bluegray',dark:true},
-  {key:'wine',label:'🔴 酒红',cls:'theme-wine',dark:true},
-  {key:'day',label:'☀️ 奶咖',cls:'theme-day',dark:false},
-  {key:'oat',label:'🌾 燕麦',cls:'theme-oat',dark:false},
-  {key:'matcha',label:'🍵 抹茶',cls:'theme-matcha',dark:false},
-  {key:'mist',label:'🌫️ 雾蓝',cls:'theme-mist',dark:false},
+  {key:'night',label:'炭灰',cls:'',dark:true},
+  {key:'indigo',label:'靛蓝',cls:'theme-indigo',dark:true},
+  {key:'violet',label:'紫夜',cls:'theme-violet',dark:true},
+  {key:'forest',label:'墨绿',cls:'theme-forest',dark:true},
+  {key:'coffee',label:'咖棕',cls:'theme-coffee',dark:true},
+  {key:'bluegray',label:'蓝灰',cls:'theme-bluegray',dark:true},
+  {key:'wine',label:'酒红',cls:'theme-wine',dark:true},
+  {key:'day',label:'奶咖',cls:'theme-day',dark:false},
+  {key:'oat',label:'燕麦',cls:'theme-oat',dark:false},
+  {key:'matcha',label:'抹茶',cls:'theme-matcha',dark:false},
+  {key:'mist',label:'雾蓝',cls:'theme-mist',dark:false},
 ];
 const THEME_DOT={night:'#16161a',indigo:'#141b2e',violet:'#171226',forest:'#12201a',coffee:'#1e1710',bluegray:'#151a22',wine:'#1d1216',day:'#f3ecdf',oat:'#f5f0e6',matcha:'#eef2e3',mist:'#e9eef5'};
 function getThemeIdx(){const t=localStorage.getItem('h_theme')||'night';const i=THEMES.findIndex(x=>x.key===t);return i<0?0:i}
