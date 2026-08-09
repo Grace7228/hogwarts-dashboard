@@ -166,6 +166,7 @@ body.theme-forest{--dark:#12201a;--card-bg:rgba(28,46,38,.55);--card-border:rgba
 body.theme-coffee{--dark:#1e1710;--card-bg:rgba(52,40,28,.55);--card-border:rgba(200,160,110,.18);--text:#ead9c4;--dim:#a8947c;--gold:#e8c98a;--gold-light:#e8c98a;--accent:rgba(210,170,110,.5);--panel-bg:rgba(32,24,16,.6);--input-bg:rgba(18,12,8,.8);--btn-bg:rgba(200,160,110,.12);--btn-border:rgba(200,160,110,.25);--btn-color:#e8c98a;--badge-bg:rgba(200,160,110,.2);--stat-bg:rgba(16,10,6,.35)}
 body.theme-bluegray{--dark:#151a22;--card-bg:rgba(36,44,56,.55);--card-border:rgba(160,180,210,.15);--text:#dbe2ec;--dim:#8d99a8;--gold:#d4c090;--gold-light:#d4c090;--accent:rgba(150,170,200,.5);--panel-bg:rgba(22,28,38,.6);--input-bg:rgba(12,16,24,.8);--btn-bg:rgba(110,130,160,.12);--btn-border:rgba(160,180,210,.22);--btn-color:#d4c090;--badge-bg:rgba(150,170,200,.2);--stat-bg:rgba(10,14,20,.35)}
 body.theme-wine{--dark:#1d1216;--card-bg:rgba(58,32,40,.55);--card-border:rgba(210,150,160,.16);--text:#edd9de;--dim:#a88a92;--gold:#e8cf8a;--gold-light:#e8cf8a;--accent:rgba(215,130,145,.5);--panel-bg:rgba(32,18,24,.6);--input-bg:rgba(18,10,14,.8);--btn-bg:rgba(200,120,135,.12);--btn-border:rgba(210,150,160,.22);--btn-color:#e8cf8a;--badge-bg:rgba(210,150,160,.2);--stat-bg:rgba(14,8,10,.35)}
+body.theme-violetgray{--dark:#1c1a26;--card-bg:rgba(42,39,58,.55);--card-border:rgba(168,150,220,.2);--text:#e2dcf2;--dim:#9a90b8;--gold:#c4b0e8;--gold-light:#b09ce0;--accent:rgba(170,145,220,.55);--panel-bg:rgba(26,24,40,.6);--input-bg:rgba(16,14,28,.8);--btn-bg:rgba(150,125,200,.12);--btn-border:rgba(170,150,220,.25);--btn-color:#c4b0e8;--badge-bg:rgba(160,140,215,.2);--stat-bg:rgba(12,10,22,.35)}
 /* --- 浅色主题：奶咖豆绿(day) + 燕麦(oat) + 抹茶(matcha) + 雾蓝(mist) --- */
 body.theme-day,body.theme-oat,body.theme-matcha,body.theme-mist{--dark:#f3ecdf;--text:#3d3229;--dim:#8a7a66;--gold:#5f7f52;--gold-light:#4d6b40;--card-border:rgba(95,127,82,.35);--accent:rgba(95,127,82,.6)}
 body.theme-day{--card-bg:rgba(255,252,245,.75);--panel-bg:rgba(255,252,245,.6);--input-bg:rgba(255,255,255,.9);--badge-bg:rgba(95,127,82,.15);--stat-bg:rgba(255,255,255,.55);--btn-bg:rgba(95,127,82,.1);--btn-border:rgba(95,127,82,.35);--btn-color:#4d6b40}
@@ -1328,12 +1329,13 @@ const THEMES=[
   {key:'coffee',label:'咖棕',cls:'theme-coffee',dark:true},
   {key:'bluegray',label:'蓝灰',cls:'theme-bluegray',dark:true},
   {key:'wine',label:'酒红',cls:'theme-wine',dark:true},
+  {key:'violetgray',label:'灰紫',cls:'theme-violetgray',dark:true},
   {key:'day',label:'奶咖',cls:'theme-day',dark:false},
   {key:'oat',label:'燕麦',cls:'theme-oat',dark:false},
   {key:'matcha',label:'抹茶',cls:'theme-matcha',dark:false},
   {key:'mist',label:'雾蓝',cls:'theme-mist',dark:false},
 ];
-const THEME_DOT={night:'#16161a',indigo:'#141b2e',violet:'#171226',forest:'#12201a',coffee:'#1e1710',bluegray:'#151a22',wine:'#1d1216',day:'#f3ecdf',oat:'#f5f0e6',matcha:'#eef2e3',mist:'#e9eef5'};
+const THEME_DOT={night:'#16161a',indigo:'#141b2e',violet:'#171226',forest:'#12201a',coffee:'#1e1710',bluegray:'#151a22',wine:'#1d1216',violetgray:'#1c1a26',day:'#f3ecdf',oat:'#f5f0e6',matcha:'#eef2e3',mist:'#e9eef5'};
 function getThemeIdx(){const t=localStorage.getItem('h_theme')||'night';const i=THEMES.findIndex(x=>x.key===t);return i<0?0:i}
 function applyTheme(idx,silent){
   const t=THEMES[idx];
