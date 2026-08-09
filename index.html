@@ -11,7 +11,16 @@
   --badge-bg:rgba(212,168,83,.2);--ok-bg:rgba(80,180,120,.15);--ok-color:#8ad4a0;
   --btn-bg:rgba(212,168,83,.08);--btn-border:rgba(212,168,83,.25);--btn-color:#f0d68a;
   --stat-bg:rgba(0,0,0,.25);}
-body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(--dark);color:var(--text);min-height:100vh;overflow-x:hidden}
+body{
+  font-family:Georgia,'Times New Roman','Noto Serif SC',serif;
+  background:var(--dark);color:var(--text);
+  min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s;
+  --card-bg:rgba(46,56,78,.55);--card-border:rgba(140,165,215,.18);
+  --gold:#a9c4ea;--gold-light:#8fb2dc;--accent:rgba(125,155,210,.5);
+  --panel-bg:rgba(22,30,44,.6);--input-bg:rgba(12,18,30,.8);
+  --btn-bg:rgba(125,155,210,.12);--btn-border:rgba(150,175,220,.25);--btn-color:#a9c4ea;
+  --badge-bg:rgba(130,160,215,.2);--stat-bg:rgba(10,14,24,.35);
+}
 
 .stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.stars canvas{display:block}
 .castle{position:fixed;bottom:0;left:0;width:100%;height:80px;pointer-events:none;z-index:1;background:linear-gradient(to top,rgba(10,8,20,0.95),rgba(20,15,40,0.2),transparent 100%)}
@@ -201,13 +210,16 @@ body.theme-day .stat-item,body.theme-oat .stat-item,body.theme-matcha .stat-item
 body.theme-day .note-item,body.theme-day .task-item,body.theme-day .log-item,body.theme-oat .note-item,body.theme-oat .task-item,body.theme-oat .log-item,body.theme-matcha .note-item,body.theme-matcha .task-item,body.theme-matcha .log-item,body.theme-mist .note-item,body.theme-mist .task-item,body.theme-mist .log-item{border-color:rgba(61,50,39,.08)}
 body.theme-day #tmFrameDash,body.theme-day #tmFrame,body.theme-oat #tmFrameDash,body.theme-oat #tmFrame,body.theme-matcha #tmFrameDash,body.theme-matcha #tmFrame,body.theme-mist #tmFrameDash,body.theme-mist #tmFrame{background:var(--dark)!important}
 /* ===== 主题辉光层：四周淡色光晕呼吸闪烁 ===== */
-.theme-glow{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.8;animation:glowA 5s ease-in-out infinite;background:
-  radial-gradient(1100px 520px at 12% -5%, rgba(110,130,180,.20), transparent 60%),
-  radial-gradient(900px 480px at 88% 8%, rgba(110,130,180,.14), transparent 60%),
-  radial-gradient(700px 420px at 50% 108%, rgba(80,100,150,.12), transparent 60%)}
-.theme-glow-b{opacity:.55;animation:glowB 7s ease-in-out infinite reverse;background:
-  radial-gradient(800px 400px at 85% 92%, rgba(120,140,200,.16), transparent 60%),
-  radial-gradient(600px 350px at 8% 88%, rgba(100,120,170,.10), transparent 60%)}
+.theme-glow{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:1;animation:glowA 4s ease-in-out infinite;background:
+  radial-gradient(1700px 800px at 5% -10%, rgba(28,42,72,.72), transparent 58%),
+  radial-gradient(1500px 700px at 95% 2%, rgba(96,126,180,.55), transparent 58%),
+  radial-gradient(1200px 620px at 90% 30%, rgba(116,146,205,.45), transparent 60%),
+  radial-gradient(1000px 540px at 100% 90%, rgba(96,116,170,.40), transparent 58%),
+  radial-gradient(800px 420px at 92% 98%, rgba(130,150,200,.34), transparent 58%)}
+.theme-glow-b{opacity:.85;animation:glowB 5s ease-in-out infinite reverse;background:
+  radial-gradient(1300px 620px at 90% 88%, rgba(108,138,195,.42), transparent 58%),
+  radial-gradient(1100px 540px at 4% 78%, rgba(38,56,90,.40), transparent 60%),
+  radial-gradient(800px 400px at 98% 6%, rgba(140,165,220,.36), transparent 58%)}
 @keyframes glowA{0%,100%{opacity:.5}50%{opacity:.95}}
 @keyframes glowB{0%,100%{opacity:.4}50%{opacity:.8}}
 body.theme-indigo .theme-glow{background:
