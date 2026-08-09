@@ -408,7 +408,7 @@ body{font-size:12px}
     '阅读':'📖 阅读\n书名：\n章节：\n类型(1纸质/2电子/3听书)：\n摘录：\n应用：\n感想：',
     '冥想':'🧘 冥想 10min｜杂念多｜给自己 6 分'
   };
-  let S={running:null,selected:[],openGroup:null,records:[],pending:[],synced:[],notes:[],viewMode:'home',tlQuery:'',tlKind:'all',tlTag:'',tlBucket:'all',todoBucket:'open'};
+  let S={running:null,selected:[],openGroup:null,records:[],pending:[],synced:[],notes:[],viewMode:'home',diary:{},tlQuery:'',tlKind:'all',tlTag:'',tlBucket:'all',todoBucket:'open'};
   const $=id=>document.getElementById(id);
   const pad=n=>String(n).padStart(2,'0');
   const hm=ms=>{const d=new Date(ms);return pad(d.getHours())+':'+pad(d.getMinutes())};
@@ -467,6 +467,7 @@ body{font-size:12px}
     if(!Array.isArray(S.notes))S.notes=[];
     if(!Array.isArray(S.selected))S.selected=[];
     if(!S.viewMode)S.viewMode='home';
+    if(!S.diary||typeof S.diary!=='object')S.diary={};
     if(typeof S.tlQuery!=='string')S.tlQuery='';
     if(!S.tlKind)S.tlKind='all';
     if(typeof S.tlTag!=='string')S.tlTag='';
@@ -504,7 +505,8 @@ body{font-size:12px}
       records:S.records||[],
       pending:S.pending||[],
       synced:S.synced||[],
-      notes:S.notes||[]
+      notes:S.notes||[],
+      diary:S.diary||{}
     };
   }
   function updateMemBanner(){
@@ -1101,6 +1103,8 @@ body{font-size:12px}
     if(clr){ clr.onclick=()=>{ S.tlQuery=''; S.tlKind='all'; S.tlTag=''; S.tlBucket='all'; save(); renderTimeline(); }; }
     box.querySelectorAll('[data-bucket]').forEach(btn=>{ btn.onclick=()=>{ S.tlBucket=btn.getAttribute('data-bucket')||'all'; save(); renderTimeline(); }; });
     const dsCopy=$('dsCopy'); if(dsCopy) dsCopy.onclick=()=>copyTodaySummary();
+    const dsEdit=$('dsEdit'); if(dsEdit) dsEdit.onclick=()=>editTodaySummary();
+    const dsDel=$('dsDel'); if(dsDel) dsDel.onclick=()=>deleteTodaySummary();
     const dsOpen=$('dsOpen'); if(dsOpen) dsOpen.onclick=()=>openTodaySummary();
   }
 
@@ -1197,9 +1201,12 @@ body{font-size:12px}
   }
 
   function renderTodaySummaryHTML(){
-    const text=buildTodaySummary();
+    const k=todayKey();
+    const custom=S.diary&&S.diary[k];
+    const text=custom||buildTodaySummary();
     const short=text.split('\n').slice(0,8).join('\n');
-    return '<div class="day-sum"><div class="ds-h"><b>📔 今日摘要</b><span><button type="button" class="tl-chip" id="dsCopy">复制</button> <button type="button" class="tl-chip" id="dsOpen">展开</button></span></div><pre>'+esc(short)+'</pre></div>';
+    const delBtn=custom?' <button type="button" class="tl-chip" id="dsDel" style="color:#e08070">删除</button>':'';
+    return '<div class="day-sum"><div class="ds-h"><b>📔 今日摘要</b><span><button type="button" class="tl-chip" id="dsCopy">复制</button> <button type="button" class="tl-chip" id="dsOpen">展开</button> <button type="button" class="tl-chip" id="dsEdit">编辑</button>'+delBtn+'</span></div><pre>'+esc(short)+'</pre></div>';
   }
 
   async function copyTodaySummary(){
@@ -1213,6 +1220,27 @@ body{font-size:12px}
     openMask('<h3>今日摘要 · 日记</h3><div class="sub">可复制到笔记或时光机备注。</div><div class="field"><textarea id="diaryOut" style="min-height:200px">'+esc(text)+'</textarea></div><div class="sact"><button class="ghost" type="button" id="dClose">关闭</button><button class="primary" type="button" id="dCopy">复制</button></div>');
     $('dClose').onclick=closeMask;
     $('dCopy').onclick=async()=>{ const v=$('diaryOut').value; try{await navigator.clipboard.writeText(v);toast('已复制')}catch(e){const ta=document.createElement('textarea');ta.value=v;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('已复制')} };
+  }
+
+  function editTodaySummary(){
+    const k=todayKey();
+    const cur=(S.diary&&S.diary[k])||buildTodaySummary();
+    openMask('<h3>编辑今日摘要</h3><div class="sub">保存后替代自动摘要；清空保存则恢复自动生成。</div><div class="field"><textarea id="diaryEdit" style="min-height:220px">'+esc(cur)+'</textarea></div><div class="sact"><button class="ghost" type="button" id="deCancel">取消</button><button class="primary" type="button" id="deSave">保存</button></div>');
+    $('deCancel').onclick=closeMask;
+    $('deSave').onclick=()=>{
+      const v=$('diaryEdit').value.replace(/\s+$/,'');
+      if(!S.diary)S.diary={};
+      if(v.trim()){ S.diary[k]=v; toast('📔 今日摘要已保存'); }
+      else { delete S.diary[k]; toast('已恢复自动摘要'); }
+      save(); closeMask(); renderTimeline();
+    };
+  }
+
+  function deleteTodaySummary(){
+    const k=todayKey();
+    if(!confirm('删除今日的自定义摘要？将恢复自动生成。'))return;
+    if(S.diary)delete S.diary[k];
+    save(); renderTimeline(); toast('📔 已删除，恢复自动摘要');
   }
 
   function openBackup(){
