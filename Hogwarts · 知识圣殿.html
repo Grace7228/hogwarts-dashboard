@@ -203,15 +203,15 @@ body.theme-day .stat-item,body.theme-oat .stat-item,body.theme-matcha .stat-item
 body.theme-day .note-item,body.theme-day .task-item,body.theme-day .log-item,body.theme-oat .note-item,body.theme-oat .task-item,body.theme-oat .log-item,body.theme-matcha .note-item,body.theme-matcha .task-item,body.theme-matcha .log-item,body.theme-mist .note-item,body.theme-mist .task-item,body.theme-mist .log-item{border-color:rgba(61,50,39,.08)}
 body.theme-day #tmFrameDash,body.theme-day #tmFrame,body.theme-oat #tmFrameDash,body.theme-oat #tmFrame,body.theme-matcha #tmFrameDash,body.theme-matcha #tmFrame,body.theme-mist #tmFrameDash,body.theme-mist #tmFrame{background:var(--dark)!important}
 /* ===== 主题辉光层：四周淡色光晕呼吸闪烁 ===== */
-.theme-glow{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.55;animation:glowA 7s ease-in-out infinite;background:
+.theme-glow{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.8;animation:glowA 5s ease-in-out infinite;background:
   radial-gradient(1100px 520px at 12% -5%, rgba(110,130,180,.20), transparent 60%),
   radial-gradient(900px 480px at 88% 8%, rgba(110,130,180,.14), transparent 60%),
   radial-gradient(700px 420px at 50% 108%, rgba(80,100,150,.12), transparent 60%)}
-.theme-glow-b{opacity:.35;animation:glowB 9s ease-in-out infinite reverse;background:
+.theme-glow-b{opacity:.55;animation:glowB 7s ease-in-out infinite reverse;background:
   radial-gradient(800px 400px at 85% 92%, rgba(120,140,200,.16), transparent 60%),
   radial-gradient(600px 350px at 8% 88%, rgba(100,120,170,.10), transparent 60%)}
-@keyframes glowA{0%,100%{opacity:.35}50%{opacity:.75}}
-@keyframes glowB{0%,100%{opacity:.25}50%{opacity:.55}}
+@keyframes glowA{0%,100%{opacity:.5}50%{opacity:.95}}
+@keyframes glowB{0%,100%{opacity:.4}50%{opacity:.8}}
 body.theme-indigo .theme-glow{background:
   radial-gradient(1100px 520px at 12% -5%, rgba(100,140,240,.22), transparent 60%),
   radial-gradient(900px 480px at 88% 8%, rgba(140,170,255,.16), transparent 60%),
@@ -263,7 +263,7 @@ body.theme-mist .theme-glow{background:
 .theme-btn:hover{background:rgba(212,168,83,.16)}
 body.theme-day .theme-btn,body.theme-oat .theme-btn,body.theme-matcha .theme-btn,body.theme-mist .theme-btn{border-color:var(--btn-border);background:var(--btn-bg);color:var(--btn-color)}
 body.theme-day .theme-panel,body.theme-oat .theme-panel,body.theme-matcha .theme-panel,body.theme-mist .theme-panel{background:rgba(250,247,240,.97);border-color:var(--card-border);color:var(--text)}
-.theme-panel{position:fixed;top:64px;right:16px;z-index:9999;width:230px;background:rgba(18,20,26,.97);border:1px solid rgba(212,168,83,.25);border-radius:10px;padding:10px;display:none;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 12px 40px rgba(0,0,0,.5);max-height:70vh;overflow-y:auto}
+.theme-panel{position:fixed;top:64px;right:16px;z-index:2147483000;width:230px;background:rgba(18,20,26,.97);border:1px solid rgba(212,168,83,.25);border-radius:10px;padding:10px;display:none;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:0 12px 40px rgba(0,0,0,.5);max-height:70vh;overflow-y:auto}
 .theme-panel.show{display:block}
 .theme-panel .tp-sec{font-size:9px;color:var(--dim);letter-spacing:1px;margin:6px 2px 4px}
 .theme-panel .tp-row{display:grid;grid-template-columns:1fr 1fr;gap:4px}
@@ -340,7 +340,7 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
 <header class="topbar">
   <div class="top-left"><span class="crest">⚜️</span><div><div class="tname">HOGWARTS 知识圣殿</div><div class="tsub">Obsidian Space OS</div></div></div>
   <div class="top-right" style="display:flex;align-items:center;gap:10px">
-    <div style="position:relative"><button class="theme-btn" id="themeToggle" onclick="toggleThemePanel()" title="切换主题" style="font-size:11px;padding:6px 12px">🎨 主题</button><div class="theme-panel" id="themePanel"></div></div>
+    <button class="theme-btn" id="themeToggle" onclick="toggleThemePanel()" title="切换主题" style="font-size:11px;padding:6px 12px">🎨 主题</button>
     <div><div class="clock" id="clock">00:00</div><div class="date" id="dateDisplay">——</div></div>
   </div>
 </header>
@@ -1474,5 +1474,6 @@ document.addEventListener('keydown',e=>{
 
 console.log('🏰 Hogwarts Space OS ready');
 </script>
+<div class="theme-panel" id="themePanel"></div>
 </body>
 </html>
