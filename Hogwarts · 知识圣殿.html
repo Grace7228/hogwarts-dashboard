@@ -155,7 +155,8 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 .rpanel{grid-column:1;grid-row:3/4;display:flex;flex-direction:column;gap:7px;max-height:calc(100vh - 110px);overflow-y:auto}
 .rpanel::-webkit-scrollbar{width:3px;background:transparent}.rpanel::-webkit-scrollbar-thumb{background:rgba(212,168,83,0.1);border-radius:2px}
 
-@media(max-width:1300px){.mission-grid{grid-template-columns:1fr}.mission-right{display:grid;grid-template-columns:1fr 1fr;gap:6px}}@media(max-width:900px){.mission-grid,.asset-stats-row{grid-template-columns:1fr}.mission-right{grid-template-columns:1fr}.mission-grid{overflow-x:auto;scrollbar-width:thin}.main{grid-template-columns:1fr;grid-template-rows:auto auto auto auto 1fr}.rpanel{grid-column:1;grid-row:auto;max-height:none}.other-views{grid-column:1;grid-row:auto}}
+@media(max-width:1300px){.mission-grid{grid-template-columns:1fr}.mission-right{display:grid;grid-template-columns:1fr 1fr;gap:6px}}@media(max-width:900px){
+  .two-col{grid-template-columns:1fr!important}.mission-grid,.asset-stats-row{grid-template-columns:1fr}.mission-right{grid-template-columns:1fr}.mission-grid{overflow-x:auto;scrollbar-width:thin}.main{grid-template-columns:1fr;grid-template-rows:auto auto auto auto 1fr}.rpanel{grid-column:1;grid-row:auto;max-height:none}.other-views{grid-column:1;grid-row:auto}}
 @media(max-width:600px){.asset-stats-row{grid-template-columns:1fr 1fr}.main{padding:6px;gap:5px}}
 
 /* ===== 多主题系统：深色 6 套 + 浅色 4 套 ===== */
@@ -316,7 +317,7 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
     </div>
   </div>
   
-  <div style="display:grid;grid-template-columns:1fr 340px;gap:8px">
+  <div class="two-col" style="display:grid;grid-template-columns:1fr 340px;gap:8px">
     <div class="card">
       <div class="ctitle"><span class="icon">📍</span> 城市记忆卡 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点击地球仪上的城市或下方卡片</span></div>
       <div id="travelCardList" style="max-height:260px;overflow-y:auto"></div>
