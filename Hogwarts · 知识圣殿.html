@@ -164,7 +164,6 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 body.theme-indigo{--dark:#141b2e;--card-bg:rgba(30,40,62,.55);--card-border:rgba(160,180,220,.18);--text:#d8e0f0;--dim:#8f9cb8;--gold:#c9b8f0;--gold-light:#c9b8f0;--accent:rgba(140,160,220,.5);--panel-bg:rgba(20,28,44,.6);--input-bg:rgba(12,18,32,.8);--btn-bg:rgba(90,110,160,.12);--btn-border:rgba(160,180,220,.25);--btn-color:#c9b8f0;--badge-bg:rgba(140,160,220,.2);--stat-bg:rgba(10,16,28,.35)}
 body.theme-violet{--dark:#171226;--card-bg:rgba(44,34,62,.55);--card-border:rgba(180,150,220,.18);--text:#e6ddf2;--dim:#9b8cb8;--gold:#e8d0a0;--gold-light:#e8d0a0;--accent:rgba(180,140,230,.5);--panel-bg:rgba(24,18,40,.6);--input-bg:rgba(14,10,26,.8);--btn-bg:rgba(140,110,190,.12);--btn-border:rgba(180,150,220,.25);--btn-color:#e8d0a0;--badge-bg:rgba(180,150,220,.2);--stat-bg:rgba(12,8,22,.35)}
 body.theme-forest{--dark:#12201a;--card-bg:rgba(28,46,38,.55);--card-border:rgba(150,190,170,.16);--text:#dde8e0;--dim:#8fa896;--gold:#d4c08a;--gold-light:#d4c08a;--accent:rgba(140,180,150,.5);--panel-bg:rgba(18,32,26,.6);--input-bg:rgba(10,20,16,.8);--btn-bg:rgba(90,140,115,.12);--btn-border:rgba(150,190,170,.22);--btn-color:#d4c08a;--badge-bg:rgba(120,170,140,.2);--stat-bg:rgba(8,16,13,.35)}
-body.theme-bluegray{--dark:#151a22;--card-bg:rgba(36,44,56,.55);--card-border:rgba(160,180,210,.15);--text:#dbe2ec;--dim:#8d99a8;--gold:#d4c090;--gold-light:#d4c090;--accent:rgba(150,170,200,.5);--panel-bg:rgba(22,28,38,.6);--input-bg:rgba(12,16,24,.8);--btn-bg:rgba(110,130,160,.12);--btn-border:rgba(160,180,210,.22);--btn-color:#d4c090;--badge-bg:rgba(150,170,200,.2);--stat-bg:rgba(10,14,20,.35)}
 body.theme-wine{--dark:#1d1216;--card-bg:rgba(58,32,40,.55);--card-border:rgba(210,150,160,.16);--text:#edd9de;--dim:#a88a92;--gold:#e8cf8a;--gold-light:#e8cf8a;--accent:rgba(215,130,145,.5);--panel-bg:rgba(32,18,24,.6);--input-bg:rgba(18,10,14,.8);--btn-bg:rgba(200,120,135,.12);--btn-border:rgba(210,150,160,.22);--btn-color:#e8cf8a;--badge-bg:rgba(210,150,160,.2);--stat-bg:rgba(14,8,10,.35)}
 body.theme-violetgray{--dark:#17171c;--card-bg:rgba(48,44,66,.62);--card-border:rgba(170,155,225,.25);--text:#e6e0f5;--dim:#9e94c0;--gold:#c8b4ec;--gold-light:#b6a0e4;--accent:rgba(175,150,230,.55);--panel-bg:rgba(24,22,34,.6);--input-bg:rgba(14,12,24,.8);--btn-bg:rgba(155,130,210,.14);--btn-border:rgba(175,155,230,.28);--btn-color:#c8b4ec;--badge-bg:rgba(165,145,220,.22);--stat-bg:rgba(16,14,28,.4)}
 /* --- 浅色主题：奶咖豆绿(day) + 燕麦(oat) + 抹茶(matcha) + 雾蓝(mist) --- */
@@ -223,10 +222,6 @@ body.theme-forest .theme-glow{background:
   radial-gradient(1100px 520px at 12% -5%, rgba(120,190,150,.20), transparent 60%),
   radial-gradient(900px 480px at 88% 8%, rgba(150,215,175,.14), transparent 60%),
   radial-gradient(700px 420px at 50% 108%, rgba(90,160,120,.12), transparent 60%)}
-body.theme-bluegray .theme-glow{background:
-  radial-gradient(1100px 520px at 12% -5%, rgba(120,150,190,.20), transparent 60%),
-  radial-gradient(900px 480px at 88% 8%, rgba(150,175,215,.14), transparent 60%),
-  radial-gradient(700px 420px at 50% 108%, rgba(100,125,165,.12), transparent 60%)}
 body.theme-wine .theme-glow{background:
   radial-gradient(1100px 520px at 12% -5%, rgba(220,120,140,.20), transparent 60%),
   radial-gradient(900px 480px at 88% 8%, rgba(240,150,165,.13), transparent 60%),
@@ -1386,7 +1381,6 @@ const THEMES=[
   {key:'indigo',label:'靛蓝',cls:'theme-indigo',dark:true},
   {key:'violet',label:'紫夜',cls:'theme-violet',dark:true},
   {key:'forest',label:'墨绿',cls:'theme-forest',dark:true},
-  {key:'bluegray',label:'蓝灰',cls:'theme-bluegray',dark:true},
   {key:'wine',label:'酒红',cls:'theme-wine',dark:true},
   {key:'violetgray',label:'灰紫',cls:'theme-violetgray',dark:true},
   {key:'day',label:'奶咖',cls:'theme-day',dark:false},
@@ -1394,7 +1388,7 @@ const THEMES=[
   {key:'matcha',label:'抹茶',cls:'theme-matcha',dark:false},
   {key:'mist',label:'雾蓝',cls:'theme-mist',dark:false},
 ];
-const THEME_DOT={night:'#16161a',indigo:'#141b2e',violet:'#171226',forest:'#12201a',bluegray:'#151a22',wine:'#1d1216',violetgray:'#1c1a26',day:'#f3ecdf',oat:'#f5f0e6',matcha:'#eef2e3',mist:'#e9eef5'};
+const THEME_DOT={night:'#16161a',indigo:'#141b2e',violet:'#171226',forest:'#12201a',wine:'#1d1216',violetgray:'#1c1a26',day:'#f3ecdf',oat:'#f5f0e6',matcha:'#eef2e3',mist:'#e9eef5'};
 function getThemeIdx(){const t=localStorage.getItem('h_theme')||'night';const i=THEMES.findIndex(x=>x.key===t);return i<0?0:i}
 function applyTheme(idx,silent){
   const t=THEMES[idx];
