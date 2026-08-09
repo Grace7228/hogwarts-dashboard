@@ -1204,7 +1204,6 @@ function updClock(){
 
 // ==================== 启动 ====================
 load();
-applyTheme(getThemeIdx(),true);
 document.getElementById('notionKey').value=localStorage.getItem('nk_h')||'';
 
 document.querySelectorAll('.navtab').forEach(t=>{t.addEventListener('click',()=>{switchView(t.dataset.view)})});
@@ -1246,6 +1245,7 @@ function applyTheme(idx,silent){
 }
 function cycleTheme(){applyTheme((getThemeIdx()+1)%THEMES.length)}
 window.cycleTheme=cycleTheme;
+applyTheme(getThemeIdx(),true);
 
 // 时光机 ↔ 课表联动：监听时光机消息
 window.addEventListener('message',e=>{
