@@ -158,11 +158,11 @@ pre.sync{white-space:pre-wrap;word-break:break-all;background:#111827;color:#e5e
 .tl-card.starred{box-shadow:0 4px 14px rgba(245,166,35,.18);border-color:rgba(245,166,35,.22)}
 .tl-card .pri{color:#d97706;font-weight:700;margin-right:2px}
 .tl-bucket{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
-.day-sum{background:rgba(24,32,48,.5);border:1px solid rgba(212,168,83,.15);border-radius:14px;padding:10px 12px;margin:0 4px 12px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.day-sum{background:rgba(26,38,32,.5);border:1px solid rgba(212,168,83,.15);border-radius:14px;padding:10px 12px;margin:0 4px 12px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .day-sum .ds-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .day-sum .ds-h b{font-size:13px;color:#f0d68a}
 .day-sum pre{white-space:pre-wrap;font:inherit;font-size:12px;color:#d9cdb8;line-height:1.5;margin:0;max-height:120px;overflow:auto}
-.day-sum .ds-h button{background:rgba(24,32,48,.5);border:1px solid rgba(212,168,83,.25);color:#f0d68a;border-radius:8px;padding:3px 8px;font-size:11px;font:inherit;cursor:pointer}
+.day-sum .ds-h button{background:rgba(26,38,32,.5);border:1px solid rgba(212,168,83,.25);color:#f0d68a;border-radius:8px;padding:3px 8px;font-size:11px;font:inherit;cursor:pointer}
 .import-hint{font-size:11px;color:#6b7280;margin-top:6px;line-height:1.4}
 .app.mode-todo{background:#1a2436}
 .app.mode-todo .hide-on-tl{display:none!important}
@@ -209,80 +209,80 @@ pre.sync{white-space:pre-wrap;word-break:break-all;background:#111827;color:#e5e
 <style>
 /* ===== 黑金主题覆盖层（与知识圣殿配色统一） ===== */
 :root{
-  --bg:#0e1524;--card:rgba(24,32,48,.55);--line:rgba(212,168,83,.18);--text:#e0d5c0;--muted:rgba(224,213,192,.55);
+  --bg:#101d18;--card:rgba(26,38,32,.55);--line:rgba(212,168,83,.18);--text:#e0d5c0;--muted:rgba(224,213,192,.55);
   --g:#d4a853;--o:#f0d68a;--b:#d4a853;--p:#e8c547;
 }
-body{background:#0e1524}
-.app{background:linear-gradient(180deg,#16202e,#0e1524);max-width:100%}
+body{background:#101d18}
+.app{background:linear-gradient(180deg,#1a2a22,#101d18);max-width:100%}
 .brand .h{color:#f0d68a}
 .pill{border-color:rgba(212,168,83,.25);color:var(--muted)}
 .pill.ok{color:#f0d68a;border-color:rgba(212,168,83,.45)}
-.ibtn{border-color:rgba(212,168,83,.25);background:rgba(24,32,48,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.stat,.timer,.qbtn,.cbtn,.mod,.chip{border-color:rgba(212,168,83,.15);background:rgba(24,32,48,.45);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.ibtn{border-color:rgba(212,168,83,.25);background:rgba(26,38,32,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.stat,.timer,.qbtn,.cbtn,.mod,.chip{border-color:rgba(212,168,83,.15);background:rgba(26,38,32,.45);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .stat .n{color:#f0d68a}
 .badge{border-color:rgba(212,168,83,.5);background:rgba(212,168,83,.14);color:#f0d68a}
 .chip.g{border-color:rgba(212,168,83,.45);color:#f0d68a}.chip.o{border-color:rgba(240,214,138,.5);color:#f0d68a}.chip.b{border-color:rgba(212,168,83,.45);color:#e0d5c0}.chip.p{border-color:rgba(232,197,71,.5);color:#e8c547}
 .elapsed{color:#f0d68a}
 .note-btn{border-color:rgba(212,168,83,.45);background:rgba(212,168,83,.1);color:#f0d68a;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .note-btn.has{border-color:rgba(212,168,83,.55);background:rgba(212,168,83,.18);color:#f0d68a}
-.panel{background:rgba(14,21,36,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.panel{background:rgba(14,24,20,.35);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .tag{border-color:rgba(212,168,83,.2);background:rgba(255,255,255,.04)}
 .tag.on,.tag.g.on,.tag.o.on,.tag.b.on,.tag.p.on{background:rgba(212,168,83,.18);border-color:rgba(212,168,83,.5);color:#f0d68a}
 .panel .acts .ok{background:#9b7a2e;color:#fff}
 .panel .acts .ghost{background:rgba(255,255,255,.08)}
 .mods{background:transparent}
-.foot{background:rgba(14,21,36,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top-color:rgba(212,168,83,.1)}
-.foot button,.foot .links button{border-color:rgba(212,168,83,.2);background:rgba(24,32,48,.5);color:#e0d5c0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-.app.mode-tl{background:#0e1524}
-.modebar button{border-color:rgba(212,168,83,.2);background:rgba(24,32,48,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.foot{background:rgba(14,24,20,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top-color:rgba(212,168,83,.1)}
+.foot button,.foot .links button{border-color:rgba(212,168,83,.2);background:rgba(26,38,32,.5);color:#e0d5c0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.app.mode-tl{background:#101d18}
+.modebar button{border-color:rgba(212,168,83,.2);background:rgba(26,38,32,.5);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .modebar button.on{border-color:rgba(212,168,83,.55);background:rgba(212,168,83,.15);color:#f0d68a}
 /* 时间轴浅色区 → 深色 */
-.tl-view{background:linear-gradient(180deg,rgba(20,28,44,.35),rgba(14,21,36,.45));color:#e0d5c0;border-radius:14px;border:1px solid rgba(212,168,83,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.tl-view{background:linear-gradient(180deg,rgba(22,34,28,.35),rgba(14,24,20,.45));color:#e0d5c0;border-radius:14px;border:1px solid rgba(212,168,83,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .tl-head{color:var(--muted)}.tl-head b{color:#f0d68a}
 .tl-axis::before{background:rgba(212,168,83,.15)}
-.tl-day{color:var(--muted)}.tl-day span{background:rgba(20,28,44,.95);border-color:rgba(212,168,83,.15)}
-.tl-card{background:rgba(24,32,48,.5);border-color:rgba(212,168,83,.12);box-shadow:0 4px 14px rgba(0,0,0,.4);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.tl-day{color:var(--muted)}.tl-day span{background:rgba(22,34,28,.95);border-color:rgba(212,168,83,.15)}
+.tl-card{background:rgba(26,38,32,.5);border-color:rgba(212,168,83,.12);box-shadow:0 4px 14px rgba(0,0,0,.4);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .tl-card .t{color:#e0d5c0}.tl-card .sub{color:var(--muted)}.tl-card .when{color:var(--muted)}
 .tl-card .chip{background:rgba(255,255,255,.05);color:#c9bda8;border-color:rgba(212,168,83,.15)}
 .tl-card .todos label{color:#d9cdb8}
 .tl-ico{border-color:#12101c}
 .tl-ico.timer{background:#9b7a2e}.tl-ico.note{background:#6b5a2e}.tl-ico.todo{background:#8a6d1e}.tl-ico.event{background:#7a6a2a}.tl-ico.live{background:#b8860b}
-.tl-actions button{border-color:rgba(212,168,83,.2);background:rgba(24,32,48,.6);color:#e0d5c0}
+.tl-actions button{border-color:rgba(212,168,83,.2);background:rgba(26,38,32,.6);color:#e0d5c0}
 .tl-empty{color:var(--muted)}
-.tl-tools{background:rgba(20,28,44,.7);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom-color:rgba(212,168,83,.12)}
-.tl-search input{background:rgba(14,21,36,.8);border-color:rgba(212,168,83,.2);color:#e0d5c0}
+.tl-tools{background:rgba(22,34,28,.7);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom-color:rgba(212,168,83,.12)}
+.tl-search input{background:rgba(14,24,20,.8);border-color:rgba(212,168,83,.2);color:#e0d5c0}
 .tl-search input:focus{border-color:rgba(212,168,83,.5);box-shadow:0 0 0 3px rgba(212,168,83,.12)}
 .tl-search .cnt{color:var(--muted)}
-.tl-chip{background:rgba(24,32,48,.6);border-color:rgba(212,168,83,.2);color:#c9bda8}
+.tl-chip{background:rgba(26,38,32,.6);border-color:rgba(212,168,83,.2);color:#c9bda8}
 .tl-chip.on{background:#9b7a2e;border-color:#d4a853;color:#fff}
-.tl-tag-select{background:rgba(14,21,36,.8);border-color:rgba(212,168,83,.2);color:#c9bda8}
+.tl-tag-select{background:rgba(14,24,20,.8);border-color:rgba(212,168,83,.2);color:#c9bda8}
 /* 底部操作面板浅色区 → 深色 */
 .mask{background:rgba(0,0,0,.7)}
-.sheet{background:rgba(24,32,48,.75);color:#e0d5c0;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.sheet{background:rgba(26,38,32,.75);color:#e0d5c0;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .sheet h3{color:#f0d68a}.sheet .sub{color:var(--muted)}
-.adj{background:rgba(24,32,48,.5);border-color:rgba(212,168,83,.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.adj{background:rgba(26,38,32,.5);border-color:rgba(212,168,83,.15);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .big{color:#f0d68a}
-.step{background:rgba(14,21,36,.8);border-color:rgba(212,168,83,.25);color:#e0d5c0}
-.quick button,.sact button{border-color:rgba(212,168,83,.25);background:rgba(24,32,48,.7);color:#e0d5c0}
+.step{background:rgba(14,24,20,.8);border-color:rgba(212,168,83,.25);color:#e0d5c0}
+.quick button,.sact button{border-color:rgba(212,168,83,.25);background:rgba(26,38,32,.7);color:#e0d5c0}
 .sact .primary{background:#9b7a2e;color:#fff}.sact .ok{background:#9b7a2e;color:#fff}.sact .ghost{background:rgba(255,255,255,.1);color:#e0d5c0}.sact .danger{background:rgba(200,100,80,.15);color:#e08070}
 .drag{color:var(--muted);border-color:rgba(212,168,83,.25)}
 .field label{color:var(--muted)}
-.field input,.field textarea{background:rgba(14,21,36,.8);border-color:rgba(212,168,83,.2);color:#e0d5c0}
-.list .item{background:rgba(24,32,48,.5);border-color:rgba(212,168,83,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.field input,.field textarea{background:rgba(14,24,20,.8);border-color:rgba(212,168,83,.2);color:#e0d5c0}
+.list .item{background:rgba(26,38,32,.5);border-color:rgba(212,168,83,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .item .t{color:#e0d5c0}.item .d{color:var(--muted)}
 .empty{color:var(--muted)}
-pre.sync{background:#0e1524;color:#f0d68a;border-color:rgba(212,168,83,.2)}
+pre.sync{background:#101d18;color:#f0d68a;border-color:rgba(212,168,83,.2)}
 /* 快速捕捉面板 */
 .qc-preview{background:rgba(212,168,83,.08);border-color:rgba(212,168,83,.3);color:#f0d68a}
-.qc-cmds button{background:rgba(24,32,48,.7);border-color:rgba(212,168,83,.2);color:#e0d5c0}
+.qc-cmds button{background:rgba(26,38,32,.7);border-color:rgba(212,168,83,.2);color:#e0d5c0}
 .qc-hint{color:var(--muted)}
 .tl-card .rep{background:rgba(212,168,83,.12);color:#f0d68a;border-color:rgba(212,168,83,.3)}
 /* 待办浅色区 */
-.todo-actions button{border-color:rgba(212,168,83,.2);background:rgba(24,32,48,.6);color:#e0d5c0}
+.todo-actions button{border-color:rgba(212,168,83,.2);background:rgba(26,38,32,.6);color:#e0d5c0}
 .mem-banner{border-color:rgba(212,168,83,.4);color:#f0d68a;background:rgba(212,168,83,.1)}
 /* ===== 待办视图黑金毛玻璃 ===== */
-.todo-view{background:linear-gradient(180deg,rgba(20,28,44,.35),rgba(14,21,36,.45));color:#e0d5c0;border-radius:14px;border:1px solid rgba(212,168,83,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.todo-side-btn{background:rgba(24,32,48,.5);border-color:rgba(212,168,83,.15);color:#e0d5c0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.todo-view{background:linear-gradient(180deg,rgba(22,34,28,.35),rgba(14,24,20,.45));color:#e0d5c0;border-radius:14px;border:1px solid rgba(212,168,83,.12);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.todo-side-btn{background:rgba(26,38,32,.5);border-color:rgba(212,168,83,.15);color:#e0d5c0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .todo-side-btn .l{color:var(--muted)}
 .todo-side-btn.open.on{background:rgba(200,100,80,.35);color:#ffd9d0}
 .todo-side-btn.overdue.on{background:rgba(200,80,70,.4);color:#ffe0dc}
@@ -291,14 +291,14 @@ pre.sync{background:#0e1524;color:#f0d68a;border-color:rgba(212,168,83,.2)}
 .todo-side-btn.star.on{background:rgba(232,197,71,.3);color:#2a1a00}
 .todo-side-btn.done.on{background:rgba(160,140,80,.3);color:#f5ecd8}
 .todo-head b{color:#f0d68a}
-.todo-item{background:rgba(24,32,48,.5);border-color:rgba(212,168,83,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.todo-item{background:rgba(26,38,32,.5);border-color:rgba(212,168,83,.12);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .todo-check{border-color:rgba(212,168,83,.4)}
-.todo-check.on{background:#9b7a2e;border-color:#d4a853;box-shadow:inset 0 0 0 3px rgba(24,32,48,.9)}
+.todo-check.on{background:#9b7a2e;border-color:#d4a853;box-shadow:inset 0 0 0 3px rgba(26,38,32,.9)}
 .todo-title{color:#e0d5c0}
 .todo-meta{color:var(--muted)}
 .todo-chip{background:rgba(255,255,255,.05);color:#c9bda8;border-color:rgba(212,168,83,.15)}
 .todo-empty{color:var(--muted)}
-.todo-actions button{border-color:rgba(212,168,83,.2);background:rgba(24,32,48,.5);color:#e0d5c0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.todo-actions button{border-color:rgba(212,168,83,.2);background:rgba(26,38,32,.5);color:#e0d5c0;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 /* ===== 全局字号统一（与知识圣殿面板一致） ===== */
 body{font-size:12px}
 .brand .h{font-size:13px}.brand .s{font-size:10px}
