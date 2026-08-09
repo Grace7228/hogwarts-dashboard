@@ -6,18 +6,12 @@
 <title>Hogwarts · 知识圣殿</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --gold:#d4a853;--gold-light:#f0d68a;--dark:#16161a;
-  --card-bg:rgba(32,34,40,0.55);--card-border:rgba(212,168,83,0.18);
-  --text:#e0d5c0;--dim:#8a8070;--accent:rgba(232,120,48,0.7);
+:root{--gold:#d4a853;--gold-light:#f0d68a;--dark:#16161a;--card-bg:rgba(32,34,40,0.55);--card-border:rgba(212,168,83,0.18);--text:#e0d5c0;--dim:#8a8070;--accent:rgba(232,120,48,0.7);
   --panel-bg:rgba(16,22,28,0.6);--input-bg:rgba(10,12,16,0.8);--chip-bg:rgba(20,22,28,0.4);
-  --tl-view-bg:linear-gradient(180deg,rgba(22,24,30,.35),rgba(18,20,26,.45));
-  --tl-card-bg:rgba(32,34,40,.5);--tl-tools-bg:rgba(22,24,30,.7);
   --badge-bg:rgba(212,168,83,.2);--ok-bg:rgba(80,180,120,.15);--ok-color:#8ad4a0;
   --btn-bg:rgba(212,168,83,.08);--btn-border:rgba(212,168,83,.25);--btn-color:#f0d68a;
-  --stat-bg:rgba(0,0,0,.25);
-}
-body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(--dark);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background .3s,color .3s}
+  --stat-bg:rgba(0,0,0,.25);}
+body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(--dark);color:var(--text);min-height:100vh;overflow-x:hidden}
 
 .stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.stars canvas{display:block}
 .castle{position:fixed;bottom:0;left:0;width:100%;height:80px;pointer-events:none;z-index:1;background:linear-gradient(to top,rgba(10,8,20,0.95),rgba(20,15,40,0.2),transparent 100%)}
@@ -181,12 +175,73 @@ body.theme-day .toast{background:rgba(61,50,39,.92);color:#f0e8d8}
 body.theme-day .stat-item{color:var(--dim)}
 body.theme-day .note-item,body.theme-day .task-item,body.theme-day .log-item{border-color:rgba(61,50,39,.08)}
 body.theme-day #tmFrameDash,body.theme-day #tmFrame{background:var(--dark)!important}
-/* 主题切换按钮 */
 .theme-btn{display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:6px;border:1px solid rgba(212,168,83,.25);background:rgba(212,168,83,.08);color:var(--gold-light);font-family:inherit;font-size:10px;cursor:pointer;transition:all .2s;white-space:nowrap}
 .theme-btn:hover{background:rgba(212,168,83,.16)}
 body.theme-day .theme-btn{border-color:var(--btn-border);background:var(--btn-bg);color:var(--btn-color)}
 
-.7,139.7) 伦敦(51.5,-0.1) 纽约(40.7,-74.0) 巴黎(48.9,2.3) 悉尼(-33.9,151.2)</span>
+</style>
+</head>
+<body>
+
+<div class="stars"><canvas id="starsCanvas"></canvas></div>
+<div class="castle"></div>
+<div class="moon"></div>
+
+<div class="main">
+
+<header class="topbar">
+  <div class="top-left"><span class="crest">⚜️</span><div><div class="tname">HOGWARTS 知识圣殿</div><div class="tsub">Obsidian Space OS</div></div></div>
+  <div class="top-right"><div class="clock" id="clock">00:00</div><div class="date" id="dateDisplay">——</div></div>
+</header>
+
+<nav class="navtabs">
+  <button class="navtab" data-view="dashboard"><span class="navtab-icon">🟢</span>舰桥</button>
+  <button class="navtab" data-view="mission"><span class="navtab-icon">🧭</span>指令站</button>
+  <button class="navtab" data-view="realms"><span class="navtab-icon">🗺️</span>知识幻境</button>
+  <button class="navtab" data-view="schedule"><span class="navtab-icon">📜</span>课表</button>
+  <button class="navtab" data-view="assets"><span class="navtab-icon">🟠</span>资产</button>
+  <button class="navtab" data-view="health"><span class="navtab-icon">🔴</span>生命</button>
+  <button class="navtab active" data-view="travel"><span class="navtab-icon">🌍</span>航行</button>
+  <button class="navtab" data-view="archive"><span class="navtab-icon">📦</span>记忆</button>
+  <button class="navtab" data-view="time"><span class="navtab-icon">⏳</span>时光机</button>
+  <button class="navtab" data-view="settings"><span class="navtab-icon">⚙️</span>设置</button>
+  <button class="theme-btn" id="themeToggle" onclick="cycleTheme()" title="切换主题">🌙 夜晚</button>
+</nav>
+
+<div class="other-views" id="otherViews" style="display:flex;flex-direction:column;gap:8px">
+
+<!-- 航行舱 -->
+<div id="view-travel" style="display:flex;flex-direction:column;gap:8px">
+  <div class="card">
+    <div class="ctitle"><span class="icon">🌍</span> 航行舱 · 旅行地球仪 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">拖拽旋转 · 滚轮缩放 · 点击城市</span></div>
+    <div class="asset-stats-row">
+      <div class="asset-stat"><div class="asset-stat-value" id="travelCount">0</div><div class="asset-stat-label">📋 旅行记录</div></div>
+      <div class="asset-stat"><div class="asset-stat-value" id="travelCountries">0</div><div class="asset-stat-label">🌏 到访国家</div></div>
+      <div class="asset-stat"><div class="asset-stat-value" id="travelCities">0</div><div class="asset-stat-label">📍 到访城市</div></div>
+      <div class="asset-stat"><div class="asset-stat-value" id="travelLast" style="font-size:10px">—</div><div class="asset-stat-label">🛬 最近目的地</div></div>
+    </div>
+    <div class="globe-container" id="globeContainer">
+      <div class="globe-loading" id="globeLoading">🌍 航行地球仪初始化中...<br><span class="globe-loading-dot"></span><span class="globe-loading-dot"></span><span class="globe-loading-dot"></span></div>
+    </div>
+  </div>
+  
+  <div style="display:grid;grid-template-columns:1fr 340px;gap:8px">
+    <div class="card">
+      <div class="ctitle"><span class="icon">📍</span> 城市记忆卡 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点击地球仪上的城市或下方卡片</span></div>
+      <div id="travelCardList" style="max-height:260px;overflow-y:auto"></div>
+    </div>
+    <div class="card">
+      <div class="ctitle"><span class="icon">➕</span> 添加新城市</div>
+      <div class="asset-add-grid">
+        <input class="small-input" id="travelCity" placeholder="城市名（如 悉尼）">
+        <input class="small-input" id="travelCountry" placeholder="国家（如 澳大利亚）">
+        <input class="small-input" id="travelLat" placeholder="纬度（如 -33.87）" type="number" step="any">
+        <input class="small-input" id="travelLng" placeholder="经度（如 151.21）" type="number" step="any">
+        <input class="small-input asset-add-full" id="travelNotes" placeholder="旅行笔记……">
+      </div>
+      <div class="btn-row">
+        <button class="btn" onclick="addTravel()">🌍 添加地点</button>
+        <span style="font-size:8px;color:var(--dim);margin-left:6px;padding-top:4px">常见城市：北京(39.9,116.4) 东京(35.7,139.7) 伦敦(51.5,-0.1) 纽约(40.7,-74.0) 巴黎(48.9,2.3) 悉尼(-33.9,151.2)</span>
       </div>
     </div>
   </div>
@@ -1183,7 +1238,6 @@ function applyTheme(idx,silent){
   localStorage.setItem('h_theme',t.key);
   const btn=document.getElementById('themeToggle');
   if(btn)btn.textContent=t.label;
-  // 同步时光机 iframe
   ['tmFrameDash','tmFrame'].forEach(id=>{
     const f=document.getElementById(id);
     if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'theme',theme:t.key},'*');
