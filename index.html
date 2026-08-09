@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hogwarts · 知识圣殿</title>
+<title>Hogwarts 路 鐭ヨ瘑鍦ｆ</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--gold:#d4a853;--gold-light:#f0d68a;--dark:#0a0a0f;--card-bg:rgba(20,18,30,0.55);--card-border:rgba(212,168,83,0.18);--text:#e0d5c0;--dim:#8a8070;--accent:rgba(232,120,48,0.7)}
+:root{--gold:#d4a853;--gold-light:#f0d68a;--dark:#0e1524;--card-bg:rgba(22,30,46,0.55);--card-border:rgba(212,168,83,0.18);--text:#e0d5c0;--dim:#8a8070;--accent:rgba(232,120,48,0.7)}
 body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(--dark);color:var(--text);min-height:100vh;overflow-x:hidden}
 
 .stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}.stars canvas{display:block}
@@ -16,11 +16,11 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 
 .main{position:relative;z-index:10;max-width:1200px;margin:0 auto;padding:10px 14px 40px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto 1fr auto;gap:8px;min-height:100vh;overflow-x:auto}
 
-.topbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:6px 14px;background:rgba(12,10,24,0.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(212,168,83,0.1);border-radius:8px}
+.topbar{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:6px 14px;background:rgba(16,24,38,0.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(212,168,83,0.1);border-radius:8px}
 .top-left{display:flex;align-items:baseline;gap:5px}.crest{font-size:18px}.tname{font-size:13px;font-weight:bold;color:var(--gold);letter-spacing:1px}.tsub{font-size:7px;color:var(--dim)}
 .top-right{text-align:right}.clock{font-size:16px;color:var(--gold-light);font-weight:bold}.date{font-size:8px;color:var(--dim)}
 
-.navtabs{grid-column:1/-1;display:flex;gap:3px;flex-wrap:wrap;padding:2px 6px;background:rgba(12,10,24,0.35);backdrop-filter:blur(8px);border-radius:6px;border:1px solid rgba(212,168,83,0.05)}
+.navtabs{grid-column:1/-1;display:flex;gap:3px;flex-wrap:wrap;padding:2px 6px;background:rgba(16,24,38,0.35);backdrop-filter:blur(8px);border-radius:6px;border:1px solid rgba(212,168,83,0.05)}
 .navtab{display:flex;align-items:center;gap:3px;padding:5px 10px;border-radius:5px;border:1px solid transparent;background:transparent;color:var(--dim);font-family:inherit;font-size:11px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
 .navtab:hover{border-color:rgba(212,168,83,0.2);color:var(--text)}
 .navtab.active{background:rgba(212,168,83,0.12);border-color:rgba(212,168,83,0.4);color:var(--gold-light)}
@@ -33,7 +33,7 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 .btn{display:flex;align-items:center;gap:2px;padding:3px 8px;border-radius:4px;flex-shrink:0;border:1px solid rgba(212,168,83,0.2);background:rgba(212,168,83,0.06);color:var(--gold-light);font-family:inherit;font-size:9px;cursor:pointer;transition:all 0.2s;white-space:nowrap}
 .btn:hover{background:rgba(212,168,83,0.15)}
 .btn-green{background:rgba(80,180,120,0.1);border-color:rgba(80,180,120,0.2);color:#8ad4a0}
-.toast{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:rgba(20,18,30,0.92);backdrop-filter:blur(10px);border:1px solid rgba(212,168,83,0.3);border-radius:5px;padding:5px 12px;color:var(--gold-light);font-family:inherit;font-size:10px;z-index:999;animation:tIn 0.3s ease,tOut 0.3s ease 1.6s forwards}
+.toast{position:fixed;top:10px;left:50%;transform:translateX(-50%);background:rgba(24,32,48,0.92);backdrop-filter:blur(10px);border:1px solid rgba(212,168,83,0.3);border-radius:5px;padding:5px 12px;color:var(--gold-light);font-family:inherit;font-size:10px;z-index:999;animation:tIn 0.3s ease,tOut 0.3s ease 1.6s forwards}
 @keyframes tIn{from{opacity:0;transform:translateX(-50%) translateY(-5px)}}@keyframes tOut{from{opacity:1}to{opacity:0}}
 
 .nlist{max-height:120px;overflow-y:auto}.nlist::-webkit-scrollbar{width:3px;background:transparent}.nlist::-webkit-scrollbar-thumb{background:rgba(212,168,83,0.1);border-radius:2px}
@@ -135,17 +135,17 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 .memory-bottle.active .memory-bottle-label{color:var(--gold-light)}
 
 .rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
-.rbox{background:linear-gradient(135deg,rgba(30,25,50,0.5),rgba(15,12,30,0.7));backdrop-filter:blur(6px);border:2px solid rgba(212,168,83,0.06);border-radius:7px;padding:8px 5px;text-align:center;cursor:pointer;transition:all 0.25s}
+.rbox{background:linear-gradient(135deg,rgba(30,40,60,0.5),rgba(18,26,42,0.7));backdrop-filter:blur(6px);border:2px solid rgba(212,168,83,0.06);border-radius:7px;padding:8px 5px;text-align:center;cursor:pointer;transition:all 0.25s}
 .rbox:hover{border-color:rgba(212,168,83,0.25);transform:translateY(-1px)}
 .rbox.active{border-color:var(--gold-light)!important;box-shadow:0 0 12px rgba(212,168,83,0.15)}.ricon{font-size:20px}.rname{font-size:9px;font-weight:bold;color:var(--gold)}.rcount{font-size:8px;color:var(--dim)}
 .daynav{display:flex;gap:2px;margin-bottom:5px;flex-wrap:wrap}
-.daybtn{padding:1px 5px;border-radius:3px;border:1px solid rgba(255,255,255,0.06);background:rgba(20,18,30,0.4);color:var(--dim);font-family:inherit;font-size:9px;cursor:pointer}.daybtn.active{background:rgba(212,168,83,0.12);border-color:rgba(212,168,83,0.4);color:var(--gold-light)}
+.daybtn{padding:1px 5px;border-radius:3px;border:1px solid rgba(255,255,255,0.06);background:rgba(24,32,48,0.4);color:var(--dim);font-family:inherit;font-size:9px;cursor:pointer}.daybtn.active{background:rgba(212,168,83,0.12);border-color:rgba(212,168,83,0.4);color:var(--gold-light)}
 .stable{width:100%;border-collapse:collapse}.stable th{text-align:left;font-size:8px;color:var(--dim);padding:2px 3px;border-bottom:1px solid rgba(212,168,83,0.1);font-weight:normal}
 .stable td{padding:3px;border-bottom:1px solid rgba(255,255,255,0.02);font-size:10px}.stime{color:var(--gold-light);font-weight:bold;width:40px}.sprof{color:var(--dim);font-size:8px}
 .hbadge{display:inline-block;padding:1px 3px;border-radius:3px;font-size:7px;letter-spacing:1px;font-weight:bold}
 .h-g{background:rgba(174,0,1,0.3);color:#e07060}.h-r{background:rgba(34,47,91,0.4);color:#7a9ec0}.h-s{background:rgba(26,71,42,0.4);color:#5aaa6e}.h-h{background:rgba(236,185,57,0.2);color:#e8c547}
 
-.foot{grid-column:1/-1;display:flex;gap:8px;padding:4px 10px;background:rgba(12,10,24,0.5);backdrop-filter:blur(8px);border:1px solid rgba(212,168,83,0.05);border-radius:5px;font-size:8px;color:var(--dim)}.fitem{display:flex;align-items:center;gap:3px}.fval{color:var(--gold-light)}
+.foot{grid-column:1/-1;display:flex;gap:8px;padding:4px 10px;background:rgba(16,24,38,0.5);backdrop-filter:blur(8px);border:1px solid rgba(212,168,83,0.05);border-radius:5px;font-size:8px;color:var(--dim)}.fitem{display:flex;align-items:center;gap:3px}.fval{color:var(--gold-light)}
 
 .rpanel{grid-column:1;grid-row:3/4;display:flex;flex-direction:column;gap:7px;max-height:calc(100vh - 110px);overflow-y:auto}
 .rpanel::-webkit-scrollbar{width:3px;background:transparent}.rpanel::-webkit-scrollbar-thumb{background:rgba(212,168,83,0.1);border-radius:2px}
@@ -163,94 +163,94 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 <div class="main">
 
 <header class="topbar">
-  <div class="top-left"><span class="crest">⚜️</span><div><div class="tname">HOGWARTS 知识圣殿</div><div class="tsub">Obsidian Space OS</div></div></div>
-  <div class="top-right"><div class="clock" id="clock">00:00</div><div class="date" id="dateDisplay">——</div></div>
+  <div class="top-left"><span class="crest">鈿滐笍</span><div><div class="tname">HOGWARTS 鐭ヨ瘑鍦ｆ</div><div class="tsub">Obsidian Space OS</div></div></div>
+  <div class="top-right"><div class="clock" id="clock">00:00</div><div class="date" id="dateDisplay">鈥斺€?/div></div>
 </header>
 
 <nav class="navtabs">
-  <button class="navtab" data-view="dashboard"><span class="navtab-icon">🟢</span>舰桥</button>
-  <button class="navtab" data-view="mission"><span class="navtab-icon">🧭</span>指令站</button>
-  <button class="navtab" data-view="realms"><span class="navtab-icon">🗺️</span>知识幻境</button>
-  <button class="navtab" data-view="schedule"><span class="navtab-icon">📜</span>课表</button>
-  <button class="navtab" data-view="assets"><span class="navtab-icon">🟠</span>资产</button>
-  <button class="navtab" data-view="health"><span class="navtab-icon">🔴</span>生命</button>
-  <button class="navtab active" data-view="travel"><span class="navtab-icon">🌍</span>航行</button>
-  <button class="navtab" data-view="archive"><span class="navtab-icon">📦</span>记忆</button>
-  <button class="navtab" data-view="time"><span class="navtab-icon">⏳</span>时光机</button>
-  <button class="navtab" data-view="settings"><span class="navtab-icon">⚙️</span>设置</button>
+  <button class="navtab" data-view="dashboard"><span class="navtab-icon">馃煝</span>鑸版ˉ</button>
+  <button class="navtab" data-view="mission"><span class="navtab-icon">馃Л</span>鎸囦护绔?/button>
+  <button class="navtab" data-view="realms"><span class="navtab-icon">馃椇锔?/span>鐭ヨ瘑骞诲</button>
+  <button class="navtab" data-view="schedule"><span class="navtab-icon">馃摐</span>璇捐〃</button>
+  <button class="navtab" data-view="assets"><span class="navtab-icon">馃煚</span>璧勪骇</button>
+  <button class="navtab" data-view="health"><span class="navtab-icon">馃敶</span>鐢熷懡</button>
+  <button class="navtab active" data-view="travel"><span class="navtab-icon">馃實</span>鑸</button>
+  <button class="navtab" data-view="archive"><span class="navtab-icon">馃摝</span>璁板繂</button>
+  <button class="navtab" data-view="time"><span class="navtab-icon">鈴?/span>鏃跺厜鏈?/button>
+  <button class="navtab" data-view="settings"><span class="navtab-icon">鈿欙笍</span>璁剧疆</button>
 </nav>
 
 <div class="other-views" id="otherViews" style="display:flex;flex-direction:column;gap:8px">
 
-<!-- 航行舱 -->
+<!-- 鑸鑸?-->
 <div id="view-travel" style="display:flex;flex-direction:column;gap:8px">
   <div class="card">
-    <div class="ctitle"><span class="icon">🌍</span> 航行舱 · 旅行地球仪 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">拖拽旋转 · 滚轮缩放 · 点击城市</span></div>
+    <div class="ctitle"><span class="icon">馃實</span> 鑸鑸?路 鏃呰鍦扮悆浠?<span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">鎷栨嫿鏃嬭浆 路 婊氳疆缂╂斁 路 鐐瑰嚮鍩庡競</span></div>
     <div class="asset-stats-row">
-      <div class="asset-stat"><div class="asset-stat-value" id="travelCount">0</div><div class="asset-stat-label">📋 旅行记录</div></div>
-      <div class="asset-stat"><div class="asset-stat-value" id="travelCountries">0</div><div class="asset-stat-label">🌏 到访国家</div></div>
-      <div class="asset-stat"><div class="asset-stat-value" id="travelCities">0</div><div class="asset-stat-label">📍 到访城市</div></div>
-      <div class="asset-stat"><div class="asset-stat-value" id="travelLast" style="font-size:10px">—</div><div class="asset-stat-label">🛬 最近目的地</div></div>
+      <div class="asset-stat"><div class="asset-stat-value" id="travelCount">0</div><div class="asset-stat-label">馃搵 鏃呰璁板綍</div></div>
+      <div class="asset-stat"><div class="asset-stat-value" id="travelCountries">0</div><div class="asset-stat-label">馃審 鍒拌鍥藉</div></div>
+      <div class="asset-stat"><div class="asset-stat-value" id="travelCities">0</div><div class="asset-stat-label">馃搷 鍒拌鍩庡競</div></div>
+      <div class="asset-stat"><div class="asset-stat-value" id="travelLast" style="font-size:10px">鈥?/div><div class="asset-stat-label">馃洭 鏈€杩戠洰鐨勫湴</div></div>
     </div>
     <div class="globe-container" id="globeContainer">
-      <div class="globe-loading" id="globeLoading">🌍 航行地球仪初始化中...<br><span class="globe-loading-dot"></span><span class="globe-loading-dot"></span><span class="globe-loading-dot"></span></div>
+      <div class="globe-loading" id="globeLoading">馃實 鑸鍦扮悆浠垵濮嬪寲涓?..<br><span class="globe-loading-dot"></span><span class="globe-loading-dot"></span><span class="globe-loading-dot"></span></div>
     </div>
   </div>
   
   <div style="display:grid;grid-template-columns:1fr 340px;gap:8px">
     <div class="card">
-      <div class="ctitle"><span class="icon">📍</span> 城市记忆卡 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点击地球仪上的城市或下方卡片</span></div>
+      <div class="ctitle"><span class="icon">馃搷</span> 鍩庡競璁板繂鍗?<span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">鐐瑰嚮鍦扮悆浠笂鐨勫煄甯傛垨涓嬫柟鍗＄墖</span></div>
       <div id="travelCardList" style="max-height:260px;overflow-y:auto"></div>
     </div>
     <div class="card">
-      <div class="ctitle"><span class="icon">➕</span> 添加新城市</div>
+      <div class="ctitle"><span class="icon">鉃?/span> 娣诲姞鏂板煄甯?/div>
       <div class="asset-add-grid">
-        <input class="small-input" id="travelCity" placeholder="城市名（如 悉尼）">
-        <input class="small-input" id="travelCountry" placeholder="国家（如 澳大利亚）">
-        <input class="small-input" id="travelLat" placeholder="纬度（如 -33.87）" type="number" step="any">
-        <input class="small-input" id="travelLng" placeholder="经度（如 151.21）" type="number" step="any">
-        <input class="small-input asset-add-full" id="travelNotes" placeholder="旅行笔记……">
+        <input class="small-input" id="travelCity" placeholder="鍩庡競鍚嶏紙濡?鎮夊凹锛?>
+        <input class="small-input" id="travelCountry" placeholder="鍥藉锛堝 婢冲ぇ鍒╀簹锛?>
+        <input class="small-input" id="travelLat" placeholder="绾害锛堝 -33.87锛? type="number" step="any">
+        <input class="small-input" id="travelLng" placeholder="缁忓害锛堝 151.21锛? type="number" step="any">
+        <input class="small-input asset-add-full" id="travelNotes" placeholder="鏃呰绗旇鈥︹€?>
       </div>
       <div class="btn-row">
-        <button class="btn" onclick="addTravel()">🌍 添加地点</button>
-        <span style="font-size:8px;color:var(--dim);margin-left:6px;padding-top:4px">常见城市：北京(39.9,116.4) 东京(35.7,139.7) 伦敦(51.5,-0.1) 纽约(40.7,-74.0) 巴黎(48.9,2.3) 悉尼(-33.9,151.2)</span>
+        <button class="btn" onclick="addTravel()">馃實 娣诲姞鍦扮偣</button>
+        <span style="font-size:8px;color:var(--dim);margin-left:6px;padding-top:4px">甯歌鍩庡競锛氬寳浜?39.9,116.4) 涓滀含(35.7,139.7) 浼︽暒(51.5,-0.1) 绾界害(40.7,-74.0) 宸撮粠(48.9,2.3) 鎮夊凹(-33.9,151.2)</span>
       </div>
     </div>
   </div>
   <div class="card">
-    <div class="ctitle"><span class="icon">🗓️</span> 月度热力图 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">每天一个方块 · 颜色越深笔记越多</span></div>
+    <div class="ctitle"><span class="icon">馃棑锔?/span> 鏈堝害鐑姏鍥?<span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">姣忓ぉ涓€涓柟鍧?路 棰滆壊瓒婃繁绗旇瓒婂</span></div>
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-      <button class="btn" onclick="shiftHeatMonth(-1)" style="font-size:9px;padding:2px 6px">◀ 上月</button>
-      <span id="heatMonthLabel" style="font-size:10px;color:var(--gold-light);letter-spacing:1px">2026年8月</span>
-      <button class="btn" onclick="shiftHeatMonth(1)" style="font-size:9px;padding:2px 6px">下月 ▶</button>
+      <button class="btn" onclick="shiftHeatMonth(-1)" style="font-size:9px;padding:2px 6px">鈼€ 涓婃湀</button>
+      <span id="heatMonthLabel" style="font-size:10px;color:var(--gold-light);letter-spacing:1px">2026骞?鏈?/span>
+      <button class="btn" onclick="shiftHeatMonth(1)" style="font-size:9px;padding:2px 6px">涓嬫湀 鈻?/button>
     </div>
     <div style="display:flex;margin-bottom:2px;padding-left:24px">
-      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">一</span>
-      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">二</span>
-      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">三</span>
-      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">四</span>
-      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">五</span>
-      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">六</span>
-      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">日</span>
+      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">涓€</span>
+      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">浜?/span>
+      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">涓?/span>
+      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">鍥?/span>
+      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">浜?/span>
+      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">鍏?/span>
+      <span style="font-size:7px;color:var(--dim);width:14px;text-align:center">鏃?/span>
     </div>
     <div id="travelHeatmap" style="display:grid;grid-template-columns:repeat(7,14px);gap:2px"></div>
     <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;margin-top:4px;font-size:8px;color:var(--dim)">
-      <span>少</span>
+      <span>灏?/span>
       <div style="width:10px;height:10px;background:rgba(212,168,83,0.1);border-radius:2px"></div>
       <div style="width:10px;height:10px;background:rgba(212,168,83,0.25);border-radius:2px"></div>
       <div style="width:10px;height:10px;background:rgba(212,168,83,0.45);border-radius:2px"></div>
       <div style="width:10px;height:10px;background:rgba(240,180,60,0.7);border-radius:2px"></div>
-      <span>多</span>
+      <span>澶?/span>
     </div>
   </div>
 </div>
 
-<!-- 其他视图占位 -->
+<!-- 鍏朵粬瑙嗗浘鍗犱綅 -->
 <div id="view-dashboard" style="display:none;flex-direction:column;gap:8px">
   <div class="card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden">
-    <div class="ctitle" style="padding:8px 14px 0"><span class="icon">⏳</span> 时光机 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">完整版 · 计时/待办/时间轴/日记</span></div>
+    <div class="ctitle" style="padding:8px 14px 0"><span class="icon">鈴?/span> 鏃跺厜鏈?<span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">瀹屾暣鐗?路 璁℃椂/寰呭姙/鏃堕棿杞?鏃ヨ</span></div>
     <div style="flex:1;min-height:calc(100vh - 160px);border-radius:8px;overflow-y:auto;border:1px solid rgba(212,168,83,0.12);margin:8px 10px 10px">
-      <iframe src="time-machine.html" id="tmFrameDash" style="width:100%;height:calc(100vh - 160px);border:none;background:#0a0a0f" title="时光机"></iframe>
+      <iframe src="time-machine.html" id="tmFrameDash" style="width:100%;height:calc(100vh - 160px);border:none;background:#0e1524" title="鏃跺厜鏈?></iframe>
     </div>
   </div>
 </div>
@@ -260,99 +260,99 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 <div id="view-assets" style="display:none"></div>
 <div id="view-health" style="display:none"></div>
 <div id="view-archive" style="display:none">
-  <div class="card"><div class="ctitle"><span class="icon">📦</span> 记忆档案馆</div>
+  <div class="card"><div class="ctitle"><span class="icon">馃摝</span> 璁板繂妗ｆ棣?/div>
     <div class="asset-stats-row">
-      <div class="asset-stat"><div class="asset-stat-value" id="arcReflections">0</div><div class="asset-stat-label">📝 复盘</div></div>
-      <div class="asset-stat"><div class="asset-stat-value" id="arcReads">0</div><div class="asset-stat-label">📖 阅读</div></div>
-      <div class="asset-stat"><div class="asset-stat-value" id="arcQuotes">0</div><div class="asset-stat-label">✍️ 好句</div></div>
-      <div class="asset-stat"><div class="asset-stat-value" id="arcThoughts">0</div><div class="asset-stat-label">💭 碎片</div></div>
+      <div class="asset-stat"><div class="asset-stat-value" id="arcReflections">0</div><div class="asset-stat-label">馃摑 澶嶇洏</div></div>
+      <div class="asset-stat"><div class="asset-stat-value" id="arcReads">0</div><div class="asset-stat-label">馃摉 闃呰</div></div>
+      <div class="asset-stat"><div class="asset-stat-value" id="arcQuotes">0</div><div class="asset-stat-label">鉁嶏笍 濂藉彞</div></div>
+      <div class="asset-stat"><div class="asset-stat-value" id="arcThoughts">0</div><div class="asset-stat-label">馃挱 纰庣墖</div></div>
     </div>
-    <div style="margin-bottom:8px"><div style="font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:4px">🧪 冥想盆 · 年份记忆瓶 <span style="font-size:8px;color:var(--dim);font-weight:normal">点击瓶子打开那年记忆</span></div><div id="memoryBottles" style="display:flex;gap:12px;flex-wrap:wrap;padding:6px 0"></div></div>
+    <div style="margin-bottom:8px"><div style="font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:4px">馃И 鍐ユ兂鐩?路 骞翠唤璁板繂鐡?<span style="font-size:8px;color:var(--dim);font-weight:normal">鐐瑰嚮鐡跺瓙鎵撳紑閭ｅ勾璁板繂</span></div><div id="memoryBottles" style="display:flex;gap:12px;flex-wrap:wrap;padding:6px 0"></div></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
       <div style="display:flex;flex-direction:column;gap:8px">
         <div style="background:rgba(0,0,0,0.2);border-radius:7px;padding:10px 12px;flex:1">
-          <div style="font-size:11px;font-weight:bold;color:var(--gold);margin-bottom:4px;letter-spacing:1px">📝 复盘日记</div>
+          <div style="font-size:11px;font-weight:bold;color:var(--gold);margin-bottom:4px;letter-spacing:1px">馃摑 澶嶇洏鏃ヨ</div>
           <div id="reflectionList" style="max-height:220px;overflow-y:auto"></div>
-          <div class="addrow" style="margin-top:4px"><textarea id="reflectionInput" placeholder="今日复盘……" rows="2"></textarea><button class="btn" onclick="addReflection()">记录</button></div>
+          <div class="addrow" style="margin-top:4px"><textarea id="reflectionInput" placeholder="浠婃棩澶嶇洏鈥︹€? rows="2"></textarea><button class="btn" onclick="addReflection()">璁板綍</button></div>
         </div>
         <div style="background:rgba(0,0,0,0.2);border-radius:7px;padding:10px 12px;flex:1">
-          <div style="font-size:11px;font-weight:bold;color:var(--gold);margin-bottom:4px;letter-spacing:1px">💭 碎片思考</div>
+          <div style="font-size:11px;font-weight:bold;color:var(--gold);margin-bottom:4px;letter-spacing:1px">馃挱 纰庣墖鎬濊€?/div>
           <div id="thoughtList" style="max-height:220px;overflow-y:auto"></div>
-          <div class="addrow" style="margin-top:4px"><textarea id="thoughtInput" placeholder="闪过的念头……" rows="1"></textarea><button class="btn" onclick="addThought()">记录</button></div>
+          <div class="addrow" style="margin-top:4px"><textarea id="thoughtInput" placeholder="闂繃鐨勫康澶粹€︹€? rows="1"></textarea><button class="btn" onclick="addThought()">璁板綍</button></div>
         </div>
       </div>
       <div style="display:flex;flex-direction:column;gap:8px">
         <div style="background:rgba(0,0,0,0.2);border-radius:7px;padding:10px 12px;flex:1">
-          <div style="font-size:11px;font-weight:bold;color:var(--gold);margin-bottom:4px;letter-spacing:1px">📖 阅读记录</div>
+          <div style="font-size:11px;font-weight:bold;color:var(--gold);margin-bottom:4px;letter-spacing:1px">馃摉 闃呰璁板綍</div>
           <div id="readLogList" style="max-height:220px;overflow-y:auto"></div>
           <div class="addrow" style="margin-top:4px;flex-wrap:wrap;gap:3px">
-            <input id="readTitle" placeholder="书名" style="flex:1;min-width:80px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none">
-            <input id="readAuthor" placeholder="作者" style="width:70px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none">
-            <input id="readStatus" placeholder="进度" style="width:80px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none">
+            <input id="readTitle" placeholder="涔﹀悕" style="flex:1;min-width:80px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none">
+            <input id="readAuthor" placeholder="浣滆€? style="width:70px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none">
+            <input id="readStatus" placeholder="杩涘害" style="width:80px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none">
             <button class="btn" onclick="addReading()" style="flex-shrink:0">+</button>
           </div>
         </div>
         <div style="background:rgba(0,0,0,0.2);border-radius:7px;padding:10px 12px;flex:1">
-          <div style="font-size:11px;font-weight:bold;color:var(--gold);margin-bottom:4px;letter-spacing:1px">✍️ 好词好句</div>
+          <div style="font-size:11px;font-weight:bold;color:var(--gold);margin-bottom:4px;letter-spacing:1px">鉁嶏笍 濂借瘝濂藉彞</div>
           <div id="quoteList" style="max-height:220px;overflow-y:auto"></div>
-          <div class="addrow" style="margin-top:4px"><input id="quoteSource" placeholder="出处" style="width:80px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none;flex-shrink:0"><textarea id="quoteText" placeholder="好词好句……" rows="1" style="flex:1"></textarea><button class="btn" onclick="addQuote()">+</button></div>
+          <div class="addrow" style="margin-top:4px"><input id="quoteSource" placeholder="鍑哄" style="width:80px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none;flex-shrink:0"><textarea id="quoteText" placeholder="濂借瘝濂藉彞鈥︹€? rows="1" style="flex:1"></textarea><button class="btn" onclick="addQuote()">+</button></div>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div id="view-settings" style="display:none">
-  <div class="card"><div class="ctitle"><span class="icon">💾</span> 备份</div><div class="btn-row"><button class="btn" onclick="exportJSON()">📥 导出</button><button class="btn" onclick="document.getElementById('importFile').click()">📤 导入</button><input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(this)"></div></div>
-  <div class="card"><div class="ctitle"><span class="icon">📡</span> Notion</div><input class="small-input" id="notionKey" placeholder="API Key" type="password"><div class="btn-row"><button class="btn btn-green" onclick="syncToNotion()">📡</button><button class="btn" onclick="testNotion()">🔍</button></div><div id="notionStatus" style="font-size:8px;color:var(--dim);margin-top:2px"></div></div>
+  <div class="card"><div class="ctitle"><span class="icon">馃捑</span> 澶囦唤</div><div class="btn-row"><button class="btn" onclick="exportJSON()">馃摜 瀵煎嚭</button><button class="btn" onclick="document.getElementById('importFile').click()">馃摛 瀵煎叆</button><input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(this)"></div></div>
+  <div class="card"><div class="ctitle"><span class="icon">馃摗</span> Notion</div><input class="small-input" id="notionKey" placeholder="API Key" type="password"><div class="btn-row"><button class="btn btn-green" onclick="syncToNotion()">馃摗</button><button class="btn" onclick="testNotion()">馃攳</button></div><div id="notionStatus" style="font-size:8px;color:var(--dim);margin-top:2px"></div></div>
 </div>
 
-<!-- 时光机 iframe 视图 -->
+<!-- 鏃跺厜鏈?iframe 瑙嗗浘 -->
 <div id="view-time" style="display:none;flex-direction:column;gap:8px;height:calc(100vh - 160px)">
   <div class="card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden">
-    <iframe src="time-machine.html" id="tmFrame" style="flex:1;width:100%;border:none;background:#121a26;border-radius:8px" title="时光机"></iframe>
+    <iframe src="time-machine.html" id="tmFrame" style="flex:1;width:100%;border:none;background:#121a26;border-radius:8px" title="鏃跺厜鏈?></iframe>
   </div>
 </div>
 
 </div>
 
-<!-- 右侧面板 -->
+<!-- 鍙充晶闈㈡澘 -->
 <div class="rpanel">
   <div class="card" style="padding:8px 10px">
-    <div class="ctitle" style="margin-bottom:6px"><span class="icon">🟢</span> 舰桥总览</div>
+    <div class="ctitle" style="margin-bottom:6px"><span class="icon">馃煝</span> 鑸版ˉ鎬昏</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px" id="dashMini"></div>
   </div>
   <div class="card" style="flex:1;display:flex;flex-direction:column;min-height:140px">
-    <div class="ctitle"><span class="icon">📋</span> <span id="realmNotesTitle">选择领域</span></div>
-    <div class="nlist" id="notesList" style="flex:1"><div class="empty" id="notesEmpty">👆 在「知识幻境」中选择</div></div>
-    <div class="addrow"><textarea id="addNoteInput" placeholder="记录……" rows="1"></textarea><button class="btn" onclick="addNote()">✨</button></div>
+    <div class="ctitle"><span class="icon">馃搵</span> <span id="realmNotesTitle">閫夋嫨棰嗗煙</span></div>
+    <div class="nlist" id="notesList" style="flex:1"><div class="empty" id="notesEmpty">馃憜 鍦ㄣ€岀煡璇嗗够澧冦€嶄腑閫夋嫨</div></div>
+    <div class="addrow"><textarea id="addNoteInput" placeholder="璁板綍鈥︹€? rows="1"></textarea><button class="btn" onclick="addNote()">鉁?/button></div>
   </div>
   <div class="card" style="text-align:center">
-    <div style="font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:4px">🍅 番茄钟</div>
+    <div style="font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:4px">馃崊 鐣寗閽?/div>
     <div style="display:flex;gap:4px;justify-content:center;margin-bottom:4px">
       <button class="btn" onclick="setPomodoro(25)" id="pom25" style="font-size:9px;padding:3px 8px">25min</button>
       <button class="btn" onclick="setPomodoro(45)" id="pom45" style="font-size:9px;padding:3px 8px">45min</button>
-      <button class="btn" onclick="setPomodoro(5)" id="pom5" style="font-size:9px;padding:3px 8px">休息</button>
+      <button class="btn" onclick="setPomodoro(5)" id="pom5" style="font-size:9px;padding:3px 8px">浼戞伅</button>
     </div>
     <div style="font-size:28px;color:var(--gold-light);font-weight:bold;letter-spacing:2px;font-variant-numeric:tabular-nums" id="pomoClock">25:00</div>
     <div style="margin-top:4px">
-      <button class="btn" onclick="togglePomodoro()" id="pomoToggle" style="background:rgba(100,180,120,0.12);border-color:rgba(100,180,120,0.3);color:#a0d8a0;font-size:10px;padding:4px 14px">▶ 开始</button>
+      <button class="btn" onclick="togglePomodoro()" id="pomoToggle" style="background:rgba(100,180,120,0.12);border-color:rgba(100,180,120,0.3);color:#a0d8a0;font-size:10px;padding:4px 14px">鈻?寮€濮?/button>
     </div>
   </div>
   <div class="card">
-    <div class="ctitle"><span class="icon">📋</span> 最近笔记</div>
+    <div class="ctitle"><span class="icon">馃搵</span> 鏈€杩戠瑪璁?/div>
     <div id="recentNotesList" style="max-height:110px;overflow-y:auto;font-size:10px"></div>
   </div>
 </div>
 
 <footer class="foot">
-  <div class="fitem">Ctrl+1~9 切视图</div><div class="fitem">Ctrl+N 笔记</div><div class="fitem" style="margin-left:auto;opacity:0.5">💾 自动保存</div>
+  <div class="fitem">Ctrl+1~9 鍒囪鍥?/div><div class="fitem">Ctrl+N 绗旇</div><div class="fitem" style="margin-left:auto;opacity:0.5">馃捑 鑷姩淇濆瓨</div>
 </footer>
 </div>
 
 <script src="lib/three.min.js"></script>
 <script src="lib/OrbitControls.js"></script>
 <script>
-// ==================== 星空 ====================
+// ==================== 鏄熺┖ ====================
 (function(){
   const c=document.getElementById('starsCanvas'),ctx=c.getContext('2d');
   function rs(){c.width=window.innerWidth;c.height=window.innerHeight}rs();window.addEventListener('resize',rs);
@@ -360,23 +360,23 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
   function draw(){ctx.clearRect(0,0,c.width,c.height);const t=Date.now()*.001;s.forEach(st=>{const a=st.p*(.5+.5*Math.sin(t*st.sp*10+st.o));ctx.beginPath();ctx.arc(st.x,st.y,st.r,0,Math.PI*2);ctx.fillStyle=`rgba(220,210,180,${Math.max(.06,a)})`;ctx.fill()});requestAnimationFrame(draw)}draw()
 })();
 
-// ==================== 城市坐标库 ====================
+// ==================== 鍩庡競鍧愭爣搴?====================
 const cityCoords={
-  '北京':[39.9042,116.4074],'上海':[31.2304,121.4737],'东京':[35.6762,139.6503],
-  '伦敦':[51.5074,-0.1278],'纽约':[40.7128,-74.006],'巴黎':[48.8566,2.3522],
-  '悉尼':[-33.8688,151.2093],'新加坡':[1.3521,103.8198],'香港':[22.3193,114.1694],
-  '首尔':[37.5665,126.978],'曼谷':[13.7563,100.5018],'旧金山':[37.7749,-122.4194],
-  '洛杉矶':[34.0522,-118.2437],'罗马':[41.9028,12.4964],'巴塞罗那':[41.3874,2.1686],
-  '柏林':[52.52,13.405],'莫斯科':[55.7558,37.6173],'迪拜':[25.2048,55.2708],
-  '伊斯坦布尔':[41.0082,28.9784],'阿姆斯特丹':[52.3676,4.9041],'布拉格':[50.0755,14.4378],
-  '开罗':[30.0444,31.2357],'京都':[35.0116,135.7681],'大阪':[34.6937,135.5023],
-  '台北':[25.033,121.5654],'墨尔本':[-37.8136,144.9631],'温哥华':[49.2827,-123.1207],
-  '多伦多':[43.6532,-79.3832],'哥本哈根':[55.6761,12.5683],'维也纳':[48.2082,16.3738],
-  '里斯本':[38.7223,-9.1393],'布达佩斯':[47.4979,19.0402],'雅典':[37.9838,23.7275],
-  '开普敦':[-33.9249,18.4241],'冰岛':[64.1466,-21.9426],'西藏':[29.6469,91.1172],
+  '鍖椾含':[39.9042,116.4074],'涓婃捣':[31.2304,121.4737],'涓滀含':[35.6762,139.6503],
+  '浼︽暒':[51.5074,-0.1278],'绾界害':[40.7128,-74.006],'宸撮粠':[48.8566,2.3522],
+  '鎮夊凹':[-33.8688,151.2093],'鏂板姞鍧?:[1.3521,103.8198],'棣欐腐':[22.3193,114.1694],
+  '棣栧皵':[37.5665,126.978],'鏇艰胺':[13.7563,100.5018],'鏃ч噾灞?:[37.7749,-122.4194],
+  '娲涙潐鐭?:[34.0522,-118.2437],'缃楅┈':[41.9028,12.4964],'宸村缃楅偅':[41.3874,2.1686],
+  '鏌忔灄':[52.52,13.405],'鑾柉绉?:[55.7558,37.6173],'杩嫓':[25.2048,55.2708],
+  '浼婃柉鍧﹀竷灏?:[41.0082,28.9784],'闃垮鏂壒涓?:[52.3676,4.9041],'甯冩媺鏍?:[50.0755,14.4378],
+  '寮€缃?:[30.0444,31.2357],'浜兘':[35.0116,135.7681],'澶ч槳':[34.6937,135.5023],
+  '鍙板寳':[25.033,121.5654],'澧ㄥ皵鏈?:[-37.8136,144.9631],'娓╁摜鍗?:[49.2827,-123.1207],
+  '澶氫鸡澶?:[43.6532,-79.3832],'鍝ユ湰鍝堟牴':[55.6761,12.5683],'缁翠篃绾?:[48.2082,16.3738],
+  '閲屾柉鏈?:[38.7223,-9.1393],'甯冭揪浣╂柉':[47.4979,19.0402],'闆呭吀':[37.9838,23.7275],
+  '寮€鏅暒':[-33.9249,18.4241],'鍐板矝':[64.1466,-21.9426],'瑗胯棌':[29.6469,91.1172],
 };
 
-// ==================== 3D 地球仪 ====================
+// ==================== 3D 鍦扮悆浠?====================
 
 let globeScene=null,globeCamera=null,globeRenderer=null,globeControls=null;
 let globeMesh=null,globeMarkers=[],globeRings=[],globeRaycaster=null;
@@ -402,14 +402,14 @@ function initGlobe(){
 
     globeRaycaster=new THREE.Raycaster();
 
-    // 星空背景
+    // 鏄熺┖鑳屾櫙
     const starsGeo=new THREE.BufferGeometry();const starsVerts=[];
     for(let i=0;i<500;i++){starsVerts.push((Math.random()-0.5)*20,(Math.random()-0.5)*20,(Math.random()-0.5)*20)}
     starsGeo.setAttribute('position',new THREE.Float32BufferAttribute(starsVerts,3));
     const starsMat=new THREE.PointsMaterial({color:0xffffff,size:0.02,transparent:true,opacity:0.6});
     globeScene.add(new THREE.Points(starsGeo,starsMat));
 
-    // 地球
+    // 鍦扮悆
     const geo=new THREE.SphereGeometry(1,64,64);
     const texLoader=new THREE.TextureLoader();
     texLoader.load('assets/earth.jpg',
@@ -417,24 +417,24 @@ function initGlobe(){
         document.getElementById('globeLoading').style.display='none';
         const mat=new THREE.MeshPhongMaterial({map:texture,specular:0x333333,shininess:5});
         globeMesh=new THREE.Mesh(geo,mat);globeScene.add(globeMesh);
-        // 光照
+        // 鍏夌収
         globeScene.add(new THREE.AmbientLight(0x444444));
         const dirLight=new THREE.DirectionalLight(0xffffff,1.2);
         dirLight.position.set(5,3,5);globeScene.add(dirLight);
-        // 标记
+        // 鏍囪
         addGlobeMarkers();
       },
-      undefined,()=>{document.getElementById('globeLoading').textContent='⚠️ 纹理加载失败，地球显示为线框模式';}
+      undefined,()=>{document.getElementById('globeLoading').textContent='鈿狅笍 绾圭悊鍔犺浇澶辫触锛屽湴鐞冩樉绀轰负绾挎妯″紡';}
     );
 
-    // 滚动到地球仪时处理
+    // 婊氬姩鍒板湴鐞冧华鏃跺鐞?
     container.addEventListener('wheel',e=>{e.stopPropagation()},{passive:false});
 
     animateGlobe();
   }catch(err){
-    // WebGL 不可用（远程桌面/虚拟机/驱动问题）→ 降级 2D 旋转地球
+    // WebGL 涓嶅彲鐢紙杩滅▼妗岄潰/铏氭嫙鏈?椹卞姩闂锛夆啋 闄嶇骇 2D 鏃嬭浆鍦扮悆
     webglFailed=true;
-    document.getElementById('globeLoading').textContent='WebGL 不可用，切换到 2D 模式…';
+    document.getElementById('globeLoading').textContent='WebGL 涓嶅彲鐢紝鍒囨崲鍒?2D 妯″紡鈥?;
     setTimeout(()=>{initGlobe2D()},50);
   }
 }
@@ -442,10 +442,10 @@ function initGlobe2D(){
   const container=document.getElementById('globeContainer');
   if(globe2D){return}
   const w=container.clientWidth,h=container.clientHeight;
-  // 清掉原来的 loading
+  // 娓呮帀鍘熸潵鐨?loading
   const loading=document.getElementById('globeLoading');
   if(loading)loading.style.display='none';
-  // 移除已有 canvas（如果 Three 曾创建）
+  // 绉婚櫎宸叉湁 canvas锛堝鏋?Three 鏇惧垱寤猴級
   container.querySelectorAll('canvas').forEach(c=>c.remove());
   const cv=document.createElement('canvas');
   cv.style.width='100%';cv.style.height='100%';
@@ -454,16 +454,16 @@ function initGlobe2D(){
   cv.width=w;cv.height=h;
   globe2D={ctx,cv,w,h,rot:0,markers:[],img:null,imgReady:false};
   const img=new Image();
-  img.onload=()=>{globe2D.img=img;globe2D.imgReady=true;globe2D.imgW=img.width;globe2D.imgH=img.height;toast('🌍 2D 地球就绪');};
-  img.onerror=()=>{globe2D.imgReady=false;toast('⚠️ 贴图加载失败，显示经纬线球');};
+  img.onload=()=>{globe2D.img=img;globe2D.imgReady=true;globe2D.imgW=img.width;globe2D.imgH=img.height;toast('馃實 2D 鍦扮悆灏辩华');};
+  img.onerror=()=>{globe2D.imgReady=false;toast('鈿狅笍 璐村浘鍔犺浇澶辫触锛屾樉绀虹粡绾嚎鐞?);};
   img.src='assets/earth.jpg';
-  // 添加城市标记（球面坐标）
+  // 娣诲姞鍩庡競鏍囪锛堢悆闈㈠潗鏍囷級
   (D.travelLog||[]).forEach(t=>{
     const lat=parseFloat(t.lat),lng=parseFloat(t.lng);
     if(isNaN(lat)||isNaN(lng))return;
     globe2D.markers.push({id:t.id,city:t.city,lat,lng});
   });
-  // 拖拽旋转
+  // 鎷栨嫿鏃嬭浆
   let dragging=false,lastX=0;
   cv.addEventListener('mousedown',e=>{dragging=true;lastX=e.clientX});
   window.addEventListener('mousemove',e=>{if(dragging){globe2D.rot+=(e.clientX-lastX)*0.01;lastX=e.clientX}});
@@ -471,16 +471,16 @@ function initGlobe2D(){
   cv.addEventListener('touchstart',e=>{dragging=true;lastX=e.touches[0].clientX});
   window.addEventListener('touchmove',e=>{if(dragging){globe2D.rot+=(e.touches[0].clientX-lastX)*0.01;lastX=e.touches[0].clientX}});
   window.addEventListener('touchend',()=>{dragging=false});
-  // 滚轮缩放
+  // 婊氳疆缂╂斁
   globe2D.zoom=1;
   cv.addEventListener('wheel',e=>{
     e.preventDefault();e.stopPropagation();
     const factor=e.deltaY<0?1.1:0.9;
     globe2D.zoom=Math.max(0.8,Math.min(3.5,globe2D.zoom*factor));
   },{passive:false});
-  // 双击放大
+  // 鍙屽嚮鏀惧ぇ
   cv.addEventListener('dblclick',()=>{globe2D.zoom=Math.min(3.5,globe2D.zoom*1.5)});
-  // 点击城市
+  // 鐐瑰嚮鍩庡競
   cv.addEventListener('click',e=>{
     const rect=cv.getBoundingClientRect();
     const mx=e.clientX-rect.left,my=e.clientY-rect.top;
@@ -490,7 +490,7 @@ function initGlobe2D(){
       const d=Math.hypot(m.sx-mx,m.sy-my);
       if(d<bd&&d<30){bd=d;best=m}
     });
-    if(best){selectTravelCity(best.id);toast('📍 '+best.city)}
+    if(best){selectTravelCity(best.id);toast('馃搷 '+best.city)}
   });
   animateGlobe2D();
 }
@@ -502,12 +502,12 @@ function animateGlobe2D(){
   const r=(Math.min(w,h)/2-20)*globe2D.zoom;
   const cx=w/2,cy=h/2;
   if(!globe2D.dragging)globe2D.rot+=0.002;
-  // 大气光晕
+  // 澶ф皵鍏夋檿
   const g=ctx.createRadialGradient(cx,cy,r*0.9,cx,cy,r*1.15);
   g.addColorStop(0,'rgba(212,168,83,0.10)');g.addColorStop(1,'rgba(212,168,83,0)');
   ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,r*1.15,0,Math.PI*2);ctx.fill();
   if(globe2D.imgReady&&globe2D.img){
-    // 逐列绘制旋转贴图球
+    // 閫愬垪缁樺埗鏃嬭浆璐村浘鐞?
     for(let x=Math.floor(cx-r);x<=cx+r;x++){
       const nx=(x-cx)/r;
       if(nx<-1||nx>1)continue;
@@ -519,17 +519,17 @@ function animateGlobe2D(){
       ctx.drawImage(globe2D.img,sx,0,colW,imgH,x-colW/2,cy-r*depth,colW,r*depth*2);
     }
   }else{
-    // 经纬线球
+    // 缁忕含绾跨悆
     ctx.strokeStyle='rgba(212,168,83,0.35)';ctx.lineWidth=1;
     for(let i=0;i<12;i++){const a=i/12*Math.PI*2+globe2D.rot;ctx.beginPath();ctx.ellipse(cx,cy,r,r*0.45,a,0,Math.PI*2);ctx.stroke()}
     for(let i=1;i<8;i++){const y=cy-r+i*r/4;ctx.beginPath();ctx.ellipse(cx,y,r*Math.sqrt(1-((i-4)/4)**2),r/4,0,Math.PI*2);ctx.stroke()}
   }
-  // 城市标记（与贴图绘制一致的投影：nx=sin(rel)，深度=cos(rel)，纬度线性映射）
+  // 鍩庡競鏍囪锛堜笌璐村浘缁樺埗涓€鑷寸殑鎶曞奖锛歯x=sin(rel)锛屾繁搴?cos(rel)锛岀含搴︾嚎鎬ф槧灏勶級
   globe2D.markers.forEach(m=>{
     const lonM=(m.lng+180)*Math.PI/180;
     let rel=lonM-globe2D.rot;
-    rel=((rel+Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-Math.PI; // 归一化到 [-π,π]
-    if(rel>Math.PI/2||rel<-Math.PI/2)return; // 背面不画
+    rel=((rel+Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-Math.PI; // 褰掍竴鍖栧埌 [-蟺,蟺]
+    if(rel>Math.PI/2||rel<-Math.PI/2)return; // 鑳岄潰涓嶇敾
     const depth=Math.cos(rel);
     m.sx=cx+r*Math.sin(rel);
     m.sy=cy-(m.lat/90)*r*depth;
@@ -553,7 +553,7 @@ function latLngToVec3(lat,lng,r){
 
 function addGlobeMarkers(){
   if(!globeMesh)return;
-  // 清除旧标记
+  // 娓呴櫎鏃ф爣璁?
   globeMarkers.forEach(m=>globeScene.remove(m));globeMarkers=[];
   globeRings.forEach(r=>globeScene.remove(r));globeRings=[];
 
@@ -563,7 +563,7 @@ function addGlobeMarkers(){
     if(isNaN(lat)||isNaN(lng))return;
     const pos=latLngToVec3(lat,lng,1.01);
 
-    // 标记点
+    // 鏍囪鐐?
     const markerGeo=new THREE.SphereGeometry(0.025,16,16);
     const isSel=t.id===selectedTravelId;
     const markerMat=new THREE.MeshBasicMaterial({color:isSel?0xff6644:0xf0d68a});
@@ -571,14 +571,14 @@ function addGlobeMarkers(){
     marker.position.copy(pos);marker.userData={travelId:t.id};
     globeScene.add(marker);globeMarkers.push(marker);
 
-    // 光晕环
+    // 鍏夋檿鐜?
     const ringGeo=new THREE.TorusGeometry(0.035,0.006,8,16);
     const ringMat=new THREE.MeshBasicMaterial({color:isSel?0xff6644:0xd4a853,transparent:true,opacity:0.5});
     const ring=new THREE.Mesh(ringGeo,ringMat);
     ring.position.copy(pos);ring.lookAt(new THREE.Vector3(0,0,0));
     globeScene.add(ring);globeRings.push(ring);
 
-    // 选中的更亮更大
+    // 閫変腑鐨勬洿浜洿澶?
     if(isSel){
       const r2=new THREE.TorusGeometry(0.06,0.01,8,24);
       const m2=new THREE.MeshBasicMaterial({color:0xff6644,transparent:true,opacity:0.8});
@@ -635,29 +635,29 @@ function selectTravelCity(tid){
   addGlobeMarkers();
   renderTravelCards();
   const travel=D.travelLog.find(t=>t.id===tid);
-  if(travel)toast(`📍 ${travel.city}${travel.country?' · '+travel.country:''}`);
+  if(travel)toast(`馃搷 ${travel.city}${travel.country?' 路 '+travel.country:''}`);
 }
 
-// ==================== 数据引擎 ====================
+// ==================== 鏁版嵁寮曟搸 ====================
 const SK='hsos5000';
 const realms=[
-  {id:'deep-reading',name:'深度阅读',icon:'📖',hname:'格兰芬多'},
-  {id:'copywriting',name:'文案炼金',icon:'✍️',hname:'拉文克劳'},
-  {id:'topic-workshop',name:'选题工坊',icon:'🔥',hname:'斯莱特林'},
-  {id:'mental-models',name:'思维模型',icon:'🧠',hname:'赫奇帕奇'},
-  {id:'info-outpost',name:'资讯哨站',icon:'📡',hname:'拉文克劳'},
-  {id:'agent-spells',name:'Agent法术',icon:'⚡',hname:'斯莱特林'},
+  {id:'deep-reading',name:'娣卞害闃呰',icon:'馃摉',hname:'鏍煎叞鑺'},
+  {id:'copywriting',name:'鏂囨鐐奸噾',icon:'鉁嶏笍',hname:'鎷夋枃鍏嬪姵'},
+  {id:'topic-workshop',name:'閫夐宸ュ潑',icon:'馃敟',hname:'鏂幈鐗规灄'},
+  {id:'mental-models',name:'鎬濈淮妯″瀷',icon:'馃',hname:'璧甯曞'},
+  {id:'info-outpost',name:'璧勮鍝ㄧ珯',icon:'馃摗',hname:'鎷夋枃鍏嬪姵'},
+  {id:'agent-spells',name:'Agent娉曟湳',icon:'鈿?,hname:'鏂幈鐗规灄'},
 ];
 const defaultSchedule=[
-  {id:'ds0',day:0,time:'08:00',subject:'《好能量》',prof:'Casey Means',house:'ravenclaw'},
-  {id:'ds1',day:0,time:'10:30',subject:'仓颉 Skill',prof:'袋鼠帝',house:'slytherin'},
-  {id:'ds2',day:0,time:'14:00',subject:'选题拆解',prof:'Notion',house:'gryffindor'},
-  {id:'ds3',day:0,time:'16:30',subject:'策略复盘',prof:'STEPPS',house:'hufflepuff'},
-  {id:'ds4',day:1,time:'08:00',subject:'《认知红利》',prof:'谢春霖',house:'ravenclaw'},
-  {id:'ds5',day:2,time:'08:00',subject:'《影响力》',prof:'Cialdini',house:'slytherin'},
-  {id:'ds6',day:3,time:'08:00',subject:'《1000个铁粉》',prof:'伍越歌',house:'gryffindor'},
-  {id:'ds7',day:4,time:'08:00',subject:'《第一性原理》',prof:'李善友',house:'ravenclaw'},
-  {id:'ds8',day:5,time:'14:00',subject:'周复盘',prof:'Obsidian',house:'gryffindor'},
+  {id:'ds0',day:0,time:'08:00',subject:'銆婂ソ鑳介噺銆?,prof:'Casey Means',house:'ravenclaw'},
+  {id:'ds1',day:0,time:'10:30',subject:'浠撻 Skill',prof:'琚嬮紶甯?,house:'slytherin'},
+  {id:'ds2',day:0,time:'14:00',subject:'閫夐鎷嗚В',prof:'Notion',house:'gryffindor'},
+  {id:'ds3',day:0,time:'16:30',subject:'绛栫暐澶嶇洏',prof:'STEPPS',house:'hufflepuff'},
+  {id:'ds4',day:1,time:'08:00',subject:'銆婅鐭ョ孩鍒┿€?,prof:'璋㈡槬闇?,house:'ravenclaw'},
+  {id:'ds5',day:2,time:'08:00',subject:'銆婂奖鍝嶅姏銆?,prof:'Cialdini',house:'slytherin'},
+  {id:'ds6',day:3,time:'08:00',subject:'銆?000涓搧绮夈€?,prof:'浼嶈秺姝?,house:'gryffindor'},
+  {id:'ds7',day:4,time:'08:00',subject:'銆婄涓€鎬у師鐞嗐€?,prof:'鏉庡杽鍙?,house:'ravenclaw'},
+  {id:'ds8',day:5,time:'14:00',subject:'鍛ㄥ鐩?,prof:'Obsidian',house:'gryffindor'},
 ];
 
 let D={selectedRealm:0,currentView:'travel',notes:{},missionTasks:[],missionLog:[],points:0,assets:[],healthLog:[],travelLog:[],archive:[],reflections:[],readings:[],quotes:[],thoughts:[],schedule:null,scheduleLog:{},settings:{currentDay:0}};
@@ -666,30 +666,30 @@ function load(){
   try{const r=localStorage.getItem(SK);if(r)D={...D,...JSON.parse(r)}}catch(e){}
   realms.forEach(r=>{if(!D.notes[r.id])D.notes[r.id]=[]});
   if(!D._inited){
-    D.notes['deep-reading']=[{id:'x1',content:'《好能量》核心：代谢健康 = 细胞能量充足',time:Date.now()-864e5}];
-    D.notes['copywriting']=[{id:'x2',content:'感官占领法：眼鼻耳舌身心',time:Date.now()-1728e5}];
-    D.missionTasks=[{id:'mt1',name:'背 100 个英语单词',tag:'english',progress:65,done:false,time:Date.now()},{id:'mt2',name:'完成 40 道数学题',tag:'math',progress:40,done:false,time:Date.now()},{id:'mt3',name:'阅读《好能量》第 6 章',tag:'reading',progress:100,done:true,time:Date.now()}];
-    D.missionLog=[{id:'ml1',text:'上午效率不错。',date:'2026-05-04',rating:'good',time:Date.now()},{id:'ml2',text:'状态一般。',date:'2026-05-03',rating:'neutral',time:Date.now()-864e5},{id:'ml3',text:'高效日！',date:'2026-05-02',rating:'good',time:Date.now()-1728e5}];
+    D.notes['deep-reading']=[{id:'x1',content:'銆婂ソ鑳介噺銆嬫牳蹇冿細浠ｈ阿鍋ュ悍 = 缁嗚優鑳介噺鍏呰冻',time:Date.now()-864e5}];
+    D.notes['copywriting']=[{id:'x2',content:'鎰熷畼鍗犻娉曪細鐪奸蓟鑰宠垖韬績',time:Date.now()-1728e5}];
+    D.missionTasks=[{id:'mt1',name:'鑳?100 涓嫳璇崟璇?,tag:'english',progress:65,done:false,time:Date.now()},{id:'mt2',name:'瀹屾垚 40 閬撴暟瀛﹂',tag:'math',progress:40,done:false,time:Date.now()},{id:'mt3',name:'闃呰銆婂ソ鑳介噺銆嬬 6 绔?,tag:'reading',progress:100,done:true,time:Date.now()}];
+    D.missionLog=[{id:'ml1',text:'涓婂崍鏁堢巼涓嶉敊銆?,date:'2026-05-04',rating:'good',time:Date.now()},{id:'ml2',text:'鐘舵€佷竴鑸€?,date:'2026-05-03',rating:'neutral',time:Date.now()-864e5},{id:'ml3',text:'楂樻晥鏃ワ紒',date:'2026-05-02',rating:'good',time:Date.now()-1728e5}];
     D.points=1120;
     const d1=new Date('2025-09-15').getTime(),d2=new Date('2025-11-20').getTime();
     D.assets=[{id:'a1',name:'MacBook Air',brand:'Apple',price:6544,buyDate:'2025-09-15',spec:'16G+512G',status:'inuse',time:d1},{id:'a2',name:'iPad Pro 12.9',brand:'Apple',price:7888,buyDate:'2025-11-20',spec:'M2 256G',status:'inuse',time:d2},{id:'a3',name:'HHKB Pro',brand:'PFU',price:1699,buyDate:'2025-06-01',spec:'Type-S',status:'inuse',time:new Date('2025-06-01').getTime()}];
     const nm=Date.now(),d24=864e5;
-    D.healthLog=[{id:'h1',type:'体重',value:'73.2',note:'晨起',time:nm-90*d24},{id:'h2',type:'体重',value:'72.8',note:'晨起',time:nm-75*d24},{id:'h3',type:'体重',value:'72.5',note:'运动后',time:nm-60*d24},{id:'h4',type:'体重',value:'72.1',note:'晨起',time:nm-45*d24},{id:'h5',type:'体重',value:'71.9',note:'晨起',time:nm-30*d24},{id:'h6',type:'体重',value:'71.6',note:'晨起',time:nm-20*d24},{id:'h7',type:'体重',value:'71.6',note:'晨起',time:nm-d24},{id:'h8',type:'睡眠',value:'7.5h',note:'深度2.1h',time:nm},{id:'h9',type:'心率',value:'62',note:'静息',time:nm},{id:'h10',type:'运动',value:'30min',note:'慢跑5km',time:nm-d24}];
-    D.travelLog=[{id:'tr1',city:'北京',country:'中国',lat:'39.90',lng:'116.41',notes:'故宫的红墙琉璃瓦在冬日的薄雪中分外庄严。在胡同里喝了一碗热豆汁儿。',time:Date.now()-120*d24},{id:'tr2',city:'京都',country:'日本',lat:'35.01',lng:'135.77',notes:'枫叶季的清水寺，落日把整座山染成金色。穿着和服在二年坂漫步。',time:Date.now()-90*d24},{id:'tr3',city:'巴黎',country:'法国',lat:'48.86',lng:'2.35',notes:'塞纳河畔的旧书摊、奥赛博物馆的印象派、蒙马特高地的街头画家。',time:Date.now()-60*d24},{id:'tr4',city:'纽约',country:'美国',lat:'40.71',lng:'-74.01',notes:'在MoMA看了梵高的星夜真迹，中央公园的秋天像一幅油画。',time:Date.now()-30*d24},{id:'tr5',city:'悉尼',country:'澳大利亚',lat:'-33.87',lng:'151.21',notes:'在邦迪海滩学会了冲浪！歌剧院在夕阳下像一片片贝壳。',time:Date.now()-5*d24},{id:'tr6',city:'冰岛',country:'冰岛',lat:'64.15',lng:'-21.94',notes:'追寻北极光的夜晚，泡在蓝湖温泉里看极光在头顶舞动。',time:Date.now()-2*d24}];
-    D.archive=[{id:'ar1',content:'2025年完成第一个Notion模板产品并上线。',time:Date.now()-2592e5*3}];
+    D.healthLog=[{id:'h1',type:'浣撻噸',value:'73.2',note:'鏅ㄨ捣',time:nm-90*d24},{id:'h2',type:'浣撻噸',value:'72.8',note:'鏅ㄨ捣',time:nm-75*d24},{id:'h3',type:'浣撻噸',value:'72.5',note:'杩愬姩鍚?,time:nm-60*d24},{id:'h4',type:'浣撻噸',value:'72.1',note:'鏅ㄨ捣',time:nm-45*d24},{id:'h5',type:'浣撻噸',value:'71.9',note:'鏅ㄨ捣',time:nm-30*d24},{id:'h6',type:'浣撻噸',value:'71.6',note:'鏅ㄨ捣',time:nm-20*d24},{id:'h7',type:'浣撻噸',value:'71.6',note:'鏅ㄨ捣',time:nm-d24},{id:'h8',type:'鐫＄湢',value:'7.5h',note:'娣卞害2.1h',time:nm},{id:'h9',type:'蹇冪巼',value:'62',note:'闈欐伅',time:nm},{id:'h10',type:'杩愬姩',value:'30min',note:'鎱㈣窇5km',time:nm-d24}];
+    D.travelLog=[{id:'tr1',city:'鍖椾含',country:'涓浗',lat:'39.90',lng:'116.41',notes:'鏁呭鐨勭孩澧欑悏鐠冪摝鍦ㄥ啲鏃ョ殑钖勯洩涓垎澶栧簞涓ャ€傚湪鑳″悓閲屽枬浜嗕竴纰楃儹璞嗘眮鍎裤€?,time:Date.now()-120*d24},{id:'tr2',city:'浜兘',country:'鏃ユ湰',lat:'35.01',lng:'135.77',notes:'鏋彾瀛ｇ殑娓呮按瀵猴紝钀芥棩鎶婃暣搴у北鏌撴垚閲戣壊銆傜┛鐫€鍜屾湇鍦ㄤ簩骞村潅婕銆?,time:Date.now()-90*d24},{id:'tr3',city:'宸撮粠',country:'娉曞浗',lat:'48.86',lng:'2.35',notes:'濉炵撼娌崇晹鐨勬棫涔︽憡銆佸ゥ璧涘崥鐗╅鐨勫嵃璞℃淳銆佽挋椹壒楂樺湴鐨勮澶寸敾瀹躲€?,time:Date.now()-60*d24},{id:'tr4',city:'绾界害',country:'缇庡浗',lat:'40.71',lng:'-74.01',notes:'鍦∕oMA鐪嬩簡姊甸珮鐨勬槦澶滅湡杩癸紝涓ぎ鍏洯鐨勭澶╁儚涓€骞呮补鐢汇€?,time:Date.now()-30*d24},{id:'tr5',city:'鎮夊凹',country:'婢冲ぇ鍒╀簹',lat:'-33.87',lng:'151.21',notes:'鍦ㄩ偊杩捣婊╁浼氫簡鍐叉氮锛佹瓕鍓ч櫌鍦ㄥ闃充笅鍍忎竴鐗囩墖璐濆３銆?,time:Date.now()-5*d24},{id:'tr6',city:'鍐板矝',country:'鍐板矝',lat:'64.15',lng:'-21.94',notes:'杩藉鍖楁瀬鍏夌殑澶滄櫄锛屾场鍦ㄨ摑婀栨俯娉夐噷鐪嬫瀬鍏夊湪澶撮《鑸炲姩銆?,time:Date.now()-2*d24}];
+    D.archive=[{id:'ar1',content:'2025骞村畬鎴愮涓€涓狽otion妯℃澘浜у搧骞朵笂绾裤€?,time:Date.now()-2592e5*3}];
     D._inited=true;save()
   }
 }
 
-function save(){try{localStorage.setItem(SK,JSON.stringify(D))}catch(e){toast('⚠️ 空间不足')}}
+function save(){try{localStorage.setItem(SK,JSON.stringify(D))}catch(e){toast('鈿狅笍 绌洪棿涓嶈冻')}}
 window.save=save;
 function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
 window.toast=toast;
 let uid=()=>'u'+Date.now()+Math.random().toString(36).slice(2,6)
-function ft(ts){const df=Date.now()-ts;if(df<6e4)return'刚刚';if(df<36e5)return Math.floor(df/6e4)+'min';if(df<864e5)return Math.floor(df/36e5)+'h';const d=new Date(ts);return`${d.getMonth()+1}/${d.getDate()}`}
+function ft(ts){const df=Date.now()-ts;if(df<6e4)return'鍒氬垰';if(df<36e5)return Math.floor(df/6e4)+'min';if(df<864e5)return Math.floor(df/36e5)+'h';const d=new Date(ts);return`${d.getMonth()+1}/${d.getDate()}`}
 function eh(s){const d=document.createElement('div');d.textContent=s;return d.innerHTML}
 
-// ==================== 航行舱 ====================
+// ==================== 鑸鑸?====================
 function renderTravel(){
   const travels=D.travelLog||[];
   const countries=new Set(travels.map(t=>t.country).filter(Boolean));
@@ -698,7 +698,7 @@ function renderTravel(){
   document.getElementById('travelCount').textContent=travels.length;
   document.getElementById('travelCountries').textContent=countries.size;
   document.getElementById('travelCities').textContent=cities.size;
-  document.getElementById('travelLast').textContent=last?last.city:'—';
+  document.getElementById('travelLast').textContent=last?last.city:'鈥?;
   renderTravelCards();
   renderTravelHeatmap();
   requestAnimationFrame(()=>{
@@ -712,7 +712,7 @@ function renderTravelHeatmap(){
   const el=document.getElementById('travelHeatmap');if(!el)return;
   const now=new Date();now.setMonth(now.getMonth()+heatMonthOffset);
   const y=now.getFullYear(),m=now.getMonth();
-  document.getElementById('heatMonthLabel').textContent=`${y}年${m+1}月`;
+  document.getElementById('heatMonthLabel').textContent=`${y}骞?{m+1}鏈坄;
   const firstDay=new Date(y,m,1);const lastDay=new Date(y,m+1,0);
   const daysInMonth=lastDay.getDate();
   const startDow=(firstDay.getDay()+6)%7; // Monday=0
@@ -730,7 +730,7 @@ function renderTravelHeatmap(){
     const key=`${y}-${m}-${d}`;const n=dayCount[key]||0;
     const p=n/maxN;
     const bg=n===0?'rgba(255,255,255,0.03)':`rgba(${180+Math.round(p*75)},${140+Math.round(p*70)},${40+Math.round(p*60)},${0.15+p*0.7})`;
-    const title=n===0?`${d}日 · 无笔记`:`${d}日 · ${n} 条笔记`;
+    const title=n===0?`${d}鏃?路 鏃犵瑪璁癭:`${d}鏃?路 ${n} 鏉＄瑪璁癭;
     html+=`<div style="width:14px;height:14px;background:${bg};border-radius:2px;cursor:default;font-size:6px;color:rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center" title="${title}">${d}</div>`;
   }
   el.innerHTML=html;
@@ -742,19 +742,19 @@ window.renderTravel=renderTravel;
 
 function renderTravelCards(){
   const travels=D.travelLog||[];
-  if(travels.length===0){document.getElementById('travelCardList').innerHTML='<div class="empty">暂无旅行记录，添加新城市吧 🌍</div>';return}
+  if(travels.length===0){document.getElementById('travelCardList').innerHTML='<div class="empty">鏆傛棤鏃呰璁板綍锛屾坊鍔犳柊鍩庡競鍚?馃實</div>';return}
   document.getElementById('travelCardList').innerHTML=travels.slice().reverse().map(t=>{
     const sel=t.id===selectedTravelId;
     return`<div class="travel-card${sel?' selected':''}" onclick="selectTravelCity('${t.id}')">
-      <div class="travel-card-img">${t.lat>0&&t.lng>0?'🏔️':t.lat>0?'🏯':t.lat<0?'🏖️':'🌆'}</div>
+      <div class="travel-card-img">${t.lat>0&&t.lng>0?'馃彅锔?:t.lat>0?'馃彲':t.lat<0?'馃彇锔?:'馃寙'}</div>
       <div class="travel-card-info">
-        <div class="travel-card-city">📍 ${eh(t.city)}</div>
+        <div class="travel-card-city">馃搷 ${eh(t.city)}</div>
         <div class="travel-card-country">${eh(t.country||'')}</div>
         <div class="travel-card-notes">${eh(t.notes||'')}</div>
       </div>
       <div class="travel-card-actions">
-        <button onclick="editTravelNotes('${t.id}');event.stopPropagation()" title="编辑笔记">✏️</button>
-        <button onclick="deleteTravel('${t.id}');event.stopPropagation()" title="删除">✕</button>
+        <button onclick="editTravelNotes('${t.id}');event.stopPropagation()" title="缂栬緫绗旇">鉁忥笍</button>
+        <button onclick="deleteTravel('${t.id}');event.stopPropagation()" title="鍒犻櫎">鉁?/button>
       </div>
     </div>`;
   }).join('');
@@ -766,45 +766,45 @@ function addTravel(){
   let lat=document.getElementById('travelLat').value.trim();
   let lng=document.getElementById('travelLng').value.trim();
   const notes=document.getElementById('travelNotes').value.trim();
-  if(!city){toast('请输入城市名');return}
-  // 自动补全坐标
+  if(!city){toast('璇疯緭鍏ュ煄甯傚悕');return}
+  // 鑷姩琛ュ叏鍧愭爣
   if((!lat||!lng)&&cityCoords[city]){
     lat=cityCoords[city][0];lng=cityCoords[city][1];
     document.getElementById('travelLat').value=lat;document.getElementById('travelLng').value=lng;
-  }if(!lat||!lng){toast('请填写纬度/经度，或使用常见城市名');return}
-  D.travelLog.push({id:uid(),city,country:country||'—',lat,lng,notes,time:Date.now()});
+  }if(!lat||!lng){toast('璇峰～鍐欑含搴?缁忓害锛屾垨浣跨敤甯歌鍩庡競鍚?);return}
+  D.travelLog.push({id:uid(),city,country:country||'鈥?,lat,lng,notes,time:Date.now()});
   save();
   ['travelCity','travelCountry','travelLat','travelLng','travelNotes'].forEach(id=>document.getElementById(id).value='');
-  renderTravel();toast('🌍 已添加 '+(city||'—'));
+  renderTravel();toast('馃實 宸叉坊鍔?'+(city||'鈥?));
 }
 window.addTravel=addTravel;
 
 function deleteTravel(id){
   D.travelLog=D.travelLog.filter(t=>t.id!==id);
   if(selectedTravelId===id)selectedTravelId=null;
-  save();renderTravel();toast('🗑️ 已删除');
+  save();renderTravel();toast('馃棏锔?宸插垹闄?);
 }
 window.deleteTravel=deleteTravel;
 
 function editTravelNotes(id){
   const travel=D.travelLog.find(t=>t.id===id);if(!travel)return;
-  const nnotes=prompt('编辑旅行笔记',travel.notes||'');
-  if(nnotes!==null){travel.notes=nnotes;save();renderTravel();toast('✏️ 笔记已更新')}
+  const nnotes=prompt('缂栬緫鏃呰绗旇',travel.notes||'');
+  if(nnotes!==null){travel.notes=nnotes;save();renderTravel();toast('鉁忥笍 绗旇宸叉洿鏂?)}
 }
 window.editTravelNotes=editTravelNotes;
 
 window.selectTravelCity=selectTravelCity;
 
-// ==================== 视图切换 ====================
+// ==================== 瑙嗗浘鍒囨崲 ====================
 function switchView(v){
   D.currentView=v;save();
   document.querySelectorAll('.navtab').forEach(t=>t.classList.toggle('active',t.dataset.view===v));
-  // 清除其他视图内容
+  // 娓呴櫎鍏朵粬瑙嗗浘鍐呭
   ['dashboard','mission','realms','schedule','assets','health','travel','archive','time','settings'].forEach(vid=>{
     const el=document.getElementById('view-'+vid);if(!el)return;
     if(vid!=='travel'&&vid!=='time'&&vid!=='dashboard')el.style.display=vid===v?'block':'none';
   });
-  // 特殊处理 travel/time/dashboard（flex 布局）
+  // 鐗规畩澶勭悊 travel/time/dashboard锛坒lex 甯冨眬锛?
   document.getElementById('view-travel').style.display=v==='travel'?'flex':'none';
   const timeEl=document.getElementById('view-time');
   if(timeEl)timeEl.style.display=v==='time'?'flex':'none';
@@ -823,7 +823,7 @@ function switchView(v){
 }
 window.switchView=switchView;
 
-// ==================== 舰桥 ====================
+// ==================== 鑸版ˉ ====================
 function renderDashboard(){
   renderDashMini();
   setTimeout(()=>{const f=document.getElementById('tmFrameDash');if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'tm-query'},'*')},800)
@@ -833,16 +833,16 @@ function renderDashMini(){
   const tn=Object.values(D.notes||{}).reduce((a,b)=>a+b.length,0);
   const tc=(D.missionTasks||[]).filter(t=>!t.done).length;
   const stats=[
-    ['📚 笔记',tn],['✅ 待办',tc],['⭐ 积分',D.points||0],
-    ['💰 资产',(D.assets||[]).length],['❤️ 健康',(D.healthLog||[]).length],['🌍 旅行',(D.travelLog||[]).length],
+    ['馃摎 绗旇',tn],['鉁?寰呭姙',tc],['猸?绉垎',D.points||0],
+    ['馃挵 璧勪骇',(D.assets||[]).length],['鉂わ笍 鍋ュ悍',(D.healthLog||[]).length],['馃實 鏃呰',(D.travelLog||[]).length],
   ];
   el.innerHTML=stats.map(s=>`<div style="background:rgba(0,0,0,0.2);border-radius:6px;padding:6px 4px;text-align:center"><div style="font-size:15px;color:var(--gold-light);font-weight:bold">${s[1]}</div><div style="font-size:8px;color:var(--dim);margin-top:1px">${s[0]}</div></div>`).join('');
 }
 
-// ==================== HTML渲染器 ====================
+// ==================== HTML娓叉煋鍣?====================
 function renderMissionHTML(){
   const now=new Date();const ye=new Date(now.getFullYear(),11,31);const dl=Math.ceil((ye-now)/864e5);
-  return `<div class="mission-grid"><div class="mission-left"><div class="card"><div class="mission-header"><div><span class="mission-title">📋 Today's Mission</span></div><div><span class="mission-date">${now.getMonth()+1}/${now.getDate()} 周${'日一二三四五六'[now.getDay()]}</span> <span class="countdown">${dl}d</span></div></div><div id="missionTaskList"></div><div style="margin-top:6px;border-top:1px solid rgba(255,255,255,0.04);padding-top:6px"><div class="add-task-row"><input id="newTaskName" placeholder="任务名称……"><select id="newTaskTag"><option value="default">默认</option><option value="english">English</option><option value="math">Math</option><option value="reading">阅读</option><option value="writing">写作</option><option value="coding">技术</option></select><button class="btn" onclick="addMissionTask()">添加</button></div></div></div><div class="card"><div class="ctitle"><span class="icon">📝</span> Mission Journal</div><div id="missionLogList" style="max-height:140px;overflow-y:auto"></div><div class="add-log-row"><textarea id="newLogText" placeholder="今日日志……" rows="1"></textarea><button class="btn" onclick="addMissionLog()" style="padding:6px 10px">记录</button></div></div></div><div class="mission-right"><div class="card points-display"><div style="font-size:9px;color:var(--dim);letter-spacing:1px;margin-bottom:2px">⭐ 积分余额</div><div class="points-value">${D.points}</div><div style="font-size:8px;color:var(--dim);margin-bottom:4px">完成任务+20 · 写日志+5 · 计时按分钟加分</div><div class="btn-row" style="justify-content:center;gap:4px"><button class="btn" onclick="addPoints(10)">+10</button><button class="btn" onclick="addPoints(50)">+50</button><button class="btn" onclick="addPoints(-10)" style="background:rgba(200,100,80,0.1);border-color:rgba(200,100,80,0.25);color:#e08070">-10</button><button class="btn" onclick="addPoints(-50)" style="background:rgba(200,100,80,0.1);border-color:rgba(200,100,80,0.25);color:#e08070">-50</button></div></div><div class="card timer-display"><div class="timer-value" id="timerDisplay">00:00:00</div><div class="timer-btns"><button class="start-btn" onclick="timerStart()">▶</button><button class="pause-btn" onclick="timerPause()">⏸</button><button class="done-btn" onclick="timerDone()">✔</button></div></div><div class="card"><div class="ctitle">📅</div><div class="cal-grid"><div class="cal-header">日</div><div class="cal-header">一</div><div class="cal-header">二</div><div class="cal-header">三</div><div class="cal-header">四</div><div class="cal-header">五</div><div class="cal-header">六</div><div id="calDays">${renderCalHTML()}</div></div></div></div></div>`;
+  return `<div class="mission-grid"><div class="mission-left"><div class="card"><div class="mission-header"><div><span class="mission-title">馃搵 Today's Mission</span></div><div><span class="mission-date">${now.getMonth()+1}/${now.getDate()} 鍛?{'鏃ヤ竴浜屼笁鍥涗簲鍏?[now.getDay()]}</span> <span class="countdown">${dl}d</span></div></div><div id="missionTaskList"></div><div style="margin-top:6px;border-top:1px solid rgba(255,255,255,0.04);padding-top:6px"><div class="add-task-row"><input id="newTaskName" placeholder="浠诲姟鍚嶇О鈥︹€?><select id="newTaskTag"><option value="default">榛樿</option><option value="english">English</option><option value="math">Math</option><option value="reading">闃呰</option><option value="writing">鍐欎綔</option><option value="coding">鎶€鏈?/option></select><button class="btn" onclick="addMissionTask()">娣诲姞</button></div></div></div><div class="card"><div class="ctitle"><span class="icon">馃摑</span> Mission Journal</div><div id="missionLogList" style="max-height:140px;overflow-y:auto"></div><div class="add-log-row"><textarea id="newLogText" placeholder="浠婃棩鏃ュ織鈥︹€? rows="1"></textarea><button class="btn" onclick="addMissionLog()" style="padding:6px 10px">璁板綍</button></div></div></div><div class="mission-right"><div class="card points-display"><div style="font-size:9px;color:var(--dim);letter-spacing:1px;margin-bottom:2px">猸?绉垎浣欓</div><div class="points-value">${D.points}</div><div style="font-size:8px;color:var(--dim);margin-bottom:4px">瀹屾垚浠诲姟+20 路 鍐欐棩蹇?5 路 璁℃椂鎸夊垎閽熷姞鍒?/div><div class="btn-row" style="justify-content:center;gap:4px"><button class="btn" onclick="addPoints(10)">+10</button><button class="btn" onclick="addPoints(50)">+50</button><button class="btn" onclick="addPoints(-10)" style="background:rgba(200,100,80,0.1);border-color:rgba(200,100,80,0.25);color:#e08070">-10</button><button class="btn" onclick="addPoints(-50)" style="background:rgba(200,100,80,0.1);border-color:rgba(200,100,80,0.25);color:#e08070">-50</button></div></div><div class="card timer-display"><div class="timer-value" id="timerDisplay">00:00:00</div><div class="timer-btns"><button class="start-btn" onclick="timerStart()">鈻?/button><button class="pause-btn" onclick="timerPause()">鈴?/button><button class="done-btn" onclick="timerDone()">鉁?/button></div></div><div class="card"><div class="ctitle">馃搮</div><div class="cal-grid"><div class="cal-header">鏃?/div><div class="cal-header">涓€</div><div class="cal-header">浜?/div><div class="cal-header">涓?/div><div class="cal-header">鍥?/div><div class="cal-header">浜?/div><div class="cal-header">鍏?/div><div id="calDays">${renderCalHTML()}</div></div></div></div></div>`;
 }
 
 function renderCalHTML(){
@@ -857,32 +857,32 @@ function renderCalHTML(){
 function setupMissionEvents(){
   const mtl=document.getElementById('missionTaskList');if(!mtl)return;
   const tasks=D.missionTasks||[];
-  if(tasks.length===0)mtl.innerHTML='<div class="empty">暂无指令</div>';
-  else mtl.innerHTML=tasks.map(t=>{const tc='tag-'+t.tag;const tn={english:'EN',math:'Math',reading:'阅',writing:'写',coding:'技',default:'默认'}[t.tag];return`<div class="mission-task"><div class="task-check${t.done?' done':''}" onclick="toggleMission('${t.id}')">${t.done?'✓':''}</div><div class="task-body"><div class="task-name${t.done?' done':''}">${eh(t.name)}</div><div class="task-meta"><span class="task-tag ${tc}">${tn}</span></div></div><div class="task-progress-container"><div class="task-progress-bar"><div class="task-progress-fill" style="width:${t.progress}%"></div></div><div class="task-percent">${t.progress}%</div></div><div class="task-actions"><button onclick="changeProgress('${t.id}',-10)">◀</button><button onclick="changeProgress('${t.id}',10)">▶</button><button onclick="deleteMission('${t.id}')">✕</button></div></div>`}).join('');
+  if(tasks.length===0)mtl.innerHTML='<div class="empty">鏆傛棤鎸囦护</div>';
+  else mtl.innerHTML=tasks.map(t=>{const tc='tag-'+t.tag;const tn={english:'EN',math:'Math',reading:'闃?,writing:'鍐?,coding:'鎶€',default:'榛樿'}[t.tag];return`<div class="mission-task"><div class="task-check${t.done?' done':''}" onclick="toggleMission('${t.id}')">${t.done?'鉁?:''}</div><div class="task-body"><div class="task-name${t.done?' done':''}">${eh(t.name)}</div><div class="task-meta"><span class="task-tag ${tc}">${tn}</span></div></div><div class="task-progress-container"><div class="task-progress-bar"><div class="task-progress-fill" style="width:${t.progress}%"></div></div><div class="task-percent">${t.progress}%</div></div><div class="task-actions"><button onclick="changeProgress('${t.id}',-10)">鈼€</button><button onclick="changeProgress('${t.id}',10)">鈻?/button><button onclick="deleteMission('${t.id}')">鉁?/button></div></div>`}).join('');
   const mll=document.getElementById('missionLogList');
   const logs=D.missionLog||[];
   if(!mll)return;
-  if(logs.length===0)mll.innerHTML='<div class="empty">暂无</div>';
-  else mll.innerHTML=logs.slice().reverse().map(l=>`<div class="log-item"><div class="log-date">${l.date}</div><div style="flex:1">${eh(l.text)}</div><div class="log-rating"><span class="good${l.rating==='good'?' active':''}" onclick="rateLog('${l.id}','good')">✓ 好</span><span class="bad${l.rating==='bad'?' active':''}" onclick="rateLog('${l.id}','bad')">✗ 差</span></div></div>`).join('');
+  if(logs.length===0)mll.innerHTML='<div class="empty">鏆傛棤</div>';
+  else mll.innerHTML=logs.slice().reverse().map(l=>`<div class="log-item"><div class="log-date">${l.date}</div><div style="flex:1">${eh(l.text)}</div><div class="log-rating"><span class="good${l.rating==='good'?' active':''}" onclick="rateLog('${l.id}','good')">鉁?濂?/span><span class="bad${l.rating==='bad'?' active':''}" onclick="rateLog('${l.id}','bad')">鉁?宸?/span></div></div>`).join('');
 }
 
 function renderRealmsHTML(){
-  let h='<div class="card"><div class="ctitle"><span class="icon">🗺️</span> 大厅幻境</div><div class="rgrid" id="realmsGrid">';
-  realms.forEach((r,i)=>{const c=(D.notes[r.id]||[]).length;h+=`<div class="rbox${i===D.selectedRealm?' active':''}" onclick="switchRealm(${i})"><div class="ricon">${r.icon}</div><div class="rname">${r.name}</div><div class="rcount">${c} 条</div></div>`});
+  let h='<div class="card"><div class="ctitle"><span class="icon">馃椇锔?/span> 澶у巺骞诲</div><div class="rgrid" id="realmsGrid">';
+  realms.forEach((r,i)=>{const c=(D.notes[r.id]||[]).length;h+=`<div class="rbox${i===D.selectedRealm?' active':''}" onclick="switchRealm(${i})"><div class="ricon">${r.icon}</div><div class="rname">${r.name}</div><div class="rcount">${c} 鏉?/div></div>`});
   h+='</div></div>';return h;
 }
 function initRealmsEvents(){}
 
 function renderScheduleHTML(){
-  let h='<div class="card"><div class="ctitle"><span class="icon">📜</span> 课表</div><div class="daynav">';
-  ['周一','周二','周三','周四','周五','周六','周日'].forEach((d,i)=>h+=`<button class="daybtn${i===D.settings.currentDay?' active':''}" data-day="${i}" onclick="switchScheduleDay(${i})">${d}</button>`);
-  h+='</div><table class="stable"><thead><tr><th>时辰</th><th>课程</th><th>教授</th><th>学院</th><th>操作</th></tr></thead><tbody id="scheduleBody"></tbody></table>';
-  h+='<div style="border-top:1px solid rgba(255,255,255,0.04);margin-top:8px;padding-top:8px"><div style="font-size:9px;color:var(--dim);margin-bottom:4px">➕ 添加课程到当前星期</div><div class="addrow" style="flex-wrap:wrap;gap:4px">';
-  h+='<input id="schTime" placeholder="时间 如09:00" style="width:90px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
-  h+='<input id="schSubject" placeholder="课程名" style="flex:1;min-width:100px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
-  h+='<input id="schProf" placeholder="教授/来源" style="width:110px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
-  h+='<select id="schHouse" style="background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none"><option value="拉文克劳">拉文克劳</option><option value="格兰芬多">格兰芬多</option><option value="斯莱特林">斯莱特林</option><option value="赫奇帕奇">赫奇帕奇</option><option value="__custom__">✏️ 自定义…</option></select>';
-  h+='<button class="btn" onclick="addScheduleItem()">➕ 添加</button></div></div></div>';
+  let h='<div class="card"><div class="ctitle"><span class="icon">馃摐</span> 璇捐〃</div><div class="daynav">';
+  ['鍛ㄤ竴','鍛ㄤ簩','鍛ㄤ笁','鍛ㄥ洓','鍛ㄤ簲','鍛ㄥ叚','鍛ㄦ棩'].forEach((d,i)=>h+=`<button class="daybtn${i===D.settings.currentDay?' active':''}" data-day="${i}" onclick="switchScheduleDay(${i})">${d}</button>`);
+  h+='</div><table class="stable"><thead><tr><th>鏃惰景</th><th>璇剧▼</th><th>鏁欐巿</th><th>瀛﹂櫌</th><th>鎿嶄綔</th></tr></thead><tbody id="scheduleBody"></tbody></table>';
+  h+='<div style="border-top:1px solid rgba(255,255,255,0.04);margin-top:8px;padding-top:8px"><div style="font-size:9px;color:var(--dim);margin-bottom:4px">鉃?娣诲姞璇剧▼鍒板綋鍓嶆槦鏈?/div><div class="addrow" style="flex-wrap:wrap;gap:4px">';
+  h+='<input id="schTime" placeholder="鏃堕棿 濡?9:00" style="width:90px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
+  h+='<input id="schSubject" placeholder="璇剧▼鍚? style="flex:1;min-width:100px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
+  h+='<input id="schProf" placeholder="鏁欐巿/鏉ユ簮" style="width:110px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
+  h+='<select id="schHouse" style="background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none"><option value="鎷夋枃鍏嬪姵">鎷夋枃鍏嬪姵</option><option value="鏍煎叞鑺">鏍煎叞鑺</option><option value="鏂幈鐗规灄">鏂幈鐗规灄</option><option value="璧甯曞">璧甯曞</option><option value="__custom__">鉁忥笍 鑷畾涔夆€?/option></select>';
+  h+='<button class="btn" onclick="addScheduleItem()">鉃?娣诲姞</button></div></div></div>';
   return h;
 }
 
@@ -910,83 +910,83 @@ function getHouseStyle(house){
 function addScheduleItem(){
   const time=document.getElementById('schTime').value.trim();
   const subject=document.getElementById('schSubject').value.trim();
-  if(!time||!subject){toast('请填写时间和课程名');return}
-  const prof=document.getElementById('schProf').value.trim()||'—';
+  if(!time||!subject){toast('璇峰～鍐欐椂闂村拰璇剧▼鍚?);return}
+  const prof=document.getElementById('schProf').value.trim()||'鈥?;
   const houseSel=document.getElementById('schHouse').value;
   let house=houseSel;
   if(houseSel==='__custom__'){
-    const custom=prompt('输入自定义学院/领域名称');
-    if(!custom){toast('已取消');return}
+    const custom=prompt('杈撳叆鑷畾涔夊闄?棰嗗煙鍚嶇О');
+    if(!custom){toast('宸插彇娑?);return}
     house=custom;
   }
   const day=D.settings.currentDay;
   if(!D.schedule||!D.schedule.length)D.schedule=JSON.parse(JSON.stringify(defaultSchedule));
   D.schedule.push({id:uid(),day,time,subject,prof,house});
-  save();renderSchedule(day);toast('📜 课程已添加');
+  save();renderSchedule(day);toast('馃摐 璇剧▼宸叉坊鍔?);
 }
 window.addScheduleItem=addScheduleItem;
 
 function delScheduleItem(id){
   if(!D.schedule||!D.schedule.length)D.schedule=JSON.parse(JSON.stringify(defaultSchedule));
   D.schedule=D.schedule.filter(s=>s.id!==id);
-  save();renderSchedule(D.settings.currentDay);toast('🗑️ 课程已删除');
+  save();renderSchedule(D.settings.currentDay);toast('馃棏锔?璇剧▼宸插垹闄?);
 }
 window.delScheduleItem=delScheduleItem;
 
 function editScheduleItem(id){
   const item=getSchedule().find(s=>s.id===id);if(!item)return;
-  const newTime=prompt('修改时间（如 09:00）',item.time);if(newTime===null)return;
-  const newSubject=prompt('修改课程名',item.subject);if(newSubject===null)return;
-  const newProf=prompt('修改教授/来源',item.prof);if(newProf===null)return;
-  const newHouse=prompt('修改学院/领域（当前：'+item.house+'，留空不变）',item.house);if(newHouse===null)return;
+  const newTime=prompt('淇敼鏃堕棿锛堝 09:00锛?,item.time);if(newTime===null)return;
+  const newSubject=prompt('淇敼璇剧▼鍚?,item.subject);if(newSubject===null)return;
+  const newProf=prompt('淇敼鏁欐巿/鏉ユ簮',item.prof);if(newProf===null)return;
+  const newHouse=prompt('淇敼瀛﹂櫌/棰嗗煙锛堝綋鍓嶏細'+item.house+'锛岀暀绌轰笉鍙橈級',item.house);if(newHouse===null)return;
   if(!D.schedule||!D.schedule.length)D.schedule=JSON.parse(JSON.stringify(defaultSchedule));
   const it=D.schedule.find(s=>s.id===id);
   if(it){it.time=newTime;it.subject=newSubject;it.prof=newProf;if(newHouse.trim())it.house=newHouse.trim()}
-  save();renderSchedule(D.settings.currentDay);toast('✏️ 课程已修改');
+  save();renderSchedule(D.settings.currentDay);toast('鉁忥笍 璇剧▼宸蹭慨鏀?);
 }
 window.editScheduleItem=editScheduleItem;
 
 function renderAssetsHTML(){
-  let h='<div class="card"><div class="ctitle"><span class="icon">🟠</span> 资产舱</div><div class="asset-stats-row">';
+  let h='<div class="card"><div class="ctitle"><span class="icon">馃煚</span> 璧勪骇鑸?/div><div class="asset-stats-row">';
   const inUse=D.assets.filter(a=>a.status==='inuse'),idle=D.assets.filter(a=>a.status==='idle'),sold=D.assets.filter(a=>a.status==='sold');
   const total=D.assets.filter(a=>a.status!=='sold').reduce((s,a)=>s+a.price,0);
   let totalDaily=0;D.assets.forEach(a=>{if(a.buyDate){const d=Math.max(1,Math.floor((Date.now()-new Date(a.buyDate).getTime())/864e5));totalDaily+=a.price/d}});
-  let maxName='—',maxDaily=0;D.assets.forEach(a=>{if(a.buyDate){const d=Math.max(1,Math.floor((Date.now()-new Date(a.buyDate).getTime())/864e5));const dd=a.price/d;if(dd>maxDaily){maxDaily=dd;maxName=a.name}}});
-  h+=`<div class="asset-stat"><div class="asset-stat-value">¥${total.toLocaleString()}</div><div class="asset-stat-label">💰 总资产</div></div>`;
-  h+=`<div class="asset-stat"><div class="asset-stat-value">¥${totalDaily.toFixed(2)}</div><div class="asset-stat-label">📊 日均</div></div>`;
-  h+=`<div class="asset-stat"><div class="asset-stat-value" style="font-size:9px">${maxName} ¥${maxDaily.toFixed(2)}</div><div class="asset-stat-label">💎 最高日均</div></div>`;
-  h+=`<div class="asset-stat"><div class="asset-stat-value">${inUse.length}/${idle.length}/${sold.length}</div><div class="asset-stat-label">📦 使/闲/出</div></div>`;
+  let maxName='鈥?,maxDaily=0;D.assets.forEach(a=>{if(a.buyDate){const d=Math.max(1,Math.floor((Date.now()-new Date(a.buyDate).getTime())/864e5));const dd=a.price/d;if(dd>maxDaily){maxDaily=dd;maxName=a.name}}});
+  h+=`<div class="asset-stat"><div class="asset-stat-value">楼${total.toLocaleString()}</div><div class="asset-stat-label">馃挵 鎬昏祫浜?/div></div>`;
+  h+=`<div class="asset-stat"><div class="asset-stat-value">楼${totalDaily.toFixed(2)}</div><div class="asset-stat-label">馃搳 鏃ュ潎</div></div>`;
+  h+=`<div class="asset-stat"><div class="asset-stat-value" style="font-size:9px">${maxName} 楼${maxDaily.toFixed(2)}</div><div class="asset-stat-label">馃拵 鏈€楂樻棩鍧?/div></div>`;
+  h+=`<div class="asset-stat"><div class="asset-stat-value">${inUse.length}/${idle.length}/${sold.length}</div><div class="asset-stat-label">馃摝 浣?闂?鍑?/div></div>`;
   h+='</div><div id="assetCardList" style="max-height:260px;overflow-y:auto"></div>';
-  h+=`<div style="border-top:1px solid rgba(255,255,255,0.04);margin-top:8px;padding-top:8px"><div class="asset-add-grid"><input class="small-input" id="assetName" placeholder="名称"><input class="small-input" id="assetBrand" placeholder="品牌"><input class="small-input" id="assetPrice" placeholder="价格 ¥"><input class="small-input" id="assetBuyDate" placeholder="购买日期" type="date"><input class="small-input asset-add-full" id="assetSpec" placeholder="规格"><select id="assetStatus" class="small-input asset-add-full" style="background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px 7px;outline:none"><option value="inuse">使用中</option><option value="idle">闲置</option><option value="sold">已出</option></select></div><div class="btn-row"><button class="btn" onclick="addAsset()">登记</button></div></div></div>`;
+  h+=`<div style="border-top:1px solid rgba(255,255,255,0.04);margin-top:8px;padding-top:8px"><div class="asset-add-grid"><input class="small-input" id="assetName" placeholder="鍚嶇О"><input class="small-input" id="assetBrand" placeholder="鍝佺墝"><input class="small-input" id="assetPrice" placeholder="浠锋牸 楼"><input class="small-input" id="assetBuyDate" placeholder="璐拱鏃ユ湡" type="date"><input class="small-input asset-add-full" id="assetSpec" placeholder="瑙勬牸"><select id="assetStatus" class="small-input asset-add-full" style="background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px 7px;outline:none"><option value="inuse">浣跨敤涓?/option><option value="idle">闂茬疆</option><option value="sold">宸插嚭</option></select></div><div class="btn-row"><button class="btn" onclick="addAsset()">鐧昏</button></div></div></div>`;
   return h;
 }
 function renderAssetItems(){
   const el=document.getElementById('assetCardList');if(!el)return;
-  if(!D.assets||D.assets.length===0){el.innerHTML='<div class="empty">暂无</div>';return}
+  if(!D.assets||D.assets.length===0){el.innerHTML='<div class="empty">鏆傛棤</div>';return}
   el.innerHTML=D.assets.map(a=>{
     const days=a.buyDate?Math.max(1,Math.floor((Date.now()-new Date(a.buyDate).getTime())/864e5)):0;
     const daily=a.buyDate?a.price/days:0;
-    const sl={inuse:'使用中',idle:'闲置',sold:'已出'}[a.status]||'使用中';
-    return`<div class="asset-item-card"><div class="asset-item-icon">${a.status==='inuse'?'💻':a.status==='idle'?'📦':'📤'}</div><div class="asset-item-info"><div class="asset-item-name">${eh(a.name)}</div><div class="asset-item-detail">${eh(a.brand||'')} · ${eh(a.spec||'')} · 购入${a.buyDate||'—'} · 持有${days}天</div></div><div class="asset-item-meta"><div class="asset-item-price">¥${a.price.toLocaleString()}</div><div class="asset-item-daily">日均¥${daily.toFixed(2)}</div><span class="asset-item-status status-${a.status}">${sl}</span></div><button class="ndel" onclick="if(confirm('确定删除「${eh(a.name)}」吗？'))delAsset('${a.id}')" title="删除此物品" style="position:absolute;top:4px;right:4px;font-size:14px;width:22px;height:22px;border-radius:50%;background:rgba(200,80,80,0.15);color:#e08070;display:flex;align-items:center;justify-content:center;z-index:2">✕</button></div>`;
+    const sl={inuse:'浣跨敤涓?,idle:'闂茬疆',sold:'宸插嚭'}[a.status]||'浣跨敤涓?;
+    return`<div class="asset-item-card"><div class="asset-item-icon">${a.status==='inuse'?'馃捇':a.status==='idle'?'馃摝':'馃摛'}</div><div class="asset-item-info"><div class="asset-item-name">${eh(a.name)}</div><div class="asset-item-detail">${eh(a.brand||'')} 路 ${eh(a.spec||'')} 路 璐叆${a.buyDate||'鈥?} 路 鎸佹湁${days}澶?/div></div><div class="asset-item-meta"><div class="asset-item-price">楼${a.price.toLocaleString()}</div><div class="asset-item-daily">鏃ュ潎楼${daily.toFixed(2)}</div><span class="asset-item-status status-${a.status}">${sl}</span></div><button class="ndel" onclick="if(confirm('纭畾鍒犻櫎銆?{eh(a.name)}銆嶅悧锛?))delAsset('${a.id}')" title="鍒犻櫎姝ょ墿鍝? style="position:absolute;top:4px;right:4px;font-size:14px;width:22px;height:22px;border-radius:50%;background:rgba(200,80,80,0.15);color:#e08070;display:flex;align-items:center;justify-content:center;z-index:2">鉁?/button></div>`;
   }).join('');
 }
 window.addAsset=function(){
   const n=document.getElementById('assetName').value.trim(),p=parseFloat(document.getElementById('assetPrice').value);
-  if(!n||!p){toast('请填名称和价格');return}
-  D.assets.push({id:uid(),name:n,brand:document.getElementById('assetBrand').value.trim()||'—',price:p,buyDate:document.getElementById('assetBuyDate').value||'—',spec:document.getElementById('assetSpec').value.trim()||'—',status:document.getElementById('assetStatus').value,time:Date.now()});
-  save();switchView('assets');toast('🟠 已登记');
+  if(!n||!p){toast('璇峰～鍚嶇О鍜屼环鏍?);return}
+  D.assets.push({id:uid(),name:n,brand:document.getElementById('assetBrand').value.trim()||'鈥?,price:p,buyDate:document.getElementById('assetBuyDate').value||'鈥?,spec:document.getElementById('assetSpec').value.trim()||'鈥?,status:document.getElementById('assetStatus').value,time:Date.now()});
+  save();switchView('assets');toast('馃煚 宸茬櫥璁?);
 };
 window.delAsset=function(id){D.assets=D.assets.filter(a=>a.id!==id);save();renderAssetItems()};
 
 function renderHealthHTML(){
-  const wh=D.healthLog.filter(h=>h.type==='体重');const lw=wh[wh.length-1];
+  const wh=D.healthLog.filter(h=>h.type==='浣撻噸');const lw=wh[wh.length-1];
   const w30=getWeightChange(30),w90=getWeightChange(90);
-  const h30=w30!==null?(w30>=0?'+':'')+w30.toFixed(1):'—',h90=w90!==null?(w90>=0?'+':'')+w90.toFixed(1):'—';
-  const abn=D.healthLog.filter(h=>h.type==='体检异常').length||5;
-  return`<div class="card"><div class="ctitle"><span class="icon">🔴</span> 生命舱</div><div class="asset-stats-row"><div class="asset-stat"><div class="asset-stat-value">${lw?lw.value:'—'}</div><div class="asset-stat-label">⚖️ 体重</div></div><div class="asset-stat"><div class="asset-stat-value" style="color:${w30<0?'#8ad4a0':'#dc8c8c'}">${h30} kg</div><div class="asset-stat-label">📉 30天</div></div><div class="asset-stat"><div class="asset-stat-value" style="color:${w90<0?'#8ad4a0':'#dc8c8c'}">${h90} kg</div><div class="asset-stat-label">📊 90天</div></div><div class="asset-stat"><div class="asset-stat-value" style="font-size:10px">${abn} 项异常</div><div class="asset-stat-label">🩺 体检</div></div></div><div style="display:grid;grid-template-columns:1fr 240px;gap:10px"><div style="background:rgba(0,0,0,0.2);border-radius:7px;padding:6px;display:flex;align-items:center;justify-content:center"><canvas id="healthChart" width="400" height="200" style="width:100%;max-width:400px"></canvas></div><div style="max-height:160px;overflow-y:auto">${(D.healthLog||[]).slice().reverse().slice(0,8).map(h=>`<div class="nitem"><div class="ncont"><b>${eh(h.type)}</b>:${eh(h.value)}${h.note?'·'+eh(h.note):''}</div><span class="nmeta">${ft(h.time)}</span></div>`).join('')}</div></div><div style="border-top:1px solid rgba(255,255,255,0.04);margin-top:6px;padding-top:6px"><div class="addrow"><select id="healthType" style="background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none;width:70px;flex-shrink:0"><option>体重</option><option>睡眠</option><option>心率</option><option>血压</option><option>运动</option><option>情绪</option><option>体检异常</option></select><input id="healthValue" placeholder="数值" style="width:60px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none;flex-shrink:0"><input id="healthNote" placeholder="备注" style="flex:1;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none"><button class="btn" onclick="addHealth()">记录</button></div></div></div>`;
+  const h30=w30!==null?(w30>=0?'+':'')+w30.toFixed(1):'鈥?,h90=w90!==null?(w90>=0?'+':'')+w90.toFixed(1):'鈥?;
+  const abn=D.healthLog.filter(h=>h.type==='浣撴寮傚父').length||5;
+  return`<div class="card"><div class="ctitle"><span class="icon">馃敶</span> 鐢熷懡鑸?/div><div class="asset-stats-row"><div class="asset-stat"><div class="asset-stat-value">${lw?lw.value:'鈥?}</div><div class="asset-stat-label">鈿栵笍 浣撻噸</div></div><div class="asset-stat"><div class="asset-stat-value" style="color:${w30<0?'#8ad4a0':'#dc8c8c'}">${h30} kg</div><div class="asset-stat-label">馃搲 30澶?/div></div><div class="asset-stat"><div class="asset-stat-value" style="color:${w90<0?'#8ad4a0':'#dc8c8c'}">${h90} kg</div><div class="asset-stat-label">馃搳 90澶?/div></div><div class="asset-stat"><div class="asset-stat-value" style="font-size:10px">${abn} 椤瑰紓甯?/div><div class="asset-stat-label">馃┖ 浣撴</div></div></div><div style="display:grid;grid-template-columns:1fr 240px;gap:10px"><div style="background:rgba(0,0,0,0.2);border-radius:7px;padding:6px;display:flex;align-items:center;justify-content:center"><canvas id="healthChart" width="400" height="200" style="width:100%;max-width:400px"></canvas></div><div style="max-height:160px;overflow-y:auto">${(D.healthLog||[]).slice().reverse().slice(0,8).map(h=>`<div class="nitem"><div class="ncont"><b>${eh(h.type)}</b>:${eh(h.value)}${h.note?'路'+eh(h.note):''}</div><span class="nmeta">${ft(h.time)}</span></div>`).join('')}</div></div><div style="border-top:1px solid rgba(255,255,255,0.04);margin-top:6px;padding-top:6px"><div class="addrow"><select id="healthType" style="background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none;width:70px;flex-shrink:0"><option>浣撻噸</option><option>鐫＄湢</option><option>蹇冪巼</option><option>琛€鍘?/option><option>杩愬姩</option><option>鎯呯华</option><option>浣撴寮傚父</option></select><input id="healthValue" placeholder="鏁板€? style="width:60px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none;flex-shrink:0"><input id="healthNote" placeholder="澶囨敞" style="flex:1;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:4px;outline:none"><button class="btn" onclick="addHealth()">璁板綍</button></div></div></div>`;
 }
 function getWeightChange(days){
-  const wh=D.healthLog.filter(h=>h.type==='体重');if(wh.length<2)return null;
+  const wh=D.healthLog.filter(h=>h.type==='浣撻噸');if(wh.length<2)return null;
   const now=Date.now(),cutoff=now-days*864e5;
   const cur=wh.reduce((a,b)=>b.time>a.time?b:a);
   const past=wh.filter(h=>h.time<=cutoff).reduce((a,b)=>!a||b.time>a.time?b:a,null);
@@ -996,9 +996,9 @@ function getWeightChange(days){
 function renderHealthChart(){
   const cv=document.getElementById('healthChart');if(!cv)return;
   const ctx=cv.getContext('2d'),W=400,H=200;
-  const data=(D.healthLog||[]).filter(h=>h.type==='体重').map(h=>({d:new Date(h.time),v:parseFloat(h.value)})).filter(h=>!isNaN(h.v));
+  const data=(D.healthLog||[]).filter(h=>h.type==='浣撻噸').map(h=>({d:new Date(h.time),v:parseFloat(h.value)})).filter(h=>!isNaN(h.v));
   ctx.clearRect(0,0,W,H);
-  if(data.length<2){ctx.fillStyle='#8a8070';ctx.font='11px Georgia';ctx.textAlign='center';ctx.fillText('数据不足',W/2,H/2);return}
+  if(data.length<2){ctx.fillStyle='#8a8070';ctx.font='11px Georgia';ctx.textAlign='center';ctx.fillText('鏁版嵁涓嶈冻',W/2,H/2);return}
   const vs=data.map(d=>d.v),min=Math.floor(Math.min(...vs)-1),max=Math.ceil(Math.max(...vs)+1),r=max-min||1;
   const pad={l:35,r:15,t:12,b:22};
   const px=x=>pad.l+(x/(data.length-1))*(W-pad.l-pad.r);
@@ -1016,16 +1016,16 @@ function renderHealthChart(){
   ctx.lineTo(px(data.length-1),H-pad.b);ctx.lineTo(px(0),H-pad.b);ctx.fillStyle=grd;ctx.fill();
   data.forEach(d=>{ctx.beginPath();ctx.arc(px(d.i||0),py(d.v),3,0,Math.PI*2);ctx.fillStyle='#f0d68a';ctx.fill()});
 }
-function addHealth(){const v=document.getElementById('healthValue').value.trim();if(!v)return;D.healthLog.push({id:uid(),type:document.getElementById('healthType').value,value:v,note:document.getElementById('healthNote').value.trim()||'',time:Date.now()});save();switchView('health');toast('🔴 已记录')}
+function addHealth(){const v=document.getElementById('healthValue').value.trim();if(!v)return;D.healthLog.push({id:uid(),type:document.getElementById('healthType').value,value:v,note:document.getElementById('healthNote').value.trim()||'',time:Date.now()});save();switchView('health');toast('馃敶 宸茶褰?)}
 window.addHealth=addHealth;
 
-function renderArchiveHTML(){return'<div class="card"><div class="ctitle"><span class="icon">📦</span> 档案馆</div><div id="archiveList" style="max-height:220px;overflow-y:auto"></div><div class="addrow"><textarea id="archiveInput" placeholder="写下值得铭记的事……" rows="2"></textarea><button class="btn" onclick="addArchive()">📦</button></div></div>';}
+function renderArchiveHTML(){return'<div class="card"><div class="ctitle"><span class="icon">馃摝</span> 妗ｆ棣?/div><div id="archiveList" style="max-height:220px;overflow-y:auto"></div><div class="addrow"><textarea id="archiveInput" placeholder="鍐欎笅鍊煎緱閾鐨勪簨鈥︹€? rows="2"></textarea><button class="btn" onclick="addArchive()">馃摝</button></div></div>';}
 function renderArchives(){
   document.getElementById('arcReflections').textContent=(D.reflections||[]).length;
   document.getElementById('arcReads').textContent=(D.readings||[]).length;
   document.getElementById('arcQuotes').textContent=(D.quotes||[]).length;
   document.getElementById('arcThoughts').textContent=(D.thoughts||[]).length;
-  // 冥想盆年份记忆瓶
+  // 鍐ユ兂鐩嗗勾浠借蹇嗙摱
   const now = new Date(); const thisYear = now.getFullYear();
   const years = []; for (let y = 2021; y <= thisYear; y++) years.push(y);
   const bottleEl = document.getElementById('memoryBottles');
@@ -1033,26 +1033,26 @@ function renderArchives(){
     if (!D._activeMemoryYear) D._activeMemoryYear = thisYear;
     bottleEl.innerHTML = years.map(y => {
       const active = y === D._activeMemoryYear;
-      return `<div class="memory-bottle${active?' active':''}" onclick="openMemoryBottle(${y})" title="${y} 年记忆">
+      return `<div class="memory-bottle${active?' active':''}" onclick="openMemoryBottle(${y})" title="${y} 骞磋蹇?>
         <div class="memory-bottle-cork"></div><div class="memory-bottle-neck"></div>
         <div class="memory-bottle-body"><div class="memory-bottle-liquid" style="height:${60+Math.random()*30}%"></div></div>
         <div class="memory-bottle-label">${y}</div></div>`;
     }).join('');
   }
-  const rl=document.getElementById('reflectionList');if(rl){const items=D.reflections||[];rl.innerHTML=items.length===0?'<div class="empty">暂无</div>':items.slice().reverse().map(r=>`<div class="nitem"><div class="ncont">${eh(r.content)}</div><span class="nmeta">${ft(r.time)}</span><button class="ndel" onclick="deleteReflection('${r.id}')">✕</button></div>`).join('')}
-  const tl=document.getElementById('thoughtList');if(tl){const items=D.thoughts||[];tl.innerHTML=items.length===0?'<div class="empty">暂无</div>':items.slice().reverse().map(t=>`<div class="nitem"><div class="ncont">${eh(t.content)}</div><span class="nmeta">${ft(t.time)}</span><button class="ndel" onclick="deleteThought('${t.id}')">✕</button></div>`).join('')}
-  const rdl=document.getElementById('readLogList');if(rdl){const items=D.readings||[];rdl.innerHTML=items.length===0?'<div class="empty">暂无</div>':items.slice().reverse().map(r=>`<div class="nitem"><div class="ncont"><b>${eh(r.title)}</b> · ${eh(r.author)} · ${eh(r.status)}</div><span class="nmeta">${ft(r.time)}</span><button class="ndel" onclick="deleteReading('${r.id}')">✕</button></div>`).join('')}
-  const ql=document.getElementById('quoteList');if(ql){const items=D.quotes||[];ql.innerHTML=items.length===0?'<div class="empty">暂无</div>':items.slice().reverse().map(q=>`<div class="nitem"><div class="ncont">${eh(q.text)} <span style="color:var(--gold-light);font-size:9px">— ${eh(q.source)}</span></div><span class="nmeta">${ft(q.time)}</span><button class="ndel" onclick="deleteQuote('${q.id}')">✕</button></div>`).join('')}
+  const rl=document.getElementById('reflectionList');if(rl){const items=D.reflections||[];rl.innerHTML=items.length===0?'<div class="empty">鏆傛棤</div>':items.slice().reverse().map(r=>`<div class="nitem"><div class="ncont">${eh(r.content)}</div><span class="nmeta">${ft(r.time)}</span><button class="ndel" onclick="deleteReflection('${r.id}')">鉁?/button></div>`).join('')}
+  const tl=document.getElementById('thoughtList');if(tl){const items=D.thoughts||[];tl.innerHTML=items.length===0?'<div class="empty">鏆傛棤</div>':items.slice().reverse().map(t=>`<div class="nitem"><div class="ncont">${eh(t.content)}</div><span class="nmeta">${ft(t.time)}</span><button class="ndel" onclick="deleteThought('${t.id}')">鉁?/button></div>`).join('')}
+  const rdl=document.getElementById('readLogList');if(rdl){const items=D.readings||[];rdl.innerHTML=items.length===0?'<div class="empty">鏆傛棤</div>':items.slice().reverse().map(r=>`<div class="nitem"><div class="ncont"><b>${eh(r.title)}</b> 路 ${eh(r.author)} 路 ${eh(r.status)}</div><span class="nmeta">${ft(r.time)}</span><button class="ndel" onclick="deleteReading('${r.id}')">鉁?/button></div>`).join('')}
+  const ql=document.getElementById('quoteList');if(ql){const items=D.quotes||[];ql.innerHTML=items.length===0?'<div class="empty">鏆傛棤</div>':items.slice().reverse().map(q=>`<div class="nitem"><div class="ncont">${eh(q.text)} <span style="color:var(--gold-light);font-size:9px">鈥?${eh(q.source)}</span></div><span class="nmeta">${ft(q.time)}</span><button class="ndel" onclick="deleteQuote('${q.id}')">鉁?/button></div>`).join('')}
 }
-function addArchive(){const i=document.getElementById('archiveInput'),c=i.value.trim();if(!c)return;D.archive.push({id:uid(),content:c,time:Date.now()});save();switchView('archive');toast('📦 已归档')}
+function addArchive(){const i=document.getElementById('archiveInput'),c=i.value.trim();if(!c)return;D.archive.push({id:uid(),content:c,time:Date.now()});save();switchView('archive');toast('馃摝 宸插綊妗?)}
 window.addArchive=addArchive;
-function addReflection(){const i=document.getElementById('reflectionInput'),c=i.value.trim();if(!c)return;D.reflections.push({id:uid(),content:c,time:Date.now()});save();switchView('archive');toast('📝 已复盘')}
+function addReflection(){const i=document.getElementById('reflectionInput'),c=i.value.trim();if(!c)return;D.reflections.push({id:uid(),content:c,time:Date.now()});save();switchView('archive');toast('馃摑 宸插鐩?)}
 window.addReflection=addReflection;
-function addReading(){const t=document.getElementById('readTitle').value.trim();if(!t)return;D.readings.push({id:uid(),title:t,author:document.getElementById('readAuthor').value.trim()||'—',status:document.getElementById('readStatus').value.trim()||'在读',time:Date.now()});save();switchView('archive');toast('📖 已记录')}
+function addReading(){const t=document.getElementById('readTitle').value.trim();if(!t)return;D.readings.push({id:uid(),title:t,author:document.getElementById('readAuthor').value.trim()||'鈥?,status:document.getElementById('readStatus').value.trim()||'鍦ㄨ',time:Date.now()});save();switchView('archive');toast('馃摉 宸茶褰?)}
 window.addReading=addReading;
-function addQuote(){const t=document.getElementById('quoteText').value.trim();if(!t)return;D.quotes.push({id:uid(),text:t,source:document.getElementById('quoteSource').value.trim()||'—',time:Date.now()});save();switchView('archive');toast('✍️ 已摘录')}
+function addQuote(){const t=document.getElementById('quoteText').value.trim();if(!t)return;D.quotes.push({id:uid(),text:t,source:document.getElementById('quoteSource').value.trim()||'鈥?,time:Date.now()});save();switchView('archive');toast('鉁嶏笍 宸叉憳褰?)}
 window.addQuote=addQuote;
-function addThought(){const i=document.getElementById('thoughtInput'),c=i.value.trim();if(!c)return;D.thoughts.push({id:uid(),content:c,time:Date.now()});save();switchView('archive');toast('💭 已记录')}
+function addThought(){const i=document.getElementById('thoughtInput'),c=i.value.trim();if(!c)return;D.thoughts.push({id:uid(),content:c,time:Date.now()});save();switchView('archive');toast('馃挱 宸茶褰?)}
 window.addThought=addThought;
 function deleteReflection(id){D.reflections=D.reflections.filter(r=>r.id!==id);save();switchView('archive')}
 window.deleteReflection=deleteReflection;
@@ -1064,14 +1064,14 @@ function deleteThought(id){D.thoughts=D.thoughts.filter(t=>t.id!==id);save();swi
 window.deleteThought=deleteThought;
 window.deleteThought=deleteThought;
 
-// ========= 番茄钟 =========
+// ========= 鐣寗閽?=========
 let pomoSeconds=25*60,pomoLeft=25*60,pomoRunning=false,pomoInterval=null;
-function setPomodoro(min){pomoSeconds=min*60;pomoLeft=pomoSeconds;pomoRunning=false;clearInterval(pomoInterval);updatePomoDisplay();document.getElementById('pomoToggle').textContent='▶ 开始';toast('🍅 '+min+'分钟')}
+function setPomodoro(min){pomoSeconds=min*60;pomoLeft=pomoSeconds;pomoRunning=false;clearInterval(pomoInterval);updatePomoDisplay();document.getElementById('pomoToggle').textContent='鈻?寮€濮?;toast('馃崊 '+min+'鍒嗛挓')}
 window.setPomodoro=setPomodoro;
 function togglePomodoro(){
-  if(pomoRunning){pomoRunning=false;clearInterval(pomoInterval);document.getElementById('pomoToggle').textContent='▶ 开始';return}
-  pomoRunning=true;document.getElementById('pomoToggle').textContent='⏸ 暂停';
-  pomoInterval=setInterval(()=>{pomoLeft--;updatePomoDisplay();if(pomoLeft<=0){pomoRunning=false;clearInterval(pomoInterval);document.getElementById('pomoToggle').textContent='▶ 开始';toast('🍅 时间到！')}},1000)
+  if(pomoRunning){pomoRunning=false;clearInterval(pomoInterval);document.getElementById('pomoToggle').textContent='鈻?寮€濮?;return}
+  pomoRunning=true;document.getElementById('pomoToggle').textContent='鈴?鏆傚仠';
+  pomoInterval=setInterval(()=>{pomoLeft--;updatePomoDisplay();if(pomoLeft<=0){pomoRunning=false;clearInterval(pomoInterval);document.getElementById('pomoToggle').textContent='鈻?寮€濮?;toast('馃崊 鏃堕棿鍒帮紒')}},1000)
 }
 window.togglePomodoro=togglePomodoro;
 function updatePomoDisplay(){const el=document.getElementById('pomoClock');if(!el)return;const m=Math.floor(pomoLeft/60),s=pomoLeft%60;document.getElementById('pomoClock').textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`}
@@ -1080,29 +1080,29 @@ function openMemoryBottle(year){
   D._activeMemoryYear = year; save();
   const bottleEl = document.getElementById('memoryBottles');
   bottleEl.querySelectorAll('.memory-bottle').forEach((b,i)=>{b.classList.toggle('active',parseInt(b.querySelector('.memory-bottle-label').textContent)===year)});
-  // 收集该年份所有记忆
+  // 鏀堕泦璇ュ勾浠芥墍鏈夎蹇?
   const yStart = new Date(year,0,1).getTime(), yEnd = new Date(year+1,0,1).getTime();
   const allMemories = [];
-  (D.reflections||[]).forEach(r=>{if(r.time>=yStart&&r.time<yEnd)allMemories.push({type:'📝复盘',text:r.content,time:r.time})});
-  (D.thoughts||[]).forEach(t=>{if(t.time>=yStart&&t.time<yEnd)allMemories.push({type:'💭思考',text:t.content,time:t.time})});
-  (D.quotes||[]).forEach(q=>{if(q.time>=yStart&&q.time<yEnd)allMemories.push({type:'✍️摘录',text:q.text+' — '+q.source,time:q.time})});
-  (D.readings||[]).forEach(r=>{if(r.time>=yStart&&r.time<yEnd)allMemories.push({type:'📖阅读',text:r.title+' · '+r.author+' · '+r.status,time:r.time})});
+  (D.reflections||[]).forEach(r=>{if(r.time>=yStart&&r.time<yEnd)allMemories.push({type:'馃摑澶嶇洏',text:r.content,time:r.time})});
+  (D.thoughts||[]).forEach(t=>{if(t.time>=yStart&&t.time<yEnd)allMemories.push({type:'馃挱鎬濊€?,text:t.content,time:t.time})});
+  (D.quotes||[]).forEach(q=>{if(q.time>=yStart&&q.time<yEnd)allMemories.push({type:'鉁嶏笍鎽樺綍',text:q.text+' 鈥?'+q.source,time:q.time})});
+  (D.readings||[]).forEach(r=>{if(r.time>=yStart&&r.time<yEnd)allMemories.push({type:'馃摉闃呰',text:r.title+' 路 '+r.author+' 路 '+r.status,time:r.time})});
   allMemories.sort((a,b)=>b.time-a.time);
-  // 找或创建冥想盆面板
+  // 鎵炬垨鍒涘缓鍐ユ兂鐩嗛潰鏉?
   let basin = document.getElementById('memoryBasin');
   if (!basin) {
     basin = document.createElement('div'); basin.id = 'memoryBasin';
     basin.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:rgba(15,10,25,0.95);backdrop-filter:blur(20px);border:1px solid rgba(212,168,83,0.3);border-radius:16px;padding:24px;min-width:400px;max-width:600px;max-height:70vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.6)';
-    basin.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:16px;font-weight:bold;color:var(--gold-light);letter-spacing:2px">🧪 冥想盆 <span id="basinYear"></span></div><button id="closeBasin" style="background:none;border:none;color:var(--dim);cursor:pointer;font-size:18px">✕</button></div><div id="basinContent"></div>';
+    basin.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><div style="font-size:16px;font-weight:bold;color:var(--gold-light);letter-spacing:2px">馃И 鍐ユ兂鐩?<span id="basinYear"></span></div><button id="closeBasin" style="background:none;border:none;color:var(--dim);cursor:pointer;font-size:18px">鉁?/button></div><div id="basinContent"></div>';
     document.body.appendChild(basin);
     document.getElementById('closeBasin').addEventListener('click',()=>basin.style.display='none');
   }
   basin.style.display = 'block';
-  document.getElementById('basinYear').textContent = year+' 年';
+  document.getElementById('basinYear').textContent = year+' 骞?;
   const content = document.getElementById('basinContent');
-  if (allMemories.length === 0) content.innerHTML = '<div class="empty" style="padding:30px">🧪 这一年还没有记忆……<br><span style="font-size:10px">在复盘日记、碎片思考、好词好句或阅读记录中添加属于这一年的内容</span></div>';
+  if (allMemories.length === 0) content.innerHTML = '<div class="empty" style="padding:30px">馃И 杩欎竴骞磋繕娌℃湁璁板繂鈥︹€?br><span style="font-size:10px">鍦ㄥ鐩樻棩璁般€佺鐗囨€濊€冦€佸ソ璇嶅ソ鍙ユ垨闃呰璁板綍涓坊鍔犲睘浜庤繖涓€骞寸殑鍐呭</span></div>';
   else content.innerHTML = allMemories.map(m => `<div class="nitem" style="padding:8px 6px"><div class="ncont"><span style="font-size:9px;color:var(--gold-light)">${m.type}</span> ${eh(m.text)}</div><span class="nmeta">${new Date(m.time).toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}</span></div>`).join('');
-  // 点击遮罩关闭
+  // 鐐瑰嚮閬僵鍏抽棴
   if (!document.getElementById('basinOverlay')) {
     const ov = document.createElement('div'); ov.id = 'basinOverlay';
     ov.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:9998;background:rgba(0,0,0,0.4)';
@@ -1112,69 +1112,69 @@ function openMemoryBottle(year){
 }
 window.openMemoryBottle = openMemoryBottle;
 
-// ==================== 指令站全局函数 ====================
+// ==================== 鎸囦护绔欏叏灞€鍑芥暟 ====================
 window.addMissionTask=function(){const n=document.getElementById('newTaskName').value.trim();if(!n)return;D.missionTasks.push({id:uid(),name:n,tag:document.getElementById('newTaskTag').value,progress:0,done:false,time:Date.now()});D.points+=5;save();switchView('mission')};
 window.toggleMission=function(id){D.missionTasks=D.missionTasks.map(t=>t.id===id?{...t,done:!t.done,progress:t.done?t.progress:100}:t);if(D.missionTasks.find(t=>t.id===id)?.done)D.points+=20;save();switchView('mission')};
 window.changeProgress=function(id,d){D.missionTasks=D.missionTasks.map(t=>{if(t.id!==id)return t;const np=Math.max(0,Math.min(100,t.progress+d));return{...t,progress:np,done:np>=100}});save();switchView('mission')};
 window.deleteMission=function(id){D.missionTasks=D.missionTasks.filter(t=>t.id!==id);save();switchView('mission')};
 window.addMissionLog=function(){const t=document.getElementById('newLogText').value.trim();if(!t)return;D.missionLog.push({id:uid(),text:t,date:new Date().toISOString().split('T')[0],rating:'neutral',time:Date.now()});D.points+=5;save();switchView('mission')};
 window.rateLog=function(id,r){D.missionLog=D.missionLog.map(l=>l.id===id?{...l,rating:l.rating===r?'neutral':r}:l);save();switchView('mission')};
-window.addPoints=function(n){D.points=Math.max(0,D.points+n);save();switchView('mission');toast((n>0?'⭐ +':'➖ ')+Math.abs(n))};
+window.addPoints=function(n){D.points=Math.max(0,D.points+n);save();switchView('mission');toast((n>0?'猸?+':'鉃?')+Math.abs(n))};
 
 let ti=null,ts=0,tr=false;
 window.timerStart=function(){if(tr)return;tr=true;ti=setInterval(()=>{ts++;const el=document.getElementById('timerDisplay');if(el)el.textContent=fmtTimer(ts)},1000)};
 window.timerPause=function(){tr=false;clearInterval(ti)};
-window.timerDone=function(){timerPause();if(ts>0){D.points+=Math.floor(ts/60);toast('⏱️ +'+Math.floor(ts/60))}ts=0;save();switchView('mission')};
+window.timerDone=function(){timerPause();if(ts>0){D.points+=Math.floor(ts/60);toast('鈴憋笍 +'+Math.floor(ts/60))}ts=0;save();switchView('mission')};
 function fmtTimer(s){const h=Math.floor(s/3600),m=Math.floor(s%3600/60),ss=s%60;return`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(ss).padStart(2,'0')}`}
 
-// ==================== 知识幻境 ====================
+// ==================== 鐭ヨ瘑骞诲 ====================
 function switchRealm(i){D.selectedRealm=i;save();renderRealmsHTML();document.getElementById('view-realms').innerHTML=renderRealmsHTML();renderRealmNotes()}
 window.switchRealm=switchRealm;
 function renderRealmNotes(){
   const r=realms[D.selectedRealm],ns=D.notes[r.id]||[];
   const t=document.getElementById('realmNotesTitle');if(t)t.textContent=`${r.icon} ${r.name}`;
   const l=document.getElementById('notesList'),e=document.getElementById('notesEmpty');if(!l)return;
-  if(ns.length===0){if(e)e.style.display='block';l.innerHTML=''}else{if(e)e.style.display='none';l.innerHTML=ns.slice().reverse().map(n=>`<div class="nitem"><div class="ncont">${eh(n.content)}</div><span class="nmeta">${ft(n.time)}</span><button class="ndel" onclick="delNote('${r.id}','${n.id}')">✕</button></div>`).join('')}
+  if(ns.length===0){if(e)e.style.display='block';l.innerHTML=''}else{if(e)e.style.display='none';l.innerHTML=ns.slice().reverse().map(n=>`<div class="nitem"><div class="ncont">${eh(n.content)}</div><span class="nmeta">${ft(n.time)}</span><button class="ndel" onclick="delNote('${r.id}','${n.id}')">鉁?/button></div>`).join('')}
 }
 function addNote(){const i=document.getElementById('addNoteInput'),c=i.value.trim();if(!c)return;const r=realms[D.selectedRealm];D.notes[r.id].push({id:uid(),content:c,time:Date.now()});save();i.value='';renderRealmNotes()}
 window.addNote=addNote;
 function delNote(rid,nid){D.notes[rid]=D.notes[rid].filter(n=>n.id!==nid);save();renderRealmNotes()}
 
-// ==================== 课表 ====================
-function renderSchedule(day){D.settings.currentDay=day;save();const ds=getSchedule().filter(s=>s.day===day).sort((a,b)=>a.time.localeCompare(b.time));const tb=document.getElementById('scheduleBody');if(!tb)return;if(ds.length===0){tb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:10px;color:var(--dim);font-style:italic">🛌 无课</td></tr>';return}tb.innerHTML=ds.map(s=>{const st=D.scheduleLog&&D.scheduleLog[s.id];const badge=st==='running'?'<span style="font-size:8px;color:var(--gold-light);background:rgba(212,168,83,0.2);border-radius:4px;padding:1px 5px">⏳计时中</span>':st==='done'?'<span style="font-size:8px;color:#8ad4a0;background:rgba(80,180,120,0.15);border-radius:4px;padding:1px 5px">✓已计时</span>':'';return `<tr><td class="stime">${s.time}</td><td>${eh(s.subject)} ${badge}</td><td class="sprof">${eh(s.prof)}</td><td><span class="hbadge" style="${getHouseStyle(s.house)}">${s.house.slice(0,2)}</span></td><td><div style="display:flex;gap:3px;align-items:center"><button class="ndel" onclick="tmStartFromSchedule('${s.id}')" title="在时光机开始计时" style="color:var(--gold-light);font-size:13px">⏱</button><button class="ndel" onclick="editScheduleItem('${s.id}')" title="编辑" style="color:#8ad4a0">✏️</button><button class="ndel" onclick="if(confirm('删除「${eh(s.subject)}」？'))delScheduleItem('${s.id}')" title="删除" style="color:#e08070">✕</button></div></td></tr>`}).join('');document.querySelectorAll('.daybtn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.day)===day))}
+// ==================== 璇捐〃 ====================
+function renderSchedule(day){D.settings.currentDay=day;save();const ds=getSchedule().filter(s=>s.day===day).sort((a,b)=>a.time.localeCompare(b.time));const tb=document.getElementById('scheduleBody');if(!tb)return;if(ds.length===0){tb.innerHTML='<tr><td colspan="5" style="text-align:center;padding:10px;color:var(--dim);font-style:italic">馃泴 鏃犺</td></tr>';return}tb.innerHTML=ds.map(s=>{const st=D.scheduleLog&&D.scheduleLog[s.id];const badge=st==='running'?'<span style="font-size:8px;color:var(--gold-light);background:rgba(212,168,83,0.2);border-radius:4px;padding:1px 5px">鈴宠鏃朵腑</span>':st==='done'?'<span style="font-size:8px;color:#8ad4a0;background:rgba(80,180,120,0.15);border-radius:4px;padding:1px 5px">鉁撳凡璁℃椂</span>':'';return `<tr><td class="stime">${s.time}</td><td>${eh(s.subject)} ${badge}</td><td class="sprof">${eh(s.prof)}</td><td><span class="hbadge" style="${getHouseStyle(s.house)}">${s.house.slice(0,2)}</span></td><td><div style="display:flex;gap:3px;align-items:center"><button class="ndel" onclick="tmStartFromSchedule('${s.id}')" title="鍦ㄦ椂鍏夋満寮€濮嬭鏃? style="color:var(--gold-light);font-size:13px">鈴?/button><button class="ndel" onclick="editScheduleItem('${s.id}')" title="缂栬緫" style="color:#8ad4a0">鉁忥笍</button><button class="ndel" onclick="if(confirm('鍒犻櫎銆?{eh(s.subject)}銆嶏紵'))delScheduleItem('${s.id}')" title="鍒犻櫎" style="color:#e08070">鉁?/button></div></td></tr>`}).join('');document.querySelectorAll('.daybtn').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.day)===day))}
 function tmStartFromSchedule(id){
   const item=getSchedule().find(s=>s.id===id);if(!item)return;
   const f=document.getElementById('tmFrame');
-  if(!f||!f.contentWindow){toast('请先打开时光机页面');return}
-  f.contentWindow.postMessage({source:'hogwarts',type:'tm-start',name:item.subject+' · '+item.time,note:item.prof},'*');
+  if(!f||!f.contentWindow){toast('璇峰厛鎵撳紑鏃跺厜鏈洪〉闈?);return}
+  f.contentWindow.postMessage({source:'hogwarts',type:'tm-start',name:item.subject+' 路 '+item.time,note:item.prof},'*');
   if(!D.scheduleLog)D.scheduleLog={};D.scheduleLog[id]='running';save();
-  toast('⏱ 已在时光机开始计时：'+item.subject);
+  toast('鈴?宸插湪鏃跺厜鏈哄紑濮嬭鏃讹細'+item.subject);
 }
 window.tmStartFromSchedule=tmStartFromSchedule;
 
-// ==================== 导出/导入/Notion ====================
-function exportJSON(){const b=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);const n=new Date();a.download=`h-${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}.json`;a.click();toast('📥')}
+// ==================== 瀵煎嚭/瀵煎叆/Notion ====================
+function exportJSON(){const b=new Blob([JSON.stringify(D,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);const n=new Date();a.download=`h-${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}.json`;a.click();toast('馃摜')}
 window.exportJSON=exportJSON;
-function importJSON(input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=function(e){try{const d=JSON.parse(e.target.result);D={...D,...d};D._inited=true;realms.forEach(rr=>{if(!D.notes[rr.id])D.notes[rr.id]=[];if(!Array.isArray(D.notes[rr.id]))D.notes[rr.id]=[]});['missionTasks','missionLog','assets','healthLog','travelLog','archive'].forEach(k=>{if(!Array.isArray(D[k]))D[k]=[]});save();switchView(D.currentView||'travel');toast('📤')}catch(err){toast('❌')}};r.readAsText(f)}
+function importJSON(input){const f=input.files[0];if(!f)return;const r=new FileReader();r.onload=function(e){try{const d=JSON.parse(e.target.result);D={...D,...d};D._inited=true;realms.forEach(rr=>{if(!D.notes[rr.id])D.notes[rr.id]=[];if(!Array.isArray(D.notes[rr.id]))D.notes[rr.id]=[]});['missionTasks','missionLog','assets','healthLog','travelLog','archive'].forEach(k=>{if(!Array.isArray(D[k]))D[k]=[]});save();switchView(D.currentView||'travel');toast('馃摛')}catch(err){toast('鉂?)}};r.readAsText(f)}
 window.importJSON=importJSON;
 const NDB='1f160899-a81a-410d-a42f-9c4ffde66460';
-async function testNotion(){const k=document.getElementById('notionKey').value.trim();if(!k)return;if(k)localStorage.setItem('nk_h',k);const s=document.getElementById('notionStatus');s.textContent='⏳…';try{const r=await fetch('https://api.notion.com/v1/users/me',{headers:{'Authorization':'***'+k,'Notion-Version':'2025-09-03'}});s.textContent=r.ok?`✅`:'❌'}catch(e){s.textContent='❌'}}
+async function testNotion(){const k=document.getElementById('notionKey').value.trim();if(!k)return;if(k)localStorage.setItem('nk_h',k);const s=document.getElementById('notionStatus');s.textContent='鈴斥€?;try{const r=await fetch('https://api.notion.com/v1/users/me',{headers:{'Authorization':'***'+k,'Notion-Version':'2025-09-03'}});s.textContent=r.ok?`鉁卄:'鉂?}catch(e){s.textContent='鉂?}}
 window.testNotion=testNotion;
-async function syncToNotion(){const k=document.getElementById('notionKey').value.trim()||localStorage.getItem('nk_h')||'';if(!k)return;const r=realms[D.selectedRealm],ns=D.notes[r.id]||[];if(ns.length===0)return;const s=document.getElementById('notionStatus');s.textContent='⏳…';let o=0,f=0;for(const n of ns){try{const rp=await fetch('https://api.notion.com/v1/pages',{method:'POST',headers:{'Authorization':'***'+k,'Notion-Version':'2025-09-03','Content-Type':'application/json'},body:JSON.stringify({parent:{database_id:NDB},properties:{Name:{title:[{text:{content:n.content.slice(0,60)}}]},精读摘要:{rich_text:[{text:{content:n.content}}]},Status:{select:{name:'待整理'}},Category:{select:{name:'使用技巧'}},'Tags AI':{rich_text:[{text:{content:r.name}}]}}})});rp.ok?o++:f++}catch(e){f++}}s.textContent=`✅${o}/${ns.length}`;toast('📡')}
+async function syncToNotion(){const k=document.getElementById('notionKey').value.trim()||localStorage.getItem('nk_h')||'';if(!k)return;const r=realms[D.selectedRealm],ns=D.notes[r.id]||[];if(ns.length===0)return;const s=document.getElementById('notionStatus');s.textContent='鈴斥€?;let o=0,f=0;for(const n of ns){try{const rp=await fetch('https://api.notion.com/v1/pages',{method:'POST',headers:{'Authorization':'***'+k,'Notion-Version':'2025-09-03','Content-Type':'application/json'},body:JSON.stringify({parent:{database_id:NDB},properties:{Name:{title:[{text:{content:n.content.slice(0,60)}}]},绮捐鎽樿:{rich_text:[{text:{content:n.content}}]},Status:{select:{name:'寰呮暣鐞?}},Category:{select:{name:'浣跨敤鎶€宸?}},'Tags AI':{rich_text:[{text:{content:r.name}}]}}})});rp.ok?o++:f++}catch(e){f++}}s.textContent=`鉁?{o}/${ns.length}`;toast('馃摗')}
 window.syncToNotion=syncToNotion;
 
-// ==================== 时钟 ====================
+// ==================== 鏃堕挓 ====================
 function updClock(){
   const n=new Date();
   const t=`${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}:${String(n.getSeconds()).padStart(2,'0')}`;
-  const d=`${n.getFullYear()}年${n.getMonth()+1}月${n.getDate()}日 周${'日一二三四五六'[n.getDay()]}`;
+  const d=`${n.getFullYear()}骞?{n.getMonth()+1}鏈?{n.getDate()}鏃?鍛?{'鏃ヤ竴浜屼笁鍥涗簲鍏?[n.getDay()]}`;
   const el1=document.getElementById('clock'),el2=document.getElementById('dateDisplay');
   if(el1)el1.textContent=t;if(el2)el2.textContent=d;
   updatePomoDisplay();
   renderRecentNotes();
 }
 
-// ==================== 启动 ====================
+// ==================== 鍚姩 ====================
 load();
 document.getElementById('notionKey').value=localStorage.getItem('nk_h')||'';
 
@@ -1186,8 +1186,8 @@ function renderRecentNotes(){
   const el=document.getElementById('recentNotesList');if(!el)return;
   const all=[];realms.forEach(r=>{(D.notes[r.id]||[]).forEach(n=>all.push({id:n.id,realmId:r.id,text:n.content,time:n.time,realm:r.name}))});
   all.sort((a,b)=>b.time-a.time);const latest=all.slice(0,6);
-  if(latest.length===0){el.innerHTML='<div class="empty" style="font-size:10px">暂无笔记</div>';return}
-  el.innerHTML=latest.map(n=>`<div class="nitem" style="font-size:10px"><div class="ncont">${eh(n.text.slice(0,50)+(n.text.length>50?'…':''))} <span style="color:var(--gold-light);font-size:8px">· ${n.realm}</span></div><span class="nmeta">${ft(n.time)}</span><button class="ndel" onclick="if(confirm('删除这条笔记？'))delNote('${n.realmId}','${n.id}')" title="删除" style="color:#e08070;font-size:12px">✕</button></div>`).join('');
+  if(latest.length===0){el.innerHTML='<div class="empty" style="font-size:10px">鏆傛棤绗旇</div>';return}
+  el.innerHTML=latest.map(n=>`<div class="nitem" style="font-size:10px"><div class="ncont">${eh(n.text.slice(0,50)+(n.text.length>50?'鈥?:''))} <span style="color:var(--gold-light);font-size:8px">路 ${n.realm}</span></div><span class="nmeta">${ft(n.time)}</span><button class="ndel" onclick="if(confirm('鍒犻櫎杩欐潯绗旇锛?))delNote('${n.realmId}','${n.id}')" title="鍒犻櫎" style="color:#e08070;font-size:12px">鉁?/button></div>`).join('');
 }
 
 switchView('travel');
@@ -1197,19 +1197,19 @@ document.addEventListener('click',e=>{
   if(e.target.closest('#globeContainer canvas'))handleGlobeClick(e);
 });
 
-// 时光机 ↔ 课表联动：监听时光机消息
+// 鏃跺厜鏈?鈫?璇捐〃鑱斿姩锛氱洃鍚椂鍏夋満娑堟伅
 window.addEventListener('message',e=>{
   const d=e.data||{};
   if(d.source!=='timemachine')return;
   if(d.type==='tm-started'){
-    toast('⏳ 时光机开始计时：'+(d.name||''));
-    // 尝试匹配课表：找到名称相同且未计时的课程标记为计时中
+    toast('鈴?鏃跺厜鏈哄紑濮嬭鏃讹細'+(d.name||''));
+    // 灏濊瘯鍖归厤璇捐〃锛氭壘鍒板悕绉扮浉鍚屼笖鏈鏃剁殑璇剧▼鏍囪涓鸿鏃朵腑
     if(D.scheduleLog){Object.keys(D.scheduleLog).forEach(k=>{if(D.scheduleLog[k]==='running')D.scheduleLog[k]='done'})}
     renderSchedule(D.settings.currentDay);
   }
   if(d.type==='tm-stopped'){
-    toast('⏹ 时光机已停止计时');
-    // 把所有计时中的课标记为已完成
+    toast('鈴?鏃跺厜鏈哄凡鍋滄璁℃椂');
+    // 鎶婃墍鏈夎鏃朵腑鐨勮鏍囪涓哄凡瀹屾垚
     if(D.scheduleLog){Object.keys(D.scheduleLog).forEach(k=>{if(D.scheduleLog[k]==='running')D.scheduleLog[k]='done'})}
     save();renderSchedule(D.settings.currentDay);
   }
@@ -1224,7 +1224,7 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-console.log('🏰 Hogwarts Space OS ready');
+console.log('馃彴 Hogwarts Space OS ready');
 </script>
 </body>
 </html>
