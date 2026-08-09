@@ -279,7 +279,10 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
 
 <header class="topbar">
   <div class="top-left"><span class="crest">⚜️</span><div><div class="tname">HOGWARTS 知识圣殿</div><div class="tsub">Obsidian Space OS</div></div></div>
-  <div class="top-right"><div class="clock" id="clock">00:00</div><div class="date" id="dateDisplay">——</div></div>
+  <div class="top-right" style="display:flex;align-items:center;gap:10px">
+    <div style="position:relative"><button class="theme-btn" id="themeToggle" onclick="toggleThemePanel()" title="切换主题" style="font-size:11px;padding:6px 12px">🎨 主题</button><div class="theme-panel" id="themePanel"></div></div>
+    <div><div class="clock" id="clock">00:00</div><div class="date" id="dateDisplay">——</div></div>
+  </div>
 </header>
 
 <nav class="navtabs">
@@ -293,7 +296,6 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
   <button class="navtab" data-view="archive"><span class="navtab-icon">📦</span>记忆</button>
   <button class="navtab" data-view="time"><span class="navtab-icon">⏳</span>时光机</button>
   <button class="navtab" data-view="settings"><span class="navtab-icon">⚙️</span>设置</button>
-  <div style="position:relative;flex-shrink:0;margin-left:auto"><button class="theme-btn" id="themeToggle" onclick="toggleThemePanel()" title="切换主题">🎨 主题</button><div class="theme-panel" id="themePanel"></div></div>
 </nav>
 
 <div class="other-views" id="otherViews" style="display:flex;flex-direction:column;gap:8px">
