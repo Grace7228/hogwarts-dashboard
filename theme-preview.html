@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>知识圣殿 · 配色方案预览</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:#0d0d12;color:#e0d5c0;padding:24px;min-height:100vh}
+  h1{font-size:18px;color:#f0d68a;letter-spacing:2px;margin-bottom:6px}
+  .sub{font-size:12px;color:#8a8070;margin-bottom:20px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+  .scheme{border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.08)}
+  .scheme-head{padding:10px 14px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,.06)}
+  .scheme-name{font-size:14px;font-weight:bold;letter-spacing:1px}
+  .scheme-hex{font-size:10px;opacity:.7;font-family:monospace}
+  .scheme-body{padding:16px;min-height:190px;display:flex;flex-direction:column;gap:10px}
+  .demo-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px;backdrop-filter:blur(10px)}
+  .demo-card .t{font-size:13px;font-weight:bold;color:var(--gold);margin-bottom:6px}
+  .demo-card .d{font-size:11px;color:var(--text);line-height:1.5}
+  .demo-row{display:flex;gap:8px;margin-top:2px}
+  .demo-btn{flex:1;text-align:center;padding:7px 0;border-radius:8px;border:1px solid var(--border);background:var(--btn);color:var(--gold);font-size:11px;cursor:pointer}
+  .demo-chip{display:inline-block;padding:2px 10px;border-radius:999px;background:var(--chip);border:1px solid var(--border);color:var(--gold);font-size:10px}
+  .scheme-note{font-size:10px;opacity:.65;margin-top:6px;line-height:1.5}
+  .pick-hint{text-align:center;font-size:12px;color:#f0d68a;margin-top:24px;letter-spacing:1px}
+</style>
+</head>
+<body>
+<h1>⚜️ 知识圣殿 · 配色方案预览</h1>
+<div class="sub">每个方案都是「底色 + 毛玻璃卡片 + 金色文字」的实际效果。选一个告诉我编号即可。</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="pick-hint">🖐 选中后告诉我方案编号（如「选 3」），我立即全局应用</div>
+
+<script>
+const schemes = [
+  {
+    name: "🌌 深靛蓝", hex: "#141b2e", note: "比之前试的墨蓝更收敛，蓝调沉稳，金色点缀高级。科技感 + 深夜感平衡。",
+    css: { card:"rgba(30,40,62,.55)", border:"rgba(160,180,220,.18)", gold:"#c9b8f0", text:"#d8e0f0", btn:"rgba(90,110,160,.12)", chip:"rgba(90,110,160,.2)" }
+  },
+  {
+    name: "🍇 深紫夜", hex: "#171226", note: "霍格沃茨魔法夜，紫调神秘浪漫。配金色最显贵气，星空背景天然融合。",
+    css: { card:"rgba(44,34,62,.55)", border:"rgba(180,150,220,.18)", gold:"#e8d0a0", text:"#e6ddf2", btn:"rgba(140,110,190,.12)", chip:"rgba(140,110,190,.2)" }
+  },
+  {
+    name: "🫒 深墨绿", hex: "#12201a", note: "旧图书馆绿皮金箔书，复古学院。比之前墨绿金更深更稳，护眼。",
+    css: { card:"rgba(28,46,38,.55)", border:"rgba(150,190,170,.16)", gold:"#d4c08a", text:"#dde8e0", btn:"rgba(90,140,115,.12)", chip:"rgba(90,140,115,.2)" }
+  },
+  {
+    name: "🟤 深咖棕", hex: "#1e1710", note: "可可咖啡色底，温暖醇厚，金色近乎同色系——最柔和、最不刺眼的搭配。",
+    css: { card:"rgba(52,40,28,.55)", border:"rgba(200,160,110,.18)", gold:"#e8c98a", text:"#ead9c4", btn:"rgba(200,160,110,.12)", chip:"rgba(200,160,110,.2)" }
+  },
+  {
+    name: "🔷 深蓝灰", hex: "#151a22", note: "比炭灰多一点蓝，比靛蓝更中性。稳妥不出错，框体不闷。",
+    css: { card:"rgba(36,44,56,.55)", border:"rgba(160,180,210,.15)", gold:"#d4c090", text:"#dbe2ec", btn:"rgba(110,130,160,.12)", chip:"rgba(110,130,160,.2)" }
+  },
+  {
+    name: "🔴 深酒红", hex: "#1d1216", note: "红酒暖调，个性最强。金色在酒红上非常出彩，适合想要独特氛围。",
+    css: { card:"rgba(58,32,40,.55)", border:"rgba(210,150,160,.16)", gold:"#e8cf8a", text:"#edd9de", btn:"rgba(200,120,135,.12)", chip:"rgba(200,120,135,.2)" }
+  },
+];
+
+const grid = document.getElementById('grid');
+grid.innerHTML = schemes.map((s, i) => `
+  <div class="scheme" style="background:${s.hex}">
+    <div class="scheme-head" style="background:${s.hex}">
+      <div class="scheme-name" style="color:${s.css.gold}">${s.name}</div>
+      <div class="scheme-hex" style="color:${s.css.text}">${s.hex}</div>
+    </div>
+    <div class="scheme-body" style="background:${s.hex};--card:${s.css.card};--border:${s.css.border};--gold:${s.css.gold};--text:${s.css.text};--btn:${s.css.btn};--chip:${s.css.chip}">
+      <div class="demo-card">
+        <div class="t">📋 舰桥总览</div>
+        <div class="d">毛玻璃卡片效果 · 金色标题 · 米白正文<br>这一行是正文文字的显示效果，应当柔和可读。</div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <span class="demo-chip">✓ 已计时</span>
+        <span class="demo-chip">⏳ 计时中</span>
+        <span class="demo-chip">⭐ 积分</span>
+      </div>
+      <div class="demo-row">
+        <div class="demo-btn">🔘 按钮</div>
+        <div class="demo-btn">📥 导出</div>
+        <div class="demo-btn">➕ 添加</div>
+      </div>
+      <div class="scheme-note" style="color:${s.css.text}">💡 ${s.note}</div>
+    </div>
+  </div>
+`).join('');
+</script>
+</body>
+</html>
