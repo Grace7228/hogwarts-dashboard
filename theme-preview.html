@@ -27,46 +27,47 @@
 </head>
 <body>
 <h1>⚜️ 知识圣殿 · 配色方案预览</h1>
-<div class="sub">每个方案都是「底色 + 毛玻璃卡片 + 金色文字」的实际效果。选一个告诉我编号即可。</div>
+<div class="sub">点击任意方案 = 立即选择该主题（自动保存）。选完后打开主页面（知识圣殿）即生效。</div>
 
 <div class="grid" id="grid"></div>
 
-<div class="pick-hint">🖐 选中后告诉我方案编号（如「选 3」），我立即全局应用</div>
+<div class="pick-hint" id="pickHint">🖐 点击上面的方案卡片即可选择主题</div>
 
 <script>
 const schemes = [
-  {
-    name: "🌌 深靛蓝", hex: "#141b2e", note: "比之前试的墨蓝更收敛，蓝调沉稳，金色点缀高级。科技感 + 深夜感平衡。",
-    css: { card:"rgba(30,40,62,.55)", border:"rgba(160,180,220,.18)", gold:"#c9b8f0", text:"#d8e0f0", btn:"rgba(90,110,160,.12)", chip:"rgba(90,110,160,.2)" }
-  },
-  {
-    name: "🍇 深紫夜", hex: "#171226", note: "霍格沃茨魔法夜，紫调神秘浪漫。配金色最显贵气，星空背景天然融合。",
-    css: { card:"rgba(44,34,62,.55)", border:"rgba(180,150,220,.18)", gold:"#e8d0a0", text:"#e6ddf2", btn:"rgba(140,110,190,.12)", chip:"rgba(140,110,190,.2)" }
-  },
-  {
-    name: "🫒 深墨绿", hex: "#12201a", note: "旧图书馆绿皮金箔书，复古学院。比之前墨绿金更深更稳，护眼。",
-    css: { card:"rgba(28,46,38,.55)", border:"rgba(150,190,170,.16)", gold:"#d4c08a", text:"#dde8e0", btn:"rgba(90,140,115,.12)", chip:"rgba(90,140,115,.2)" }
-  },
-  {
-    name: "🟤 深咖棕", hex: "#1e1710", note: "可可咖啡色底，温暖醇厚，金色近乎同色系——最柔和、最不刺眼的搭配。",
-    css: { card:"rgba(52,40,28,.55)", border:"rgba(200,160,110,.18)", gold:"#e8c98a", text:"#ead9c4", btn:"rgba(200,160,110,.12)", chip:"rgba(200,160,110,.2)" }
-  },
-  {
-    name: "🔷 深蓝灰", hex: "#151a22", note: "比炭灰多一点蓝，比靛蓝更中性。稳妥不出错，框体不闷。",
-    css: { card:"rgba(36,44,56,.55)", border:"rgba(160,180,210,.15)", gold:"#d4c090", text:"#dbe2ec", btn:"rgba(110,130,160,.12)", chip:"rgba(110,130,160,.2)" }
-  },
-  {
-    name: "🔴 深酒红", hex: "#1d1216", note: "红酒暖调，个性最强。金色在酒红上非常出彩，适合想要独特氛围。",
-    css: { card:"rgba(58,32,40,.55)", border:"rgba(210,150,160,.16)", gold:"#e8cf8a", text:"#edd9de", btn:"rgba(200,120,135,.12)", chip:"rgba(200,120,135,.2)" }
-  },
+  { key:'night',   name:'🌙 炭灰', hex:'#16161a', dark:true, note:'默认 · 稳重的炭灰金，适合绝大多数场景。',
+    css:{card:'rgba(32,34,40,.55)',border:'rgba(212,168,83,.18)',gold:'#f0d68a',text:'#e0d5c0',btn:'rgba(212,168,83,.08)',chip:'rgba(212,168,83,.2)'} },
+  { key:'indigo',  name:'🌌 深靛蓝', hex:'#141b2e', dark:true, note:'蓝调沉稳，金色点缀高级，科技感+深夜感平衡。',
+    css:{card:'rgba(30,40,62,.55)',border:'rgba(160,180,220,.18)',gold:'#c9b8f0',text:'#d8e0f0',btn:'rgba(90,110,160,.12)',chip:'rgba(90,110,160,.2)'} },
+  { key:'violet',  name:'🍇 深紫夜', hex:'#171226', dark:true, note:'霍格沃茨魔法夜，紫调神秘浪漫，配金色最显贵气。',
+    css:{card:'rgba(44,34,62,.55)',border:'rgba(180,150,220,.18)',gold:'#e8d0a0',text:'#e6ddf2',btn:'rgba(140,110,190,.12)',chip:'rgba(140,110,190,.2)'} },
+  { key:'forest',  name:'🫒 深墨绿', hex:'#12201a', dark:true, note:'旧图书馆绿皮金箔书，复古学院，护眼。',
+    css:{card:'rgba(28,46,38,.55)',border:'rgba(150,190,170,.16)',gold:'#d4c08a',text:'#dde8e0',btn:'rgba(90,140,115,.12)',chip:'rgba(90,140,115,.2)'} },
+  { key:'coffee',  name:'🟤 深咖棕', hex:'#1e1710', dark:true, note:'可可咖啡色，温暖醇厚，最柔和不刺眼。',
+    css:{card:'rgba(52,40,28,.55)',border:'rgba(200,160,110,.18)',gold:'#e8c98a',text:'#ead9c4',btn:'rgba(200,160,110,.12)',chip:'rgba(200,160,110,.2)'} },
+  { key:'bluegray',name:'🔷 深蓝灰', hex:'#151a22', dark:true, note:'比炭灰多一点蓝，比靛蓝更中性，稳妥不出错。',
+    css:{card:'rgba(36,44,56,.55)',border:'rgba(160,180,210,.15)',gold:'#d4c090',text:'#dbe2ec',btn:'rgba(110,130,160,.12)',chip:'rgba(110,130,160,.2)'} },
+  { key:'wine',    name:'🔴 深酒红', hex:'#1d1216', dark:true, note:'红酒暖调，个性最强，金色在酒红上非常出彩。',
+    css:{card:'rgba(58,32,40,.55)',border:'rgba(210,150,160,.16)',gold:'#e8cf8a',text:'#edd9de',btn:'rgba(200,120,135,.12)',chip:'rgba(200,120,135,.2)'} },
+  { key:'day',     name:'☀️ 奶咖', hex:'#f3ecdf', dark:false, note:'奶咖底+豆绿点缀，柔和温暖，白天首选。',
+    css:{card:'rgba(255,252,245,.75)',border:'rgba(95,127,82,.35)',gold:'#4d6b40',text:'#3d3229',btn:'rgba(95,127,82,.1)',chip:'rgba(95,127,82,.15)'} },
+  { key:'oat',     name:'🌾 燕麦', hex:'#f5f0e6', dark:false, note:'燕麦米色+暖棕点缀，像清晨的阳光和牛奶。',
+    css:{card:'rgba(255,252,246,.78)',border:'rgba(160,120,70,.35)',gold:'#7a5e30',text:'#3f3628',btn:'rgba(160,120,70,.1)',chip:'rgba(160,120,70,.15)'} },
+  { key:'matcha',  name:'🍵 抹茶', hex:'#eef2e3', dark:false, note:'抹茶浅绿底，清新治愈，阅读舒适。',
+    css:{card:'rgba(252,255,248,.78)',border:'rgba(120,160,100,.35)',gold:'#587a4c',text:'#33402e',btn:'rgba(120,160,100,.1)',chip:'rgba(120,160,100,.15)'} },
+  { key:'mist',    name:'🌫️ 雾蓝', hex:'#e9eef5', dark:false, note:'晨雾浅蓝底+靛蓝点缀，清爽冷静。',
+    css:{card:'rgba(252,254,255,.78)',border:'rgba(90,130,180,.35)',gold:'#3d5f8f',text:'#2f3a48',btn:'rgba(90,130,180,.1)',chip:'rgba(90,130,180,.15)'} },
 ];
 
 const grid = document.getElementById('grid');
+const hint = document.getElementById('pickHint');
+const cur = localStorage.getItem('h_theme') || 'night';
+
 grid.innerHTML = schemes.map((s, i) => `
-  <div class="scheme" style="background:${s.hex}">
+  <div class="scheme" style="background:${s.hex};cursor:pointer;${s.hex===cur?'outline:2px solid #f0d68a;':''}" onclick="pick(${i})">
     <div class="scheme-head" style="background:${s.hex}">
       <div class="scheme-name" style="color:${s.css.gold}">${s.name}</div>
-      <div class="scheme-hex" style="color:${s.css.text}">${s.hex}</div>
+      <div class="scheme-hex" style="color:${s.css.text}">${s.hex}${s.hex===cur?' ✓当前':''}</div>
     </div>
     <div class="scheme-body" style="background:${s.hex};--card:${s.css.card};--border:${s.css.border};--gold:${s.css.gold};--text:${s.css.text};--btn:${s.css.btn};--chip:${s.css.chip}">
       <div class="demo-card">
@@ -87,6 +88,16 @@ grid.innerHTML = schemes.map((s, i) => `
     </div>
   </div>
 `).join('');
-</script>
-</body>
-</html>
+
+function pick(i){
+  const s = schemes[i];
+  localStorage.setItem('h_theme', s.key);
+  hint.textContent = '✅ 已选择「' + s.name + '」——现在打开主页面（或刷新主页面）即可生效！';
+  hint.style.color = '#8ad4a0';
+  grid.querySelectorAll('.scheme').forEach((el, j) => {
+    el.style.outline = j === i ? '2px solid #f0d68a' : '';
+  });
+  // 高亮当前
+  const heads = grid.querySelectorAll('.scheme-hex');
+  heads.forEach((el, j) => { el.textContent = schemes[j].hex + (j===i?' ✓当前':''); });
+}

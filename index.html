@@ -157,7 +157,61 @@ body{font-family:Georgia,'Times New Roman','Noto Serif SC',serif;background:var(
 @media(max-width:1300px){.mission-grid{grid-template-columns:1fr}.mission-right{display:grid;grid-template-columns:1fr 1fr;gap:6px}}@media(max-width:900px){.mission-grid,.asset-stats-row{grid-template-columns:1fr}.mission-right{grid-template-columns:1fr}.mission-grid{overflow-x:auto;scrollbar-width:thin}.main{grid-template-columns:1fr;grid-template-rows:auto auto auto auto 1fr}.rpanel{grid-column:1;grid-row:auto;max-height:none}.other-views{grid-column:1;grid-row:auto}}
 @media(max-width:600px){.asset-stats-row{grid-template-columns:1fr 1fr}.main{padding:6px;gap:5px}}
 
-/* ===== 主题系统：夜晚炭灰（默认）/ 白天奶咖（豆绿点缀）===== */
+/* ===== 多主题系统：深色 6 套 + 浅色 4 套 ===== */
+/* --- 深色主题：仅覆盖变量 --- */
+body.theme-indigo{--dark:#141b2e;--card-bg:rgba(30,40,62,.55);--card-border:rgba(160,180,220,.18);--text:#d8e0f0;--dim:#8f9cb8;--gold:#c9b8f0;--gold-light:#c9b8f0;--accent:rgba(140,160,220,.5);--panel-bg:rgba(20,28,44,.6);--input-bg:rgba(12,18,32,.8);--btn-bg:rgba(90,110,160,.12);--btn-border:rgba(160,180,220,.25);--btn-color:#c9b8f0;--badge-bg:rgba(140,160,220,.2);--stat-bg:rgba(10,16,28,.35)}
+body.theme-violet{--dark:#171226;--card-bg:rgba(44,34,62,.55);--card-border:rgba(180,150,220,.18);--text:#e6ddf2;--dim:#9b8cb8;--gold:#e8d0a0;--gold-light:#e8d0a0;--accent:rgba(180,140,230,.5);--panel-bg:rgba(24,18,40,.6);--input-bg:rgba(14,10,26,.8);--btn-bg:rgba(140,110,190,.12);--btn-border:rgba(180,150,220,.25);--btn-color:#e8d0a0;--badge-bg:rgba(180,150,220,.2);--stat-bg:rgba(12,8,22,.35)}
+body.theme-forest{--dark:#12201a;--card-bg:rgba(28,46,38,.55);--card-border:rgba(150,190,170,.16);--text:#dde8e0;--dim:#8fa896;--gold:#d4c08a;--gold-light:#d4c08a;--accent:rgba(140,180,150,.5);--panel-bg:rgba(18,32,26,.6);--input-bg:rgba(10,20,16,.8);--btn-bg:rgba(90,140,115,.12);--btn-border:rgba(150,190,170,.22);--btn-color:#d4c08a;--badge-bg:rgba(120,170,140,.2);--stat-bg:rgba(8,16,13,.35)}
+body.theme-coffee{--dark:#1e1710;--card-bg:rgba(52,40,28,.55);--card-border:rgba(200,160,110,.18);--text:#ead9c4;--dim:#a8947c;--gold:#e8c98a;--gold-light:#e8c98a;--accent:rgba(210,170,110,.5);--panel-bg:rgba(32,24,16,.6);--input-bg:rgba(18,12,8,.8);--btn-bg:rgba(200,160,110,.12);--btn-border:rgba(200,160,110,.25);--btn-color:#e8c98a;--badge-bg:rgba(200,160,110,.2);--stat-bg:rgba(16,10,6,.35)}
+body.theme-bluegray{--dark:#151a22;--card-bg:rgba(36,44,56,.55);--card-border:rgba(160,180,210,.15);--text:#dbe2ec;--dim:#8d99a8;--gold:#d4c090;--gold-light:#d4c090;--accent:rgba(150,170,200,.5);--panel-bg:rgba(22,28,38,.6);--input-bg:rgba(12,16,24,.8);--btn-bg:rgba(110,130,160,.12);--btn-border:rgba(160,180,210,.22);--btn-color:#d4c090;--badge-bg:rgba(150,170,200,.2);--stat-bg:rgba(10,14,20,.35)}
+body.theme-wine{--dark:#1d1216;--card-bg:rgba(58,32,40,.55);--card-border:rgba(210,150,160,.16);--text:#edd9de;--dim:#a88a92;--gold:#e8cf8a;--gold-light:#e8cf8a;--accent:rgba(215,130,145,.5);--panel-bg:rgba(32,18,24,.6);--input-bg:rgba(18,10,14,.8);--btn-bg:rgba(200,120,135,.12);--btn-border:rgba(210,150,160,.22);--btn-color:#e8cf8a;--badge-bg:rgba(210,150,160,.2);--stat-bg:rgba(14,8,10,.35)}
+/* --- 浅色主题：奶咖豆绿(day) + 燕麦(oat) + 抹茶(matcha) + 雾蓝(mist) --- */
+body.theme-day,body.theme-oat,body.theme-matcha,body.theme-mist{--dark:#f3ecdf;--text:#3d3229;--dim:#8a7a66;--gold:#5f7f52;--gold-light:#4d6b40;--card-border:rgba(95,127,82,.35);--accent:rgba(95,127,82,.6)}
+body.theme-day{--card-bg:rgba(255,252,245,.75);--panel-bg:rgba(255,252,245,.6);--input-bg:rgba(255,255,255,.9);--badge-bg:rgba(95,127,82,.15);--stat-bg:rgba(255,255,255,.55);--btn-bg:rgba(95,127,82,.1);--btn-border:rgba(95,127,82,.35);--btn-color:#4d6b40}
+body.theme-oat{--dark:#f5f0e6;--text:#3f3628;--dim:#93876f;--gold:#8a6d3b;--gold-light:#7a5e30;--card-border:rgba(138,109,59,.35);--accent:rgba(160,120,70,.6);--card-bg:rgba(255,252,246,.78);--panel-bg:rgba(255,252,246,.6);--input-bg:rgba(255,255,255,.9);--badge-bg:rgba(160,120,70,.15);--stat-bg:rgba(255,255,255,.55);--btn-bg:rgba(160,120,70,.1);--btn-border:rgba(160,120,70,.35);--btn-color:#7a5e30}
+body.theme-matcha{--dark:#eef2e3;--text:#33402e;--dim:#85907a;--gold:#6b8f5e;--gold-light:#587a4c;--card-border:rgba(107,143,94,.35);--accent:rgba(120,160,100,.6);--card-bg:rgba(252,255,248,.78);--panel-bg:rgba(252,255,248,.6);--input-bg:rgba(255,255,255,.9);--badge-bg:rgba(120,160,100,.15);--stat-bg:rgba(255,255,255,.55);--btn-bg:rgba(120,160,100,.1);--btn-border:rgba(120,160,100,.35);--btn-color:#587a4c}
+body.theme-mist{--dark:#e9eef5;--text:#2f3a48;--dim:#7e8a9c;--gold:#4a6fa5;--gold-light:#3d5f8f;--card-border:rgba(74,111,165,.35);--accent:rgba(90,130,180,.6);--card-bg:rgba(252,254,255,.78);--panel-bg:rgba(252,254,255,.6);--input-bg:rgba(255,255,255,.9);--badge-bg:rgba(90,130,180,.15);--stat-bg:rgba(255,255,255,.55);--btn-bg:rgba(90,130,180,.1);--btn-border:rgba(90,130,180,.35);--btn-color:#3d5f8f}
+/* --- 浅色通用元素覆盖 --- */
+body.theme-day .stars-layer,body.theme-day .castle-silhouette,body.theme-day .moon-glow,
+body.theme-oat .stars-layer,body.theme-oat .castle-silhouette,body.theme-oat .moon-glow,
+body.theme-matcha .stars-layer,body.theme-matcha .castle-silhouette,body.theme-matcha .moon-glow,
+body.theme-mist .stars-layer,body.theme-mist .castle-silhouette,body.theme-mist .moon-glow{opacity:.1}
+body.theme-day .topbar,body.theme-day .navtabs,body.theme-day .foot,
+body.theme-oat .topbar,body.theme-oat .navtabs,body.theme-oat .foot,
+body.theme-matcha .topbar,body.theme-matcha .navtabs,body.theme-matcha .foot,
+body.theme-mist .topbar,body.theme-mist .navtabs,body.theme-mist .foot{background:var(--panel-bg);border-color:var(--card-border)}
+body.theme-day .card,body.theme-oat .card,body.theme-matcha .card,body.theme-mist .card{background:var(--card-bg);border-color:var(--card-border)}
+body.theme-day .card-title,body.theme-day .ctitle,body.theme-day .header-title,body.theme-day .rname,body.theme-day .stat-value,
+body.theme-oat .card-title,body.theme-oat .ctitle,body.theme-oat .header-title,body.theme-oat .rname,body.theme-oat .stat-value,
+body.theme-matcha .card-title,body.theme-matcha .ctitle,body.theme-matcha .header-title,body.theme-matcha .rname,body.theme-matcha .stat-value,
+body.theme-mist .card-title,body.theme-mist .ctitle,body.theme-mist .header-title,body.theme-mist .rname,body.theme-mist .stat-value{color:var(--gold-light)}
+body.theme-day .daybtn,body.theme-day .btn,body.theme-oat .daybtn,body.theme-oat .btn,body.theme-matcha .daybtn,body.theme-matcha .btn,body.theme-mist .daybtn,body.theme-mist .btn{background:var(--btn-bg);border-color:var(--btn-border);color:var(--btn-color)}
+body.theme-day .btn-green,body.theme-oat .btn-green,body.theme-matcha .btn-green,body.theme-mist .btn-green{background:var(--badge-bg);border-color:var(--btn-border);color:var(--btn-color)}
+body.theme-day .small-input,body.theme-day .addrow textarea,body.theme-day .addrow input,body.theme-day .quick-note-input,
+body.theme-oat .small-input,body.theme-oat .addrow textarea,body.theme-oat .addrow input,body.theme-oat .quick-note-input,
+body.theme-matcha .small-input,body.theme-matcha .addrow textarea,body.theme-matcha .addrow input,body.theme-matcha .quick-note-input,
+body.theme-mist .small-input,body.theme-mist .addrow textarea,body.theme-mist .addrow input,body.theme-mist .quick-note-input{background:var(--input-bg);color:var(--text);border-color:var(--card-border)}
+body.theme-day .addrow textarea::placeholder,body.theme-oat .addrow textarea::placeholder,body.theme-matcha .addrow textarea::placeholder,body.theme-mist .addrow textarea::placeholder{color:var(--dim)}
+body.theme-day .realm-card,body.theme-oat .realm-card,body.theme-matcha .realm-card,body.theme-mist .realm-card{background:var(--card-bg)}
+body.theme-day .realm-card.active,body.theme-oat .realm-card.active,body.theme-matcha .realm-card.active,body.theme-mist .realm-card.active{border-color:var(--gold-light)!important}
+body.theme-day .schedule-table td,body.theme-oat .schedule-table td,body.theme-matcha .schedule-table td,body.theme-mist .schedule-table td{border-color:rgba(61,50,39,.08)}
+body.theme-day .toast,body.theme-oat .toast,body.theme-matcha .toast,body.theme-mist .toast{background:rgba(61,50,39,.92);color:#f0e8d8}
+body.theme-day .stat-item,body.theme-oat .stat-item,body.theme-matcha .stat-item,body.theme-mist .stat-item{color:var(--dim)}
+body.theme-day .note-item,body.theme-day .task-item,body.theme-day .log-item,body.theme-oat .note-item,body.theme-oat .task-item,body.theme-oat .log-item,body.theme-matcha .note-item,body.theme-matcha .task-item,body.theme-matcha .log-item,body.theme-mist .note-item,body.theme-mist .task-item,body.theme-mist .log-item{border-color:rgba(61,50,39,.08)}
+body.theme-day #tmFrameDash,body.theme-day #tmFrame,body.theme-oat #tmFrameDash,body.theme-oat #tmFrame,body.theme-matcha #tmFrameDash,body.theme-matcha #tmFrame,body.theme-mist #tmFrameDash,body.theme-mist #tmFrame{background:var(--dark)!important}
+/* 主题选择器 */
+.theme-btn{display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:6px;border:1px solid rgba(212,168,83,.25);background:rgba(212,168,83,.08);color:var(--gold-light);font-family:inherit;font-size:10px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.theme-btn:hover{background:rgba(212,168,83,.16)}
+body.theme-day .theme-btn,body.theme-oat .theme-btn,body.theme-matcha .theme-btn,body.theme-mist .theme-btn{border-color:var(--btn-border);background:var(--btn-bg);color:var(--btn-color)}
+.theme-panel{position:absolute;top:calc(100% + 6px);right:0;z-index:999;width:220px;background:rgba(18,20,26,.97);border:1px solid rgba(212,168,83,.25);border-radius:10px;padding:10px;display:none;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.theme-panel.show{display:block}
+.theme-panel .tp-sec{font-size:9px;color:var(--dim);letter-spacing:1px;margin:6px 2px 4px}
+.theme-panel .tp-row{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.tp-item{display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:6px;cursor:pointer;border:1px solid transparent;font-size:10px;color:var(--text);transition:all .15s}
+.tp-item:hover{border-color:rgba(212,168,83,.35);background:rgba(212,168,83,.08)}
+.tp-item.on{border-color:rgba(212,168,83,.6);background:rgba(212,168,83,.14)}
+.tp-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;border:1px solid rgba(255,255,255,.2)}
+
 body.theme-day{--dark:#f3ecdf;--text:#3d3229;--dim:#8a7a66;--gold:#5f7f52;--gold-light:#4d6b40;--card-border:rgba(95,127,82,.35);--accent:rgba(95,127,82,.6)}
 body.theme-day{--card-bg:rgba(255,252,245,.75);--panel-bg:rgba(255,252,245,.6);--input-bg:rgba(255,255,255,.9);--chip-bg:rgba(255,252,245,.65);--badge-bg:rgba(95,127,82,.15);--stat-bg:rgba(255,255,255,.55);--btn-bg:rgba(95,127,82,.1);--btn-border:rgba(95,127,82,.35);--btn-color:#4d6b40}
 body.theme-day .stars-layer,body.theme-day .castle-silhouette,body.theme-day .moon-glow{opacity:.1}
@@ -205,7 +259,7 @@ body.theme-day .theme-btn{border-color:var(--btn-border);background:var(--btn-bg
   <button class="navtab" data-view="archive"><span class="navtab-icon">📦</span>记忆</button>
   <button class="navtab" data-view="time"><span class="navtab-icon">⏳</span>时光机</button>
   <button class="navtab" data-view="settings"><span class="navtab-icon">⚙️</span>设置</button>
-  <button class="theme-btn" id="themeToggle" onclick="cycleTheme()" title="切换主题">🌙 夜晚</button>
+  <div style="position:relative"><button class="theme-btn" id="themeToggle" onclick="toggleThemePanel()" title="切换主题">🌙 炭灰</button><div class="theme-panel" id="themePanel"></div></div>
 </nav>
 
 <div class="other-views" id="otherViews" style="display:flex;flex-direction:column;gap:8px">
@@ -1223,28 +1277,61 @@ switchView('travel');
 // Globe click handler
 document.addEventListener('click',e=>{
   if(e.target.closest('#globeContainer canvas'))handleGlobeClick(e);
+  if(!e.target.closest('.theme-panel')&&!e.target.closest('#themeToggle')){
+    const tp=document.getElementById('themePanel');
+    if(tp)tp.classList.remove('show');
+  }
 });
 
-// ==================== 主题切换 ====================
+// ==================== 主题切换（多主题选择器）====================
 const THEMES=[
-  {key:'night',label:'🌙 夜晚',cls:''},
-  {key:'day',label:'☀️ 白天',cls:'theme-day'},
+  {key:'night',label:'🌙 炭灰',cls:'',dark:true},
+  {key:'indigo',label:'🌌 靛蓝',cls:'theme-indigo',dark:true},
+  {key:'violet',label:'🍇 紫夜',cls:'theme-violet',dark:true},
+  {key:'forest',label:'🫒 墨绿',cls:'theme-forest',dark:true},
+  {key:'coffee',label:'🟤 咖棕',cls:'theme-coffee',dark:true},
+  {key:'bluegray',label:'🔷 蓝灰',cls:'theme-bluegray',dark:true},
+  {key:'wine',label:'🔴 酒红',cls:'theme-wine',dark:true},
+  {key:'day',label:'☀️ 奶咖',cls:'theme-day',dark:false},
+  {key:'oat',label:'🌾 燕麦',cls:'theme-oat',dark:false},
+  {key:'matcha',label:'🍵 抹茶',cls:'theme-matcha',dark:false},
+  {key:'mist',label:'🌫️ 雾蓝',cls:'theme-mist',dark:false},
 ];
+const THEME_DOT={night:'#16161a',indigo:'#141b2e',violet:'#171226',forest:'#12201a',coffee:'#1e1710',bluegray:'#151a22',wine:'#1d1216',day:'#f3ecdf',oat:'#f5f0e6',matcha:'#eef2e3',mist:'#e9eef5'};
 function getThemeIdx(){const t=localStorage.getItem('h_theme')||'night';const i=THEMES.findIndex(x=>x.key===t);return i<0?0:i}
 function applyTheme(idx,silent){
   const t=THEMES[idx];
   document.body.className=t.cls;
   localStorage.setItem('h_theme',t.key);
   const btn=document.getElementById('themeToggle');
-  if(btn)btn.textContent=t.label;
+  if(btn)btn.textContent=(t.dark?'🌙 ':'☀️ ')+t.label;
   ['tmFrameDash','tmFrame'].forEach(id=>{
     const f=document.getElementById(id);
-    if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'theme',theme:t.key},'*');
+    if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'theme',theme:t.dark?'night':'day'},'*');
   });
-  if(!silent)toast('🎨 已切换：'+t.label);
+  renderThemePanel();
+  if(!silent)toast('🎨 主题：'+t.label);
 }
 function cycleTheme(){applyTheme((getThemeIdx()+1)%THEMES.length)}
+function toggleThemePanel(){
+  const p=document.getElementById('themePanel');
+  if(p)p.classList.toggle('show');
+}
+function renderThemePanel(){
+  const p=document.getElementById('themePanel');
+  if(!p)return;
+  const cur=getThemeIdx();
+  const darkSec=THEMES.filter(t=>t.dark).map((t,i)=>tpItem(t,i,cur)).join('');
+  const lightSec=THEMES.filter(t=>!t.dark).map((t,i)=>tpItem(t,i,cur)).join('');
+  p.innerHTML='<div class="tp-sec">深色系</div><div class="tp-row">'+darkSec+'</div><div class="tp-sec">浅色系</div><div class="tp-row">'+lightSec+'</div>';
+  function tpItem(t,i,cur){
+    const realIdx=THEMES.findIndex(x=>x.key===t.key);
+    return '<div class="tp-item'+(realIdx===cur?' on':'')+'" onclick="applyTheme('+realIdx+');event.stopPropagation()"><span class="tp-dot" style="background:'+THEME_DOT[t.key]+'"></span>'+t.label+'</div>';
+  }
+}
 window.cycleTheme=cycleTheme;
+window.toggleThemePanel=toggleThemePanel;
+window.renderThemePanel=renderThemePanel;
 applyTheme(getThemeIdx(),true);
 
 // 时光机 ↔ 课表联动：监听时光机消息
