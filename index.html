@@ -1158,7 +1158,7 @@ function switchView(v){
   if(v==='dashboard'){renderDashboard();setTimeout(()=>{const f=document.getElementById('tmFrameDash');if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'tm-query'},'*')},800)}
   renderDashMini();
   if(v==='mission'){document.getElementById('view-mission').innerHTML=renderMissionHTML();setupMissionEvents()}
-  if(v==='realms'){document.getElementById('view-realms').innerHTML=renderRealmsHTML();renderRealmNotes();initRealmsEvents()}
+  if(v==='realms'){document.getElementById('view-realms').innerHTML=renderRealmsHTML();renderRealmNotes();initRealmsEvents();renderRealmsNotes()}
   if(v==='schedule'){document.getElementById('view-schedule').innerHTML=renderScheduleHTML();renderSchedule(D.settings.currentDay)}
   if(v==='assets'){document.getElementById('view-assets').innerHTML=renderAssetsHTML();renderAssetItems()}
   if(v==='health'){document.getElementById('view-health').innerHTML=renderHealthHTML();setTimeout(renderHealthChart,100)}
@@ -1391,10 +1391,45 @@ function setupMissionEvents(){
   renderMissionRealm();
 }
 
+function renderRealmsNotes(){
+  const b=document.getElementById('realmsNoteBtns');if(!b)return;
+  b.innerHTML=realms.map((r,i)=>{
+    const cnt=(D.notes[r.id]||[]).length;
+    return '<button onclick="switchRealmsNote('+i+')" style="padding:3px 9px;border-radius:6px;border:1px solid '+(i===D.selectedRealm?'rgba(212,168,83,.6)':'rgba(212,168,83,.2)')+';background:'+(i===D.selectedRealm?'rgba(212,168,83,.18)':'rgba(212,168,83,.05)')+';color:var(--gold-light);font-family:inherit;font-size:10px;cursor:pointer">'+r.icon+' '+r.name+' <span style="opacity:.6">'+cnt+'</span></button>';
+  }).join('');
+  const l=document.getElementById('realmsNotesList');
+  const ns=D.notes[realms[D.selectedRealm].id]||[];
+  if(ns.length===0)l.innerHTML='<div class="empty">暂无笔记</div>';
+  else l.innerHTML=ns.slice().reverse().map(n=>'<div class="nitem"><div class="ncont">'+eh(n.content)+'</div><span class="nmeta">'+ft(n.time)+'</span><button class="ndel" onclick="delRealmsNote(\''+n.id+'\')">✕</button></div>').join('');
+}
+function switchRealmsNote(i){
+  D.selectedRealm=i;save();
+  renderRealms();renderRealmsNotes();
+  if(document.getElementById('missionRealmBtns'))renderMissionRealm();
+}
+window.switchRealmsNote=switchRealmsNote;
+function addRealmsNote(){
+  const i=document.getElementById('realmsNoteInput');if(!i)return;
+  const c=i.value.trim();if(!c)return;
+  D.notes[realms[D.selectedRealm].id].push({id:uid(),content:c,time:Date.now()});
+  save();i.value='';renderRealmsNotes();
+  if(document.getElementById('missionRealmBtns'))renderMissionRealm();
+  toast('✨ 已记录');
+}
+window.addRealmsNote=addRealmsNote;
+function delRealmsNote(id){
+  D.notes[realms[D.selectedRealm].id]=D.notes[realms[D.selectedRealm].id].filter(n=>n.id!==id);
+  save();renderRealmsNotes();
+  if(document.getElementById('missionRealmBtns'))renderMissionRealm();
+}
+window.delRealmsNote=delRealmsNote;
+
 function renderRealmsHTML(){
   let h='<div class="card"><div class="ctitle"><span class="icon">🗺️</span> 大厅幻境</div><div class="rgrid" id="realmsGrid">';
   realms.forEach((r,i)=>{const c=(D.notes[r.id]||[]).length;h+=`<div class="rbox${i===D.selectedRealm?' active':''}" onclick="switchRealm(${i})"><div class="ricon">${r.icon}</div><div class="rname">${r.name}</div><div class="rcount">${c} 条</div></div>`});
-  h+='</div></div>';return h;
+  h+='</div></div>';
+  h+='<div class="card"><div class="ctitle"><span class="icon">🗂️</span> 领域记录 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点击领域卡片选择 · 记录笔记</span></div><div id="realmsNoteBtns" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px"></div><div id="realmsNotesList" style="max-height:150px;overflow-y:auto;font-size:11px"></div><div class="addrow" style="margin-top:4px"><textarea id="realmsNoteInput" placeholder="记录笔记……" rows="1"></textarea><button class="btn" onclick="addRealmsNote()">✨</button></div></div>';
+  return h;
 }
 function initRealmsEvents(){}
 
@@ -1661,7 +1696,7 @@ function renderRealmNotes(){
   const l=document.getElementById('notesList'),e=document.getElementById('notesEmpty');if(!l)return;
   if(ns.length===0){if(e)e.style.display='block';l.innerHTML=''}else{if(e)e.style.display='none';l.innerHTML=ns.slice().reverse().map(n=>`<div class="nitem"><div class="ncont">${eh(n.content)}</div><span class="nmeta">${ft(n.time)}</span><button class="ndel" onclick="delNote('${r.id}','${n.id}')">✕</button></div>`).join('')}
 }
-function addNote(){const i=document.getElementById('addNoteInput'),c=i.value.trim();if(!c)return;const r=realms[D.selectedRealm];D.notes[r.id].push({id:uid(),content:c,time:Date.now()});save();i.value='';renderRealmNotes()}
+function addNote(){const i=document.getElementById('addNoteInput');if(!i)return;const c=i.value.trim();if(!c)return;const r=realms[D.selectedRealm];D.notes[r.id].push({id:uid(),content:c,time:Date.now()});save();i.value='';renderRealmNotes()}
 window.addNote=addNote;
 function delNote(rid,nid){D.notes[rid]=D.notes[rid].filter(n=>n.id!==nid);save();renderRealmNotes()}
 
