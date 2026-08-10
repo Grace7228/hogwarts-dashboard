@@ -1260,8 +1260,9 @@ function renderDayTimeline(){
     const bottom=(endMin-6*60)/60*H-2;
     const hh=Math.max(6,bottom-top);
     html+='<div style="position:absolute;left:44px;right:6px;top:'+top+'px;height:'+hh+'px;border-radius:4px;background:rgba(120,170,240,.25);border-left:2px solid #78aaf0;font-size:11px;color:var(--text);overflow:hidden">';
-    html+='<span style="display:block;padding:2px 6px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden" title="'+ev.name+' ('+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' - '+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+')">'+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' '+ev.name+'</span>';
-    html+='<span onclick="event.stopPropagation();delTimelineEvent(\''+ev.id+'\')" title="删除这条日程" style="position:absolute;top:1px;right:2px;font-size:9px;color:#e08070;cursor:pointer;padding:0 3px;opacity:.85">✕</span>';
+    const evFont = hh<18?9:(hh<26?10:11);
+    html+='<span style="display:flex;align-items:center;height:100%;padding:0 5px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden;font-size:'+evFont+'px;line-height:1.2" title="'+ev.name+' ('+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' - '+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+')">'+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' '+ev.name+'</span>';
+    html+='<span onclick="event.stopPropagation();delTimelineEvent(\''+ev.id+'\')" title="删除这条日程" style="position:absolute;top:0;right:1px;font-size:8px;color:#e08070;cursor:pointer;padding:0 2px;opacity:.9;background:rgba(0,0,0,.3);border-radius:2px">✕</span>';
     html+='</div>';
   });
   el.innerHTML=html;
