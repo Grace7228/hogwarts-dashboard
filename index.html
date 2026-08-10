@@ -450,11 +450,8 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
 
 <!-- 其他视图占位 -->
 <div id="view-dashboard" style="display:none;flex-direction:column;gap:8px">
-  <div class="card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden">
-    <div class="ctitle" style="padding:8px 14px 0"><span class="icon">⏳</span> 时光机 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">完整版 · 计时/待办/时间轴/日记</span></div>
-    <div style="flex:1;min-height:calc(100vh - 160px);border-radius:8px;overflow-y:auto;border:1px solid rgba(212,168,83,0.12);margin:8px 10px 10px">
-      <iframe src="time-machine.html" id="tmFrameDash" style="width:100%;height:calc(100vh - 160px);border:none;background:#16161a" title="时光机"></iframe>
-    </div>
+  <div class="card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden;border-radius:10px">
+    <iframe src="time-machine.html" id="tmFrameDash" style="flex:1;width:100%;height:calc(100vh - 180px);border:none;background:#16161a" title="时光机"></iframe>
   </div>
 </div>
 <div id="view-mission" style="display:none"></div>
