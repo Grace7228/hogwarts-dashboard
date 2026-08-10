@@ -1757,10 +1757,13 @@ window.cycleTheme=cycleTheme;
 window.toggleThemePanel=toggleThemePanel;
 window.renderThemePanel=renderThemePanel;
 applyTheme(getThemeIdx(),true);
-renderCalNav();
-renderDayTimeline();
-renderCalNav();
-renderDayTimeline();
+try{renderCalNav();renderDayTimeline();}catch(e){console.error(e)}
+document.addEventListener('DOMContentLoaded',function(){
+  try{renderCalNav();renderDayTimeline();}catch(e){console.error(e)}
+});
+window.addEventListener('load',function(){
+  try{renderCalNav();renderDayTimeline();}catch(e){console.error(e)}
+});
 
 // 时光机 ↔ 课表联动：监听时光机消息
 window.addEventListener('message',e=>{
