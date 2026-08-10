@@ -1673,6 +1673,7 @@ body.theme-day [style*="rgba(0,0,0,0.2)"],body.theme-day [style*="rgba(0,0,0,0.2
     try{
       var last=S.records[S.records.length-1];
       parent.postMessage({source:'timemachine', type:'tm-stopped',
+        id: last?last.id:null,
         name: last?last.name:'',
         startMs: last?last.startMs:Date.now(),
         endMs: last?last.endMs:Date.now(),

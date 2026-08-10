@@ -1258,10 +1258,21 @@ function renderDayTimeline(){
     const top=Math.max(0,(startMin-6*60)/60)*H+2;
     const bottom=Math.min(18*60,(endMin-6*60)/60)*H-2;
     const hh=Math.max(14,bottom-top);
-    html+='<div onclick="toast(\''+ev.name.replace(/'/g,'')+' · '+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+'-'+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+'\')" title="时光机记录: '+ev.name+' ('+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' - '+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+')" style="position:absolute;left:44px;right:6px;top:'+top+'px;height:'+hh+'px;padding:2px 6px;border-radius:4px;background:rgba(120,170,240,.25);border-left:2px solid #78aaf0;font-size:9px;color:var(--text);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">⏱ '+ev.name+'</div>';
+    html+='<div style="position:absolute;left:44px;right:6px;top:'+top+'px;height:'+hh+'px;border-radius:4px;background:rgba(120,170,240,.25);border-left:2px solid #78aaf0;font-size:9px;color:var(--text);overflow:hidden">';
+    html+='<span style="display:block;padding:2px 6px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden" title="'+ev.name+' ('+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' - '+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+')">⏱ '+ev.name+'</span>';
+    html+='<span onclick="event.stopPropagation();delTimelineEvent(\''+ev.id+'\')" title="删除这条日程" style="position:absolute;top:1px;right:2px;font-size:9px;color:#e08070;cursor:pointer;padding:0 3px;opacity:.85">✕</span>';
+    html+='</div>';
   });
   el.innerHTML=html;
 }
+function delTimelineEvent(id){
+  if(!D.timelineEvents)return;
+  D.timelineEvents=D.timelineEvents.filter(e=>e.id!==id);
+  save();renderDayTimeline();
+  toast('🗑️ 日程已删除');
+}
+window.delTimelineEvent=delTimelineEvent;
+
 function tmStartFromMission(id){
   const t=(D.missionTasks||[]).find(x=>x.id===id);if(!t)return;
   const f=document.getElementById('tmFrame');
@@ -1773,6 +1784,13 @@ window.addEventListener('message',e=>{
     if(D.scheduleLog){Object.keys(D.scheduleLog).forEach(k=>{if(D.scheduleLog[k]==='running')D.scheduleLog[k]='done'})}
     renderSchedule(D.settings.currentDay);
   }
+  if(d.type==='tm-record-deleted'){
+    if(d.id&&D.timelineEvents){
+      D.timelineEvents=D.timelineEvents.filter(e=>e.tmId!==d.id);
+      save();renderDayTimeline();
+    }
+    return;
+  }
   if(d.type==='tm-stopped'){
     toast('⏹ 时光机已停止计时');
     // 把所有计时中的课标记为已完成
@@ -1785,6 +1803,7 @@ window.addEventListener('message',e=>{
       const ds=sm.getFullYear()+'-'+String(sm.getMonth()+1).padStart(2,'0')+'-'+String(sm.getDate()).padStart(2,'0');
       D.timelineEvents.push({
         id:'te'+Date.now(),
+        tmId:d.id||null,
         date:ds,
         name:d.name,
         note:d.note||'',
