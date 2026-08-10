@@ -171,9 +171,7 @@ body{
 /* ===== 多主题系统：深色 6 套 + 浅色 4 套 ===== */
 /* --- 深色主题：仅覆盖变量 --- */
 body.theme-indigo{--dark:#141b2e;--card-bg:rgba(30,40,62,.55);--card-border:rgba(160,180,220,.18);--text:#d8e0f0;--dim:#8f9cb8;--gold:#c9b8f0;--gold-light:#c9b8f0;--accent:rgba(140,160,220,.5);--panel-bg:rgba(20,28,44,.6);--input-bg:rgba(12,18,32,.8);--btn-bg:rgba(90,110,160,.12);--btn-border:rgba(160,180,220,.25);--btn-color:#c9b8f0;--badge-bg:rgba(140,160,220,.2);--stat-bg:rgba(10,16,28,.35)}
-body.theme-violet{--dark:#171226;--card-bg:rgba(44,34,62,.55);--card-border:rgba(180,150,220,.18);--text:#e6ddf2;--dim:#9b8cb8;--gold:#e8d0a0;--gold-light:#e8d0a0;--accent:rgba(180,140,230,.5);--panel-bg:rgba(24,18,40,.6);--input-bg:rgba(14,10,26,.8);--btn-bg:rgba(140,110,190,.12);--btn-border:rgba(180,150,220,.25);--btn-color:#e8d0a0;--badge-bg:rgba(180,150,220,.2);--stat-bg:rgba(12,8,22,.35)}
-body.theme-forest{--dark:#12201a;--card-bg:rgba(28,46,38,.55);--card-border:rgba(150,190,170,.16);--text:#dde8e0;--dim:#8fa896;--gold:#d4c08a;--gold-light:#d4c08a;--accent:rgba(140,180,150,.5);--panel-bg:rgba(18,32,26,.6);--input-bg:rgba(10,20,16,.8);--btn-bg:rgba(90,140,115,.12);--btn-border:rgba(150,190,170,.22);--btn-color:#d4c08a;--badge-bg:rgba(120,170,140,.2);--stat-bg:rgba(8,16,13,.35)}
-body.theme-wine{--dark:#1d1216;--card-bg:rgba(58,32,40,.55);--card-border:rgba(210,150,160,.16);--text:#edd9de;--dim:#a88a92;--gold:#e8cf8a;--gold-light:#e8cf8a;--accent:rgba(215,130,145,.5);--panel-bg:rgba(32,18,24,.6);--input-bg:rgba(18,10,14,.8);--btn-bg:rgba(200,120,135,.12);--btn-border:rgba(210,150,160,.22);--btn-color:#e8cf8a;--badge-bg:rgba(210,150,160,.2);--stat-bg:rgba(14,8,10,.35)}
+body.theme-forest{--dark:#12201a;--card-bg:rgba(34,44,38,.58);--card-border:rgba(190,120,130,.18);--text:#e8e0dc;--dim:#9a8a8a;--gold:#d8a8a0;--gold-light:#c89088;--accent:rgba(200,120,130,.5);--panel-bg:rgba(22,30,26,.6);--input-bg:rgba(12,18,14,.8);--btn-bg:rgba(190,110,120,.14);--btn-border:rgba(200,130,140,.25);--btn-color:#d8a8a0;--badge-bg:rgba(195,120,130,.2);--stat-bg:rgba(10,14,12,.35)}
 body.theme-violetgray{--dark:#17171c;--card-bg:rgba(48,44,66,.62);--card-border:rgba(170,155,225,.25);--text:#e6e0f5;--dim:#9e94c0;--gold:#c8b4ec;--gold-light:#b6a0e4;--accent:rgba(175,150,230,.55);--panel-bg:rgba(24,22,34,.6);--input-bg:rgba(14,12,24,.8);--btn-bg:rgba(155,130,210,.14);--btn-border:rgba(175,155,230,.28);--btn-color:#c8b4ec;--badge-bg:rgba(165,145,220,.22);--stat-bg:rgba(16,14,28,.4)}
 /* --- 浅色主题：奶咖豆绿(day) + 燕麦(oat) + 抹茶(matcha) + 雾蓝(mist) --- */
 body.theme-day,body.theme-oat,body.theme-matcha,body.theme-mist{--dark:#f3ecdf;--text:#3d3229;--dim:#8a7a66;--gold:#5f7f52;--gold-light:#4d6b40;--card-border:rgba(95,127,82,.35);--accent:rgba(95,127,82,.6)}
@@ -222,22 +220,26 @@ body.theme-day #tmFrameDash,body.theme-day #tmFrame,body.theme-oat #tmFrameDash,
   radial-gradient(800px 400px at 98% 6%, rgba(140,165,220,.36), transparent 58%)}
 @keyframes glowA{0%,100%{opacity:.5}50%{opacity:.95}}
 @keyframes glowB{0%,100%{opacity:.4}50%{opacity:.8}}
-body.theme-indigo .theme-glow{background:
-  radial-gradient(1100px 520px at 12% -5%, rgba(100,140,240,.22), transparent 60%),
-  radial-gradient(900px 480px at 88% 8%, rgba(140,170,255,.16), transparent 60%),
-  radial-gradient(700px 420px at 50% 108%, rgba(80,110,220,.14), transparent 60%)}
-body.theme-violet .theme-glow{background:
-  radial-gradient(1100px 520px at 12% -5%, rgba(170,130,240,.24), transparent 60%),
-  radial-gradient(900px 480px at 88% 8%, rgba(200,160,255,.16), transparent 60%),
-  radial-gradient(700px 420px at 50% 108%, rgba(140,100,220,.14), transparent 60%)}
-body.theme-forest .theme-glow{background:
-  radial-gradient(1100px 520px at 12% -5%, rgba(120,190,150,.20), transparent 60%),
-  radial-gradient(900px 480px at 88% 8%, rgba(150,215,175,.14), transparent 60%),
-  radial-gradient(700px 420px at 50% 108%, rgba(90,160,120,.12), transparent 60%)}
-body.theme-wine .theme-glow{background:
-  radial-gradient(1100px 520px at 12% -5%, rgba(220,120,140,.20), transparent 60%),
-  radial-gradient(900px 480px at 88% 8%, rgba(240,150,165,.13), transparent 60%),
-  radial-gradient(700px 420px at 50% 108%, rgba(190,90,110,.12), transparent 60%)}
+body.theme-indigo .theme-glow{opacity:1;animation-duration:4s;background:
+  radial-gradient(1700px 800px at 5% -10%, rgba(38,42,96,.72), transparent 58%),
+  radial-gradient(1500px 700px at 95% 2%, rgba(140,110,235,.55), transparent 58%),
+  radial-gradient(1200px 620px at 90% 30%, rgba(170,135,250,.45), transparent 60%),
+  radial-gradient(1000px 540px at 100% 90%, rgba(120,90,200,.40), transparent 58%),
+  radial-gradient(800px 420px at 92% 98%, rgba(190,160,255,.34), transparent 58%)}
+body.theme-indigo .theme-glow-b{opacity:.85;animation-duration:5s;background:
+  radial-gradient(1300px 620px at 90% 88%, rgba(160,125,235,.42), transparent 58%),
+  radial-gradient(1100px 540px at 4% 78%, rgba(50,50,110,.40), transparent 60%),
+  radial-gradient(800px 400px at 98% 6%, rgba(190,160,255,.36), transparent 58%)}
+body.theme-forest .theme-glow{opacity:1;animation-duration:4s;background:
+  radial-gradient(1700px 800px at 5% -10%, rgba(16,42,32,.72), transparent 58%),
+  radial-gradient(1500px 700px at 95% 2%, rgba(185,80,105,.55), transparent 58%),
+  radial-gradient(1200px 620px at 90% 30%, rgba(215,100,125,.45), transparent 60%),
+  radial-gradient(1000px 540px at 100% 90%, rgba(150,55,80,.40), transparent 58%),
+  radial-gradient(800px 420px at 92% 98%, rgba(230,120,145,.34), transparent 58%)}
+body.theme-forest .theme-glow-b{opacity:.85;animation-duration:5s;background:
+  radial-gradient(1300px 620px at 90% 88%, rgba(200,90,115,.42), transparent 58%),
+  radial-gradient(1100px 540px at 4% 78%, rgba(24,56,42,.40), transparent 60%),
+  radial-gradient(800px 400px at 98% 6%, rgba(230,130,155,.36), transparent 58%)}
 body.theme-violetgray .theme-glow{opacity:1;animation-duration:4s;background:
   radial-gradient(1700px 800px at 4% -12%, rgba(10,26,64,.75), transparent 58%),
   radial-gradient(1500px 700px at 96% 2%, rgba(59,110,245,.60), transparent 58%),
@@ -280,7 +282,16 @@ body.theme-day .theme-panel,body.theme-oat .theme-panel,body.theme-matcha .theme
 .tp-item.on{border-color:rgba(212,168,83,.6);background:rgba(212,168,83,.14)}
 .tp-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;border:1px solid rgba(255,255,255,.2)}
 
-body.theme-day{--dark:#f3ecdf;--text:#2b261f;--dim:#6b5f4e;--gold:#4d6b40;--gold-light:#3d5c30;--card-border:rgba(95,127,82,.35);--accent:rgba(95,127,82,.6)}
+body.theme-day{
+  --dark:#efe9de;--text:#2b261f;--dim:#6b5f4e;--gold:#4d6b40;--gold-light:#3d5c30;--card-border:rgba(95,127,82,.35);--accent:rgba(95,127,82,.6);
+  background:
+    repeating-linear-gradient(90deg, rgba(122,104,74,.03) 0px, rgba(122,104,74,.03) 1px, transparent 1px, transparent 3px),
+    repeating-linear-gradient(0deg, rgba(122,104,74,.022) 0px, rgba(122,104,74,.022) 1px, transparent 1px, transparent 5px),
+    radial-gradient(rgba(122,104,74,.028) 1px, transparent 1.2px),
+    linear-gradient(180deg, #f1ece1, #ede6d8);
+  background-size: auto, auto, 3px 3px, auto;
+  background-attachment: fixed;
+}
 body.theme-day{--card-bg:rgba(255,252,245,.75);--panel-bg:rgba(255,252,245,.6);--input-bg:rgba(255,255,255,.9);--chip-bg:rgba(255,252,245,.65);--badge-bg:rgba(95,127,82,.15);--stat-bg:rgba(255,255,255,.55);--btn-bg:rgba(95,127,82,.1);--btn-border:rgba(95,127,82,.35);--btn-color:#4d6b40}
 body.theme-day .stars-layer,body.theme-day .castle-silhouette,body.theme-day .moon-glow{opacity:.1}
 body.theme-day .topbar,body.theme-day .navtabs,body.theme-day .foot{background:var(--panel-bg);border-color:var(--card-border)}
@@ -1390,17 +1401,15 @@ document.addEventListener('click',e=>{
 // ==================== 主题切换（多主题选择器）====================
 const THEMES=[
   {key:'night',label:'炭灰',cls:'',dark:true},
-  {key:'indigo',label:'靛蓝',cls:'theme-indigo',dark:true},
-  {key:'violet',label:'紫夜',cls:'theme-violet',dark:true},
-  {key:'forest',label:'墨绿',cls:'theme-forest',dark:true},
-  {key:'wine',label:'酒红',cls:'theme-wine',dark:true},
+  {key:'indigo',label:'蓝紫',cls:'theme-indigo',dark:true},
+  {key:'forest',label:'森林红酒',cls:'theme-forest',dark:true},
   {key:'violetgray',label:'灰紫',cls:'theme-violetgray',dark:true},
   {key:'day',label:'奶咖',cls:'theme-day',dark:false},
   {key:'oat',label:'燕麦',cls:'theme-oat',dark:false},
   {key:'matcha',label:'抹茶',cls:'theme-matcha',dark:false},
   {key:'mist',label:'雾蓝',cls:'theme-mist',dark:false},
 ];
-const THEME_DOT={night:'#16161a',indigo:'#141b2e',violet:'#171226',forest:'#12201a',wine:'#1d1216',violetgray:'#1c1a26',day:'#f3ecdf',oat:'#f5f0e6',matcha:'#eef2e3',mist:'#e9eef5'};
+const THEME_DOT={night:'#16161a',indigo:'#141b2e',forest:'#12201a',violetgray:'#1c1a26',day:'#f3ecdf',oat:'#f5f0e6',matcha:'#eef2e3',mist:'#e9eef5'};
 function getThemeIdx(){const t=localStorage.getItem('h_theme')||'night';const i=THEMES.findIndex(x=>x.key===t);return i<0?0:i}
 function applyTheme(idx,silent){
   const t=THEMES[idx];

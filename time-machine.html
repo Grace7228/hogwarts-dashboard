@@ -325,12 +325,19 @@ body{font-size:12px}
 
 /* ===== 白天奶咖主题（豆绿点缀） ===== */
 body.theme-day{
-  background:#f3ecdf;color:#3d3229;
+  background:
+    repeating-linear-gradient(90deg, rgba(122,104,74,.03) 0px, rgba(122,104,74,.03) 1px, transparent 1px, transparent 3px),
+    repeating-linear-gradient(0deg, rgba(122,104,74,.022) 0px, rgba(122,104,74,.022) 1px, transparent 1px, transparent 5px),
+    radial-gradient(rgba(122,104,74,.028) 1px, transparent 1.2px),
+    linear-gradient(180deg, #f1ece1, #ede6d8);
+  background-size: auto, auto, 3px 3px, auto;
+  background-attachment: fixed;
+  color:#3d3229;
   --text:#3d3229;--muted:rgba(61,50,41,.62);--line:rgba(95,127,82,.22);
   --g:#5f7f52;--o:#8a6d3b;--b:#4a6fa5;--p:#7a5e30;
   --card:rgba(255,255,255,.65);
 }
-body.theme-day .app{background:linear-gradient(180deg,#f7f1e4,#f3ecdf)}
+body.theme-day .app{background:linear-gradient(180deg,rgba(241,236,225,.7),rgba(237,230,216,.75))}
 body.theme-day .brand .h{color:#4d6b40}
 body.theme-day .pill,body.theme-day .stat,body.theme-day .timer,body.theme-day .qbtn,body.theme-day .cbtn,body.theme-day .mod,body.theme-day .chip{background:rgba(255,255,255,.7);border-color:rgba(95,127,82,.25);color:#3d3229}
 body.theme-day .stat .n{color:#3d5c30;font-weight:800}
