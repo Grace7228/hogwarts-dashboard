@@ -1004,7 +1004,7 @@ const defaultSchedule=[
   {id:'ds8',day:5,time:'14:00',subject:'周复盘',prof:'Obsidian',house:'gryffindor'},
 ];
 
-let D={selectedRealm:0,currentView:'travel',notes:{},missionTasks:[],missionLog:[],points:0,assets:[],healthLog:[],travelLog:[],archive:[],reflections:[],readings:[],quotes:[],thoughts:[],schedule:null,scheduleLog:{},settings:{currentDay:0}};
+let D={selectedRealm:0,currentView:'travel',notes:{},missionTasks:[],missionLog:[],points:0,assets:[],healthLog:[],travelLog:[],archive:[],reflections:[],readings:[],quotes:[],thoughts:[],schedule:null,scheduleLog:{},timelineDate:null,calOffset:0,settings:{currentDay:0}};
 
 function load(){
   try{const r=localStorage.getItem(SK);if(r)D={...D,...JSON.parse(r)}}catch(e){}
@@ -1193,8 +1193,18 @@ function renderMissionHTML(){
       <select id="newTaskPrio" style="width:70px"><option value="B2">B2</option><option value="B1">B1</option><option value="B3">B3</option><option value="B4">B4</option></select>
       <button class="btn" onclick="addMissionTask()">添加</button>
     </div></div></div><div class="card"><div class="ctitle"><span class="icon">📝</span> Mission Journal</div><div id="missionLogList" style="max-height:140px;overflow-y:auto"></div><div class="add-log-row"><textarea id="newLogText" placeholder="今日日志……" rows="1"></textarea><button class="btn" onclick="addMissionLog()" style="padding:6px 10px">记录</button></div></div></div><div class="mission-right"><div class="card points-display"><div style="font-size:9px;color:var(--dim);letter-spacing:1px;margin-bottom:2px">⭐ 积分余额</div><div class="points-value">${D.points}</div><div style="font-size:8px;color:var(--dim);margin-bottom:4px">完成任务+20 · 写日志+5 · 计时按分钟加分</div><div class="btn-row" style="justify-content:center;gap:4px"><button class="btn" onclick="addPoints(10)">+10</button><button class="btn" onclick="addPoints(50)">+50</button><button class="btn" onclick="addPoints(-10)" style="background:rgba(200,100,80,0.1);border-color:rgba(200,100,80,0.25);color:#e08070">-10</button><button class="btn" onclick="addPoints(-50)" style="background:rgba(200,100,80,0.1);border-color:rgba(200,100,80,0.25);color:#e08070">-50</button></div></div><div class="card timer-display"><div class="timer-value" id="timerDisplay">00:00:00</div><div class="timer-btns"><button class="start-btn" onclick="timerStart()">▶</button><button class="pause-btn" onclick="timerPause()">⏸</button><button class="done-btn" onclick="timerDone()">✔</button></div></div><div class="card">
-    <div class="ctitle">⏱️ 当日时间轴 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">任务按时间段显示 · 点击任务可开始计时</span></div>
-    <div id="dayTimeline" style="max-height:320px;overflow-y:auto;padding-right:4px"></div>
+    <div class="ctitle">📅 日程 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点日历选日期 · 下方显示当天时间轴</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+      <button class="btn" onclick="calShift(-1)" style="font-size:9px;padding:2px 7px">◀</button>
+      <span id="calMonthLabel" style="font-size:11px;color:var(--gold-light);letter-spacing:1px"></span>
+      <button class="btn" onclick="calShift(1)" style="font-size:9px;padding:2px 7px">▶</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;margin-bottom:4px">
+      <span style="font-size:8px;color:var(--dim)">日</span><span style="font-size:8px;color:var(--dim)">一</span><span style="font-size:8px;color:var(--dim)">二</span><span style="font-size:8px;color:var(--dim)">三</span><span style="font-size:8px;color:var(--dim)">四</span><span style="font-size:8px;color:var(--dim)">五</span><span style="font-size:8px;color:var(--dim)">六</span>
+    </div>
+    <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;margin-bottom:8px"></div>
+    <div class="ctitle" style="border-top:1px solid rgba(255,255,255,0.04);padding-top:6px">⏱️ <span id="timelineDateLabel">当日时间轴</span> <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点击任务可开始计时</span></div>
+    <div id="dayTimeline" style="max-height:260px;overflow-y:auto;padding-right:4px"></div>
   </div></div></div>`;
 }
 
@@ -1216,11 +1226,46 @@ function taskItemHTML(t){
   return `<div class="mission-task"><div class="task-check${t.done?' done':''}" onclick="toggleMission('${t.id}')">${t.done?'✓':''}</div><div class="task-body"><div class="task-name${t.done?' done':''}">${ps} ${eh(t.name)}</div><div class="task-meta"><span class="task-tag ${tc}">${tn}</span><span style="font-size:9px;color:${pc};font-weight:bold;border:1px solid ${pc};border-radius:4px;padding:0 5px">${t.prio||'B4'}</span></div></div><div class="task-progress-container"><div class="task-progress-bar"><div class="task-progress-fill" style="width:${t.progress}%"></div></div><div class="task-percent">${t.progress}%</div></div><div class="task-actions"><button onclick="changeProgress('${t.id}',-10)">◀</button><button onclick="changeProgress('${t.id}',10)">▶</button><button onclick="deleteMission('${t.id}')">✕</button></div></div>`;
 }
 
+function todayKeyStr(){
+  const n=new Date();
+  return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+}
+function calShift(d){D.calOffset+=d;save();renderMission();}
+window.calShift=calShift;
+function renderCalNav(){
+  const grid=document.getElementById('calGrid');if(!grid)return;
+  const base=new Date();base.setMonth(base.getMonth()+D.calOffset);
+  const y=base.getFullYear(),m=base.getMonth();
+  document.getElementById('calMonthLabel').textContent=y+'年'+(m+1)+'月';
+  const fd=new Date(y,m,1).getDay();
+  const dim=new Date(y,m+1,0).getDate();
+  const dip=new Date(y,m,0).getDate();
+  const today=todayKeyStr();
+  const sel=D.timelineDate||today;
+  let h='';
+  for(let i=fd-1;i>=0;i--)h+='<span style="font-size:8px;color:var(--dim);opacity:.4">'+(dip-i)+'</span>';
+  for(let d=1;d<=dim;d++){
+    const ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const isSel=ds===sel;
+    const isToday=ds===today;
+    h+='<span onclick="calPick(\''+ds+'\')" style="font-size:9px;padding:3px 0;border-radius:4px;cursor:pointer;color:var(--text);'+(isSel?'background:rgba(212,168,83,.3);font-weight:bold;color:var(--gold-light)':isToday?'border:1px solid rgba(224,112,96,.6)':'')+'">'+d+'</span>';
+  }
+  const tt=fd+dim,rem=tt<=35?35-tt:42-tt;
+  for(let d=1;d<=rem;d++)h+='<span style="font-size:8px;color:var(--dim);opacity:.4">'+d+'</span>';
+  grid.innerHTML=h;
+}
+function calPick(ds){
+  D.timelineDate=ds;save();renderMission();toast('📅 '+ds);
+}
+window.calPick=calPick;
 function renderDayTimeline(){
   const el=document.getElementById('dayTimeline');if(!el)return;
   const now=new Date();
   const curMin=now.getHours()*60+now.getMinutes();
-  const tasks=D.missionTasks||[];
+  const today=todayKeyStr();
+  const sel=D.timelineDate||today;
+  document.getElementById('timelineDateLabel').textContent=sel+' 日程';
+  const tasks=(D.missionTasks||[]).filter(t=>!t.date||t.date===sel);
   const slotHour={morning:9,afternoon:14,night:20};
   const slotEnd={morning:12,afternoon:18,night:23};
   let html='';
@@ -1256,7 +1301,7 @@ window.tmStartFromMission=tmStartFromMission;
 
 function setupMissionEvents(){
   const mtl=document.getElementById('missionTaskList');if(!mtl)return;
-  const tasks=D.missionTasks||[];
+  const tasks=(D.missionTasks||[]).filter(t=>!t.date||t.date===(D.timelineDate||todayKeyStr()));
   // 按时间段分区
   const slots=[{k:'morning',n:'🌅 Morning'},{k:'afternoon',n:'☀️ Afternoon'},{k:'night',n:'🌙 Tonight'}];
   const others=tasks.filter(t=>!t.slot||!slots.find(s=>s.k===t.slot));
@@ -1275,6 +1320,7 @@ function setupMissionEvents(){
   if(logs.length===0)mll.innerHTML='<div class="empty">暂无</div>';
   else mll.innerHTML=logs.slice().reverse().map(l=>`<div class="log-item"><div class="log-date">${l.date}</div><div style="flex:1">${eh(l.text)}</div><div class="log-rating"><span class="good${l.rating==='good'?' active':''}" onclick="rateLog('${l.id}','good')">✓ 好</span><span class="bad${l.rating==='bad'?' active':''}" onclick="rateLog('${l.id}','bad')">✗ 差</span></div></div>`).join('');
   renderDayTimeline();
+  renderCalNav();
 }
 
 function renderRealmsHTML(){
@@ -1524,7 +1570,7 @@ function openMemoryBottle(year){
 window.openMemoryBottle = openMemoryBottle;
 
 // ==================== 指令站全局函数 ====================
-window.addMissionTask=function(){const n=document.getElementById('newTaskName').value.trim();if(!n)return;D.missionTasks.push({id:uid(),name:n,tag:document.getElementById('newTaskTag').value,slot:document.getElementById('newTaskSlot').value,prio:document.getElementById('newTaskPrio').value,progress:0,done:false,time:Date.now()});D.points+=5;save();switchView('mission')};
+window.addMissionTask=function(){const n=document.getElementById('newTaskName').value.trim();if(!n)return;D.missionTasks.push({id:uid(),name:n,tag:document.getElementById('newTaskTag').value,slot:document.getElementById('newTaskSlot').value,prio:document.getElementById('newTaskPrio').value,date:(D.timelineDate||todayKeyStr()),progress:0,done:false,time:Date.now()});D.points+=5;save();switchView('mission')};
 window.toggleMission=function(id){D.missionTasks=D.missionTasks.map(t=>t.id===id?{...t,done:!t.done,progress:t.done?t.progress:100}:t);if(D.missionTasks.find(t=>t.id===id)?.done)D.points+=20;save();switchView('mission')};
 window.changeProgress=function(id,d){D.missionTasks=D.missionTasks.map(t=>{if(t.id!==id)return t;const np=Math.max(0,Math.min(100,t.progress+d));return{...t,progress:np,done:np>=100}});save();switchView('mission')};
 window.deleteMission=function(id){D.missionTasks=D.missionTasks.filter(t=>t.id!==id);save();switchView('mission')};
