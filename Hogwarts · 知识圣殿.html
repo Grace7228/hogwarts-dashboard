@@ -612,6 +612,9 @@ let selectedTravelId=null,flyTarget=null,flyStart=null,flyProgress=0;
 let globe2D=null,webglFailed=false;
 
 function initGlobe(){
+  // 直接使用 2D Canvas 方案（兼容所有环境，无需 WebGL）
+  try{ initGlobe2D(); }catch(e){ try{ initGlobe2D(); }catch(e2){} }
+  return;
   try{
     const container=document.getElementById('globeContainer');
     const w=container.clientWidth,h=container.clientHeight;
