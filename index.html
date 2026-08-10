@@ -549,13 +549,29 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
     <div class="ctitle" style="margin-bottom:6px"><span class="icon">🟢</span> 舰桥总览</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px" id="dashMini"></div>
   </div>
-  <div class="card" style="padding:6px;text-align:center">
-    <div style="font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:4px">🍅 番茄钟</div>
-    <iframe src="presence-clock.html" style="width:100%;height:280px;border:none;background:transparent" title="番茄钟" loading="lazy"></iframe>
+<div class="card">
+  <div class="ctitle">📅 日程 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点日期看当天 · 点任务可计时</span></div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+    <button class="btn" onclick="calShift(-1)" style="font-size:9px;padding:2px 7px">◀</button>
+    <span id="calMonthLabel" style="font-size:11px;color:var(--gold-light);letter-spacing:1px"></span>
+    <button class="btn" onclick="calShift(1)" style="font-size:9px;padding:2px 7px">▶</button>
   </div>
+  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;margin-bottom:4px">
+    <span style="font-size:8px;color:var(--dim)">日</span><span style="font-size:8px;color:var(--dim)">一</span><span style="font-size:8px;color:var(--dim)">二</span><span style="font-size:8px;color:var(--dim)">三</span><span style="font-size:8px;color:var(--dim)">四</span><span style="font-size:8px;color:var(--dim)">五</span><span style="font-size:8px;color:var(--dim)">六</span>
+  </div>
+  <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;margin-bottom:8px"></div>
+  <div class="ctitle" style="border-top:1px solid rgba(255,255,255,0.04);padding-top:6px">⏱️ <span id="timelineDateLabel">当日时间轴</span></div>
+  <div id="dayTimeline" style="max-height:240px;overflow-y:auto;padding-right:4px"></div>
+</div>
+
+
   <div class="card">
     <div class="ctitle"><span class="icon">📋</span> 最近笔记</div>
     <div id="recentNotesList" style="max-height:110px;overflow-y:auto;font-size:10px"></div>
+  </div>
+  <div class="card" style="padding:6px;text-align:center">
+    <div style="font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:4px">🍅 番茄钟</div>
+    <iframe src="presence-clock.html" style="width:100%;height:280px;border:none;background:transparent" title="番茄钟" loading="lazy"></iframe>
   </div>
 </div>
 
@@ -1176,20 +1192,7 @@ function renderMissionHTML(){
   return `<div class="mission-book">
   <!-- 左页：日历 + 任务 -->
   <div class="book-page">
-    <div class="card">
-      <div class="ctitle">📅 日程 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点日期看当天 · 点任务可计时</span></div>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-        <button class="btn" onclick="calShift(-1)" style="font-size:9px;padding:2px 7px">◀</button>
-        <span id="calMonthLabel" style="font-size:11px;color:var(--gold-light);letter-spacing:1px"></span>
-        <button class="btn" onclick="calShift(1)" style="font-size:9px;padding:2px 7px">▶</button>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;margin-bottom:4px">
-        <span style="font-size:8px;color:var(--dim)">日</span><span style="font-size:8px;color:var(--dim)">一</span><span style="font-size:8px;color:var(--dim)">二</span><span style="font-size:8px;color:var(--dim)">三</span><span style="font-size:8px;color:var(--dim)">四</span><span style="font-size:8px;color:var(--dim)">五</span><span style="font-size:8px;color:var(--dim)">六</span>
-      </div>
-      <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;margin-bottom:8px"></div>
-      <div class="ctitle" style="border-top:1px solid rgba(255,255,255,0.04);padding-top:6px">⏱️ <span id="timelineDateLabel">当日时间轴</span></div>
-      <div id="dayTimeline" style="max-height:240px;overflow-y:auto;padding-right:4px"></div>
-    </div>
+
     <div class="card">
       <div class="mission-header"><div><span class="mission-title">📋 Today's Mission</span></div><div><span class="mission-date">${now.getMonth()+1}/${now.getDate()} 周${'日一二三四五六'[now.getDay()]}</span> <span class="countdown">${dl}d</span></div></div>
       <div id="missionTaskList"></div>
@@ -1252,7 +1255,7 @@ function todayKeyStr(){
   const n=new Date();
   return n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
 }
-function calShift(d){D.calOffset+=d;save();renderMission();}
+function calShift(d){D.calOffset+=d;save();renderCalNav();}
 window.calShift=calShift;
 function renderCalNav(){
   const grid=document.getElementById('calGrid');if(!grid)return;
@@ -1279,9 +1282,8 @@ function renderCalNav(){
 }
 function calPick(ds){
   D.timelineDate=ds;save();
-  const vm=document.getElementById('view-mission');
-  if(vm){vm.innerHTML=renderMissionHTML();setupMissionEvents();}
-  else renderMission();
+  renderCalNav();
+  if(document.getElementById('missionTaskList'))setupMissionEvents();
   toast('📅 '+ds);
 }
 window.calPick=calPick;
@@ -1807,6 +1809,8 @@ window.cycleTheme=cycleTheme;
 window.toggleThemePanel=toggleThemePanel;
 window.renderThemePanel=renderThemePanel;
 applyTheme(getThemeIdx(),true);
+renderCalNav();
+renderDayTimeline();
 renderCalNav();
 renderDayTimeline();
 
