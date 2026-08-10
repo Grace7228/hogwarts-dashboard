@@ -161,7 +161,7 @@ pre.sync{white-space:pre-wrap;word-break:break-all;background:#111827;color:#e5e
 .day-sum{background:rgba(32,34,40,.5);border:1px solid rgba(212,168,83,.15);border-radius:14px;padding:10px 12px;margin:0 4px 12px;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .day-sum .ds-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
 .day-sum .ds-h b{font-size:13px;color:#f0d68a}
-.day-sum pre{white-space:pre-wrap;font:inherit;font-size:12px;color:#d9cdb8;line-height:1.5;margin:0;max-height:120px;overflow:auto}
+.day-sum pre{white-space:pre-wrap;font:inherit;font-size:12px;color:#d9cdb8;line-height:1.5;margin:0;max-height:160px;overflow:auto}
 .day-sum .ds-h button{background:rgba(32,34,40,.5);border:1px solid rgba(212,168,83,.25);color:#f0d68a;border-radius:8px;padding:3px 8px;font-size:11px;font:inherit;cursor:pointer}
 .import-hint{font-size:11px;color:#6b7280;margin-top:6px;line-height:1.4}
 .app.mode-todo{background:#1a2436}
@@ -1306,7 +1306,7 @@ function renderTimeline(){
     const k=todayKey();
     const custom=S.diary&&S.diary[k];
     const text=custom||buildTodaySummary();
-    const short=text.split('\n').slice(0,8).join('\n');
+    const short=text.split('\n').slice(0,24).join('\n');
     const delBtn=custom?' <button type="button" class="tl-chip" id="dsDel" style="color:#e08070">删除</button>':'';
     return '<div class="day-sum"><div class="ds-h"><b>📔 今日摘要</b><span><button type="button" class="tl-chip" id="dsCopy">复制</button> <button type="button" class="tl-chip" id="dsOpen">展开</button> <button type="button" class="tl-chip" id="dsEdit">编辑</button>'+delBtn+'</span></div><pre>'+esc(short)+'</pre></div>';
   }
