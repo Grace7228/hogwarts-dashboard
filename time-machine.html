@@ -1354,6 +1354,7 @@ function renderTimeline(){
       '<div class="sact" style="margin-top:0">'+
         '<button class="primary" type="button" id="bkDownload">💾 下载 JSON</button>'+
         '<button class="ok" type="button" id="bkCopy">复制</button>'+
+        '<button class="ghost" type="button" id="bkClearDemo" style="color:#e08070">🧹 清空演示数据</button>'+
       '</div>'+
       '<div class="field" style="margin-top:12px"><label>从备份恢复</label>'+
         '<input type="file" id="bkFile" accept="application/json,.json">'+
@@ -1363,7 +1364,8 @@ function renderTimeline(){
     );
     $('bkBox').textContent=text;
     $('bkClose').onclick=closeMask;
-    $('bkCopy').onclick=async()=>{ try{await navigator.clipboard.writeText(text);toast('备份已复制')}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('备份已复制')} };
+    $('bkCopy').onclick=async()=>{ try{await navigator.clipboard.writeText(text);
+    var bkCD=$('bkClearDemo'); if(bkCD) bkCD.onclick=clearDemoData;toast('备份已复制')}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast('备份已复制')} };
     $('bkDownload').onclick=()=>{
       const b=new Blob([text],{type:'application/json'});
       const a=document.createElement('a');
