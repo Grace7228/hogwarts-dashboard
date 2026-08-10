@@ -1202,10 +1202,6 @@ function renderMissionHTML(){
   <!-- 右页：领域记录 + 日志 + 积分计时 -->
   <div class="book-page">
     <div class="card">
-      <div class="ctitle"><span class="icon">📋</span> 最近笔记</div>
-      <div id="recentNotesList" style="max-height:110px;overflow-y:auto;font-size:10px"></div>
-    </div>
-    <div class="card">
       <div class="ctitle"><span class="icon">📝</span> Mission Journal</div>
       <div id="missionLogList" style="max-height:120px;overflow-y:auto"></div>
       <div class="add-log-row"><textarea id="newLogText" placeholder="今日日志……" rows="1"></textarea><button class="btn" onclick="addMissionLog()" style="padding:6px 10px">记录</button></div>
@@ -1410,6 +1406,7 @@ function renderRealmsHTML(){
   realms.forEach((r,i)=>{const c=(D.notes[r.id]||[]).length;h+=`<div class="rbox${i===D.selectedRealm?' active':''}" onclick="switchRealm(${i})"><div class="ricon">${r.icon}</div><div class="rname">${r.name}</div><div class="rcount">${c} 条</div></div>`});
   h+='</div></div>';
   h+='<div class="card"><div class="ctitle"><span class="icon">🗂️</span> 领域记录 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点击领域卡片选择 · 记录笔记</span></div><div id="realmsNoteBtns" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px"></div><div id="realmsNotesList" style="max-height:150px;overflow-y:auto;font-size:11px"></div><div class="addrow" style="margin-top:4px"><textarea id="realmsNoteInput" placeholder="记录笔记……" rows="1"></textarea><button class="btn" onclick="addRealmsNote()">✨</button></div></div>';
+  h+='<div class="card"><div class="ctitle"><span class="icon">📋</span> 最近笔记</div><div id="recentNotesList" style="max-height:140px;overflow-y:auto;font-size:10px"></div></div>';
   return h;
 }
 function initRealmsEvents(){}
