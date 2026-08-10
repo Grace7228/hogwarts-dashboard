@@ -1202,12 +1202,6 @@ function renderMissionHTML(){
   <!-- 右页：领域记录 + 日志 + 积分计时 -->
   <div class="book-page">
     <div class="card">
-      <div class="ctitle">🗂️ 领域记录 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">选择领域查看/记录笔记</span></div>
-      <div id="missionRealmBtns" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px"></div>
-      <div id="missionNotesList" style="max-height:150px;overflow-y:auto;font-size:11px"></div>
-      <div class="addrow" style="margin-top:4px"><textarea id="missionNoteInput" placeholder="记录笔记……" rows="1"></textarea><button class="btn" onclick="addMissionNote()">✨</button></div>
-    </div>
-    <div class="card">
       <div class="ctitle"><span class="icon">📋</span> 最近笔记</div>
       <div id="recentNotesList" style="max-height:110px;overflow-y:auto;font-size:10px"></div>
     </div>
@@ -1336,11 +1330,13 @@ function renderMissionRealm(){
   else l.innerHTML=ns.slice().reverse().map(n=>'<div class="nitem"><div class="ncont">'+eh(n.content)+'</div><span class="nmeta">'+ft(n.time)+'</span><button class="ndel" onclick="delMissionNote(\''+n.id+'\')">✕</button></div>').join('');
 }
 function switchMissionRealm(i){
-  D.selectedRealm=i;save();renderMissionRealm();
+  D.selectedRealm=i;save();
+  if(document.getElementById('realmsNoteBtns'))renderRealmsNotes();
 }
 window.switchMissionRealm=switchMissionRealm;
 function addMissionNote(){
-  const i=document.getElementById('missionNoteInput');const c=i.value.trim();if(!c)return;
+  const i=document.getElementById('missionNoteInput');if(!i)return;
+  const c=i.value.trim();if(!c)return;
   D.notes[realms[D.selectedRealm].id].push({id:uid(),content:c,time:Date.now()});
   save();i.value='';renderMissionRealm();renderRealms();toast('✨ 已记录');
 }
