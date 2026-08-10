@@ -612,14 +612,8 @@ let selectedTravelId=null,flyTarget=null,flyStart=null,flyProgress=0;
 let globe2D=null,webglFailed=false;
 
 function initGlobe(){
-  // 优先 3D WebGL（高精度），失败自动降级 2D 超采样版
-  try{
-    startGlobe3D();
-    return;
-  }catch(e){
-    webglFailed=true;
-    try{ initGlobe2D(); }catch(e2){}
-  }
+  // 强制 2D Canvas 超采样版（保证任何环境都能显示，放大清晰）
+  try{ initGlobe2D(); }catch(e){ console.error('globe2d init error', e); }
 }
 function startGlobe3D(){
   try{
@@ -694,6 +688,11 @@ function initGlobe2D(){
   const ctx=cv.getContext('2d');
   // 2x 超采样提升放大清晰度
   const SS=2;
+  if(w<50||h<50){ // 容器尺寸未就绪，延迟重试
+    setTimeout(initGlobe2D,200);
+    cv.remove();
+    return;
+  }
   cv.width=w*SS;cv.height=h*SS;
   ctx.setTransform(SS,0,0,SS,0,0);
   globe2D={ctx,cv,w,h,SS,rot:0,markers:[],globalCities:[],img:null,imgReady:false};
