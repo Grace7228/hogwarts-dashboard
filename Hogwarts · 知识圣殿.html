@@ -549,11 +549,6 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
     <div class="ctitle" style="margin-bottom:6px"><span class="icon">🟢</span> 舰桥总览</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px" id="dashMini"></div>
   </div>
-  <div class="card" style="flex:1;display:flex;flex-direction:column;min-height:140px">
-    <div class="ctitle"><span class="icon">📋</span> <span id="realmNotesTitle">选择领域</span></div>
-    <div class="nlist" id="notesList" style="flex:1"><div class="empty" id="notesEmpty">👆 在「知识幻境」中选择</div></div>
-    <div class="addrow"><textarea id="addNoteInput" placeholder="记录……" rows="1"></textarea><button class="btn" onclick="addNote()">✨</button></div>
-  </div>
   <div class="card" style="padding:6px;text-align:center">
     <div style="font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:4px">🍅 番茄钟</div>
     <iframe src="presence-clock.html" style="width:100%;height:400px;border:none;background:transparent" title="番茄钟" loading="lazy"></iframe>
@@ -1683,10 +1678,8 @@ function fmtTimer(s){const h=Math.floor(s/3600),m=Math.floor(s%3600/60),ss=s%60;
 function switchRealm(i){D.selectedRealm=i;save();renderRealmsHTML();document.getElementById('view-realms').innerHTML=renderRealmsHTML();renderRealmNotes()}
 window.switchRealm=switchRealm;
 function renderRealmNotes(){
-  const r=realms[D.selectedRealm],ns=D.notes[r.id]||[];
-  const t=document.getElementById('realmNotesTitle');if(t)t.textContent=`${r.icon} ${r.name}`;
-  const l=document.getElementById('notesList'),e=document.getElementById('notesEmpty');if(!l)return;
-  if(ns.length===0){if(e)e.style.display='block';l.innerHTML=''}else{if(e)e.style.display='none';l.innerHTML=ns.slice().reverse().map(n=>`<div class="nitem"><div class="ncont">${eh(n.content)}</div><span class="nmeta">${ft(n.time)}</span><button class="ndel" onclick="delNote('${r.id}','${n.id}')">✕</button></div>`).join('')}
+  // 领域笔记已统一到「领域记录」模块（指令站/知识幻境）
+  if(document.getElementById('realmsNoteBtns'))renderRealmsNotes();
 }
 function addNote(){const i=document.getElementById('addNoteInput');if(!i)return;const c=i.value.trim();if(!c)return;const r=realms[D.selectedRealm];D.notes[r.id].push({id:uid(),content:c,time:Date.now()});save();i.value='';renderRealmNotes()}
 window.addNote=addNote;
