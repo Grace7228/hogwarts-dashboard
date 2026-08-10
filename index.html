@@ -1186,28 +1186,63 @@ function renderDashMini(){
 // ==================== HTML渲染器 ====================
 function renderMissionHTML(){
   const now=new Date();const ye=new Date(now.getFullYear(),11,31);const dl=Math.ceil((ye-now)/864e5);
-  return `<div class="mission-grid"><div class="mission-left"><div class="card"><div class="mission-header"><div><span class="mission-title">📋 Today's Mission</span></div><div><span class="mission-date">${now.getMonth()+1}/${now.getDate()} 周${'日一二三四五六'[now.getDay()]}</span> <span class="countdown">${dl}d</span></div></div><div id="missionTaskList"></div><div style="margin-top:6px;border-top:1px solid rgba(255,255,255,0.04);padding-top:6px"><div class="add-task-row" style="flex-wrap:wrap;gap:4px">
-      <input id="newTaskName" placeholder="任务名称……" style="flex:1;min-width:120px">
-      <select id="newTaskTag" style="width:80px"><option value="default">标签</option><option value="english">EN</option><option value="math">Math</option><option value="reading">阅读</option><option value="writing">写作</option><option value="coding">技术</option></select>
-      <select id="newTaskSlot" style="width:70px"><option value="morning">🌅早</option><option value="afternoon">☀️午</option><option value="night">🌙晚</option></select>
-      <select id="newTaskPrio" style="width:70px"><option value="B2">B2</option><option value="B1">B1</option><option value="B3">B3</option><option value="B4">B4</option></select>
-      <button class="btn" onclick="addMissionTask()">添加</button>
-    </div></div></div><div class="card"><div class="ctitle"><span class="icon">📝</span> Mission Journal</div><div id="missionLogList" style="max-height:140px;overflow-y:auto"></div><div class="add-log-row"><textarea id="newLogText" placeholder="今日日志……" rows="1"></textarea><button class="btn" onclick="addMissionLog()" style="padding:6px 10px">记录</button></div></div></div><div class="mission-right"><div class="card points-display"><div style="font-size:9px;color:var(--dim);letter-spacing:1px;margin-bottom:2px">⭐ 积分余额</div><div class="points-value">${D.points}</div><div style="font-size:8px;color:var(--dim);margin-bottom:4px">完成任务+20 · 写日志+5 · 计时按分钟加分</div><div class="btn-row" style="justify-content:center;gap:4px"><button class="btn" onclick="addPoints(10)">+10</button><button class="btn" onclick="addPoints(50)">+50</button><button class="btn" onclick="addPoints(-10)" style="background:rgba(200,100,80,0.1);border-color:rgba(200,100,80,0.25);color:#e08070">-10</button><button class="btn" onclick="addPoints(-50)" style="background:rgba(200,100,80,0.1);border-color:rgba(200,100,80,0.25);color:#e08070">-50</button></div></div><div class="card timer-display"><div class="timer-value" id="timerDisplay">00:00:00</div><div class="timer-btns"><button class="start-btn" onclick="timerStart()">▶</button><button class="pause-btn" onclick="timerPause()">⏸</button><button class="done-btn" onclick="timerDone()">✔</button></div></div><div class="card">
-    <div class="ctitle">📅 日程 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点日历选日期 · 下方显示当天时间轴</span></div>
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-      <button class="btn" onclick="calShift(-1)" style="font-size:9px;padding:2px 7px">◀</button>
-      <span id="calMonthLabel" style="font-size:11px;color:var(--gold-light);letter-spacing:1px"></span>
-      <button class="btn" onclick="calShift(1)" style="font-size:9px;padding:2px 7px">▶</button>
+  return `<div class="mission-book">
+  <!-- 左页：日历 + 任务 -->
+  <div class="book-page">
+    <div class="card">
+      <div class="ctitle">📅 日程 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点日期看当天 · 点任务可计时</span></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+        <button class="btn" onclick="calShift(-1)" style="font-size:9px;padding:2px 7px">◀</button>
+        <span id="calMonthLabel" style="font-size:11px;color:var(--gold-light);letter-spacing:1px"></span>
+        <button class="btn" onclick="calShift(1)" style="font-size:9px;padding:2px 7px">▶</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;margin-bottom:4px">
+        <span style="font-size:8px;color:var(--dim)">日</span><span style="font-size:8px;color:var(--dim)">一</span><span style="font-size:8px;color:var(--dim)">二</span><span style="font-size:8px;color:var(--dim)">三</span><span style="font-size:8px;color:var(--dim)">四</span><span style="font-size:8px;color:var(--dim)">五</span><span style="font-size:8px;color:var(--dim)">六</span>
+      </div>
+      <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;margin-bottom:8px"></div>
+      <div class="ctitle" style="border-top:1px solid rgba(255,255,255,0.04);padding-top:6px">⏱️ <span id="timelineDateLabel">当日时间轴</span></div>
+      <div id="dayTimeline" style="max-height:240px;overflow-y:auto;padding-right:4px"></div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;margin-bottom:4px">
-      <span style="font-size:8px;color:var(--dim)">日</span><span style="font-size:8px;color:var(--dim)">一</span><span style="font-size:8px;color:var(--dim)">二</span><span style="font-size:8px;color:var(--dim)">三</span><span style="font-size:8px;color:var(--dim)">四</span><span style="font-size:8px;color:var(--dim)">五</span><span style="font-size:8px;color:var(--dim)">六</span>
+    <div class="card">
+      <div class="mission-header"><div><span class="mission-title">📋 Today's Mission</span></div><div><span class="mission-date">${now.getMonth()+1}/${now.getDate()} 周${'日一二三四五六'[now.getDay()]}</span> <span class="countdown">${dl}d</span></div></div>
+      <div id="missionTaskList"></div>
+      <div style="margin-top:6px;border-top:1px solid rgba(255,255,255,0.04);padding-top:6px">
+        <div class="add-task-row" style="flex-wrap:wrap;gap:4px">
+          <input id="newTaskName" placeholder="任务名称……" style="flex:1;min-width:110px">
+          <select id="newTaskTag" style="width:70px"><option value="default">标签</option><option value="english">EN</option><option value="math">Math</option><option value="reading">阅读</option><option value="writing">写作</option><option value="coding">技术</option></select>
+          <select id="newTaskSlot" style="width:62px"><option value="morning">🌅早</option><option value="afternoon">☀️午</option><option value="night">🌙晚</option></select>
+          <select id="newTaskPrio" style="width:62px"><option value="B2">B2</option><option value="B1">B1</option><option value="B3">B3</option><option value="B4">B4</option></select>
+          <button class="btn" onclick="addMissionTask()">添加</button>
+        </div>
+      </div>
     </div>
-    <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;margin-bottom:8px"></div>
-    <div class="ctitle" style="border-top:1px solid rgba(255,255,255,0.04);padding-top:6px">⏱️ <span id="timelineDateLabel">当日时间轴</span> <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点击任务可开始计时</span></div>
-    <div id="dayTimeline" style="max-height:260px;overflow-y:auto;padding-right:4px"></div>
-  </div></div></div>`;
+  </div>
+  <!-- 右页：领域记录 + 日志 + 积分计时 -->
+  <div class="book-page">
+    <div class="card">
+      <div class="ctitle">🗂️ 领域记录 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">选择领域查看/记录笔记</span></div>
+      <div id="missionRealmBtns" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px"></div>
+      <div id="missionNotesList" style="max-height:150px;overflow-y:auto;font-size:11px"></div>
+      <div class="addrow" style="margin-top:4px"><textarea id="missionNoteInput" placeholder="记录笔记……" rows="1"></textarea><button class="btn" onclick="addMissionNote()">✨</button></div>
+    </div>
+    <div class="card">
+      <div class="ctitle"><span class="icon">📝</span> Mission Journal</div>
+      <div id="missionLogList" style="max-height:120px;overflow-y:auto"></div>
+      <div class="add-log-row"><textarea id="newLogText" placeholder="今日日志……" rows="1"></textarea><button class="btn" onclick="addMissionLog()" style="padding:6px 10px">记录</button></div>
+    </div>
+    <div class="card points-display">
+      <div style="font-size:9px;color:var(--dim);letter-spacing:1px;margin-bottom:2px">⭐ 积分余额</div>
+      <div class="points-value">${D.points}</div>
+      <div style="font-size:8px;color:var(--dim);margin-bottom:4px">完成任务+20 · 写日志+5 · 计时按分钟加分</div>
+      <div class="btn-row" style="justify-content:center;gap:4px"><button class="btn" onclick="addPoints(10)">+10</button><button class="btn" onclick="addPoints(50)">+50</button><button class="btn" onclick="addPoints(-10)" style="background:rgba(200,100,80,0.1);border-color:rgba(200,100,80,0.25);color:#e08070">-10</button><button class="btn" onclick="addPoints(-50)" style="background:rgba(200,100,80,0.1);border-color:rgba(200,100,80,0.25);color:#e08070">-50</button></div>
+    </div>
+    <div class="card timer-display">
+      <div class="timer-value" id="timerDisplay">00:00:00</div>
+      <div class="timer-btns"><button class="start-btn" onclick="timerStart()">▶</button><button class="pause-btn" onclick="timerPause()">⏸</button><button class="done-btn" onclick="timerDone()">✔</button></div>
+    </div>
+  </div>
+</div>`;
 }
-
 function renderCalHTML(){
   const now=new Date(),y=now.getFullYear(),m=now.getMonth();
   const fd=new Date(y,m,1).getDay(),dim=new Date(y,m+1,0).getDate(),dip=new Date(y,m,0).getDate();
@@ -1304,6 +1339,33 @@ function tmStartFromMission(id){
 }
 window.tmStartFromMission=tmStartFromMission;
 
+function renderMissionRealm(){
+  const b=document.getElementById('missionRealmBtns');if(!b)return;
+  b.innerHTML=realms.map((r,i)=>{
+    const c=(D.notes[r.id]||[]).length;
+    return '<button onclick="switchMissionRealm('+i+')" style="padding:3px 9px;border-radius:6px;border:1px solid '+(i===D.selectedRealm?'rgba(212,168,83,.6)':'rgba(212,168,83,.2)')+';background:'+(i===D.selectedRealm?'rgba(212,168,83,.18)':'rgba(212,168,83,.05)')+';color:var(--gold-light);font-family:inherit;font-size:10px;cursor:pointer">'+r.icon+' '+r.name+' <span style="opacity:.6">'+c+'</span></button>';
+  }).join('');
+  const l=document.getElementById('missionNotesList');
+  const ns=D.notes[realms[D.selectedRealm].id]||[];
+  if(ns.length===0)l.innerHTML='<div class="empty">暂无笔记</div>';
+  else l.innerHTML=ns.slice().reverse().map(n=>'<div class="nitem"><div class="ncont">'+eh(n.content)+'</div><span class="nmeta">'+ft(n.time)+'</span><button class="ndel" onclick="delMissionNote(\''+n.id+'\')">✕</button></div>').join('');
+}
+function switchMissionRealm(i){
+  D.selectedRealm=i;save();renderMissionRealm();
+}
+window.switchMissionRealm=switchMissionRealm;
+function addMissionNote(){
+  const i=document.getElementById('missionNoteInput');const c=i.value.trim();if(!c)return;
+  D.notes[realms[D.selectedRealm].id].push({id:uid(),content:c,time:Date.now()});
+  save();i.value='';renderMissionRealm();renderRealms();toast('✨ 已记录');
+}
+window.addMissionNote=addMissionNote;
+function delMissionNote(id){
+  D.notes[realms[D.selectedRealm].id]=D.notes[realms[D.selectedRealm].id].filter(n=>n.id!==id);
+  save();renderMissionRealm();renderRealms();
+}
+window.delMissionNote=delMissionNote;
+
 function setupMissionEvents(){
   const mtl=document.getElementById('missionTaskList');if(!mtl)return;
   const tasks=(D.missionTasks||[]).filter(t=>!t.date||t.date===(D.timelineDate||todayKeyStr()));
@@ -1326,6 +1388,7 @@ function setupMissionEvents(){
   else mll.innerHTML=logs.slice().reverse().map(l=>`<div class="log-item"><div class="log-date">${l.date}</div><div style="flex:1">${eh(l.text)}</div><div class="log-rating"><span class="good${l.rating==='good'?' active':''}" onclick="rateLog('${l.id}','good')">✓ 好</span><span class="bad${l.rating==='bad'?' active':''}" onclick="rateLog('${l.id}','bad')">✗ 差</span></div></div>`).join('');
   renderDayTimeline();
   renderCalNav();
+  renderMissionRealm();
 }
 
 function renderRealmsHTML(){
