@@ -1670,7 +1670,15 @@ body.theme-day [style*="rgba(0,0,0,0.2)"],body.theme-day [style*="rgba(0,0,0,0.2
   var _origStop = stopTimer;
   stopTimer = function(silent){
     _origStop(silent);
-    try{ parent.postMessage({source:'timemachine', type:'tm-stopped'}, '*'); }catch(err){}
+    try{
+      var last=S.records[S.records.length-1];
+      parent.postMessage({source:'timemachine', type:'tm-stopped',
+        name: last?last.name:'',
+        startMs: last?last.startMs:Date.now(),
+        endMs: last?last.endMs:Date.now(),
+        note: last?(last.note||''):''
+      }, '*');
+    }catch(err){}
   };
 
 })();

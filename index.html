@@ -974,7 +974,7 @@ const defaultSchedule=[
   {id:'ds8',day:5,time:'14:00',subject:'周复盘',prof:'Obsidian',house:'gryffindor'},
 ];
 
-let D={selectedRealm:0,currentView:'travel',notes:{},missionTasks:[],missionLog:[],points:0,assets:[],healthLog:[],travelLog:[],archive:[],reflections:[],readings:[],quotes:[],thoughts:[],schedule:null,scheduleLog:{},timelineDate:null,calOffset:0,settings:{currentDay:0}};
+let D={selectedRealm:0,currentView:'travel',notes:{},missionTasks:[],missionLog:[],points:0,assets:[],healthLog:[],travelLog:[],archive:[],reflections:[],readings:[],quotes:[],thoughts:[],schedule:null,scheduleLog:{},timelineDate:null,calOffset:0,timelineEvents:[],settings:{currentDay:0}};
 
 function load(){
   try{const r=localStorage.getItem(SK);if(r)D={...D,...JSON.parse(r)}}catch(e){}
@@ -1227,15 +1227,17 @@ function renderDayTimeline(){
   const sel=D.timelineDate||today;
   document.getElementById('timelineDateLabel').textContent=sel+' 日程';
   const tasks=(D.missionTasks||[]).filter(t=>!t.date||t.date===sel);
+  const evts=(D.timelineEvents||[]).filter(e=>e.date===sel);
   const slotHour={morning:9,afternoon:14,night:20};
   const slotEnd={morning:12,afternoon:18,night:23};
+  const H=34; // 每小时像素
   let html='';
   for(let h=6;h<=23;h++){
     const isNow=Math.floor(curMin/60)===h;
     const mins=curMin%60;
-    html+='<div style="position:relative;height:34px;border-bottom:1px solid rgba(255,255,255,0.03)">';
+    html+='<div style="position:relative;height:'+H+'px;border-bottom:1px solid rgba(255,255,255,0.03)">';
     html+='<span style="position:absolute;left:0;top:-6px;font-size:8px;color:var(--dim)">'+String(h).padStart(2,'0')+':00</span>';
-    // 该小时内的任务
+    // 该小时内的任务（时间段块）
     tasks.forEach(t=>{
       if(t.done)return;
       const sh=slotHour[t.slot];
@@ -1246,10 +1248,20 @@ function renderDayTimeline(){
     });
     // 当前时间红线
     if(isNow){
-      html+='<div style="position:absolute;left:0;right:0;top:'+(mins/60*34)+'px;height:1px;background:#e07060;z-index:2"></div>';
+      html+='<div style="position:absolute;left:0;right:0;top:'+(mins/60*H)+'px;height:1px;background:#e07060;z-index:2"></div>';
     }
     html+='</div>';
   }
+  // 精确时间事件（时光机记录）——覆盖层
+  evts.forEach(ev=>{
+    const startMin=ev.startH*60+ev.startM;
+    const endMin=ev.endH*60+ev.endM;
+    if(endMin<6*60||startMin>23*60+59)return;
+    const top=Math.max(0,(startMin-6*60)/60)*H+2;
+    const bottom=Math.min(18*60,(endMin-6*60)/60)*H-2;
+    const hh=Math.max(14,bottom-top);
+    html+='<div onclick="toast(\''+ev.name.replace(/'/g,'')+' · '+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+'-'+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+'\')" title="时光机记录: '+ev.name+' ('+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' - '+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+')" style="position:absolute;left:44px;right:6px;top:'+top+'px;height:'+hh+'px;padding:2px 6px;border-radius:4px;background:rgba(120,170,240,.25);border-left:2px solid #78aaf0;font-size:9px;color:var(--text);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">⏱ '+ev.name+'</div>';
+  });
   el.innerHTML=html;
 }
 function tmStartFromMission(id){
@@ -1764,6 +1776,26 @@ window.addEventListener('message',e=>{
     toast('⏹ 时光机已停止计时');
     // 把所有计时中的课标记为已完成
     if(D.scheduleLog){Object.keys(D.scheduleLog).forEach(k=>{if(D.scheduleLog[k]==='running')D.scheduleLog[k]='done'})}
+    // 写入日程表（时间轴）
+    if(d.name){
+      if(!D.timelineEvents)D.timelineEvents=[];
+      const sm=new Date(d.startMs||Date.now());
+      const em=new Date(d.endMs||Date.now());
+      const ds=sm.getFullYear()+'-'+String(sm.getMonth()+1).padStart(2,'0')+'-'+String(sm.getDate()).padStart(2,'0');
+      D.timelineEvents.push({
+        id:'te'+Date.now(),
+        date:ds,
+        name:d.name,
+        note:d.note||'',
+        startH:sm.getHours(),startM:sm.getMinutes(),
+        endH:em.getHours(),endM:em.getMinutes()
+      });
+      save();
+      // 如果当前看的是当天，刷新时间轴
+      const sel=D.timelineDate||todayKeyStr();
+      if(sel===ds)renderDayTimeline();
+      if(document.getElementById('missionTaskList'))setupMissionEvents();
+    }
     save();renderSchedule(D.settings.currentDay);
   }
 });
