@@ -161,7 +161,7 @@ body{
 
 .foot{grid-column:1/-1;display:flex;gap:8px;padding:4px 10px;background:rgba(20,22,28,0.5);backdrop-filter:blur(8px);border:1px solid rgba(212,168,83,0.05);border-radius:5px;font-size:8px;color:var(--dim)}.fitem{display:flex;align-items:center;gap:3px}.fval{color:var(--gold-light)}
 
-.rpanel{grid-column:1;grid-row:3/4;display:flex;flex-direction:column;gap:7px;max-height:calc(100vh - 110px);overflow-y:auto}
+.rpanel{grid-column:1;grid-row:3/4;display:flex;flex-direction:column;gap:7px;height:calc(100vh - 160px);overflow-y:auto}
 .rpanel::-webkit-scrollbar{width:3px;background:transparent}.rpanel::-webkit-scrollbar-thumb{background:rgba(212,168,83,0.1);border-radius:2px}
 
 @media(max-width:1300px){.mission-grid{grid-template-columns:1fr}.mission-right{display:grid;grid-template-columns:1fr 1fr;gap:6px}}@media(max-width:900px){
@@ -524,7 +524,7 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
     <div class="ctitle" style="margin-bottom:6px"><span class="icon">🟢</span> 舰桥总览</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px" id="dashMini"></div>
   </div>
-<div class="card">
+<div class="card" style="flex:1;display:flex;flex-direction:column;min-height:0">
   <div class="ctitle">📅 日程 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点日期看当天 · 点任务可计时</span></div>
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
     <button class="btn" onclick="calShift(-1)" style="font-size:9px;padding:2px 7px">◀</button>
@@ -536,7 +536,7 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
   </div>
   <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:0;text-align:center;margin-bottom:4px"></div>
   <div class="ctitle" style="border-top:1px solid rgba(255,255,255,0.04);padding-top:6px">⏱️ <span id="timelineDateLabel">当日时间轴</span></div>
-  <div id="dayTimeline" style="max-height:420px;overflow-y:auto;padding-right:4px"></div>
+  <div id="dayTimeline" style="flex:1;overflow-y:auto;padding-right:4px;min-height:0"></div>
 </div>
 
 
