@@ -1234,6 +1234,7 @@ function calShift(d){D.calOffset+=d;save();renderMission();}
 window.calShift=calShift;
 function renderCalNav(){
   const grid=document.getElementById('calGrid');if(!grid)return;
+  if(typeof D.calOffset!=='number'||isNaN(D.calOffset))D.calOffset=0;
   const base=new Date();base.setMonth(base.getMonth()+D.calOffset);
   const y=base.getFullYear(),m=base.getMonth();
   document.getElementById('calMonthLabel').textContent=y+'年'+(m+1)+'月';
@@ -1255,7 +1256,11 @@ function renderCalNav(){
   grid.innerHTML=h;
 }
 function calPick(ds){
-  D.timelineDate=ds;save();renderMission();toast('📅 '+ds);
+  D.timelineDate=ds;save();
+  const vm=document.getElementById('view-mission');
+  if(vm){vm.innerHTML=renderMissionHTML();setupMissionEvents();}
+  else renderMission();
+  toast('📅 '+ds);
 }
 window.calPick=calPick;
 function renderDayTimeline(){
