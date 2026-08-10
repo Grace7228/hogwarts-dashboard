@@ -1265,10 +1265,16 @@ function renderDayTimeline(){
   el.innerHTML=html;
 }
 function clearTimelineEvents(){
-  if(!confirm('清空所有日程记录？此操作只影响日程表视图。'))return;
+  if(!confirm('清空所有日程记录？将同步清空时光机的当日记录。'))return;
   D.timelineEvents=[];
   save();renderDayTimeline();
-  toast('🗑️ 日程已清空');
+  // 同步通知时光机清空当天记录（今日摘要同步）
+  const today=todayKeyStr();
+  ['tmFrameDash','tmFrame'].forEach(id=>{
+    const f=document.getElementById(id);
+    if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'tm-clear-today',date:today},'*');
+  });
+  toast('🗑️ 日程已清空（含时光机当日记录）');
 }
 window.clearTimelineEvents=clearTimelineEvents;
 

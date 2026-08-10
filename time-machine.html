@@ -1663,6 +1663,16 @@ function renderTimeline(){
     var d = e.data || {};
     if(d.source !== 'hogwarts') return;
     if(d.type === 'theme'){ document.body.className=(d.theme==='day')?'theme-day':''; return; }
+    if(d.type === 'tm-clear-today'){
+      const k=d.date||todayKey();
+      const before=S.records.length;
+      S.records=S.records.filter(r=>dayKey(r.endMs)!==k&&dayKey(r.startMs)!==k);
+      S.pending=S.pending.filter(p=>dayKey(p.endMs||p.startMs)!==k);
+      S.synced=S.synced.filter(s=>dayKey(s.endMs||s.startMs)!==k);
+      if(S.records.length!==before)save();
+      renderAll();renderTimeline();
+      return;
+    }
     if(d.type === 'tm-start'){
       startTimer([], d.name || '', d.note || '');
     }
