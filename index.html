@@ -612,9 +612,16 @@ let selectedTravelId=null,flyTarget=null,flyStart=null,flyProgress=0;
 let globe2D=null,webglFailed=false;
 
 function initGlobe(){
-  // 直接使用 2D Canvas 方案（兼容所有环境，无需 WebGL）
-  try{ initGlobe2D(); }catch(e){ try{ initGlobe2D(); }catch(e2){} }
-  return;
+  // 优先 3D WebGL（高精度），失败自动降级 2D 超采样版
+  try{
+    startGlobe3D();
+    return;
+  }catch(e){
+    webglFailed=true;
+    try{ initGlobe2D(); }catch(e2){}
+  }
+}
+function startGlobe3D(){
   try{
     const container=document.getElementById('globeContainer');
     const w=container.clientWidth,h=container.clientHeight;
@@ -655,7 +662,13 @@ function initGlobe(){
         // 标记
         addGlobeMarkers();
       },
-      undefined,()=>{document.getElementById('globeLoading').textContent='⚠️ 纹理加载失败，地球显示为线框模式';}
+      undefined,()=>{
+        // 纹理加载失败 → 清理 3D 降级 2D
+        document.getElementById('globeLoading').textContent='切换到 2D 模式…';
+        try{ if(globeRenderer){globeRenderer.dispose();globeRenderer.domElement.remove()} }catch(e2){}
+        webglFailed=true;
+        initGlobe2D();
+      }
     );
 
     // 滚动到地球仪时处理
@@ -663,10 +676,7 @@ function initGlobe(){
 
     animateGlobe();
   }catch(err){
-    // WebGL 不可用（远程桌面/虚拟机/驱动问题）→ 降级 2D 旋转地球
-    webglFailed=true;
-    document.getElementById('globeLoading').textContent='WebGL 不可用，切换到 2D 模式…';
-    setTimeout(()=>{initGlobe2D()},50);
+    throw err;
   }
 }
 function initGlobe2D(){
@@ -682,8 +692,11 @@ function initGlobe2D(){
   cv.style.width='100%';cv.style.height='100%';
   container.appendChild(cv);
   const ctx=cv.getContext('2d');
-  cv.width=w;cv.height=h;
-  globe2D={ctx,cv,w,h,rot:0,markers:[],globalCities:[],img:null,imgReady:false};
+  // 2x 超采样提升放大清晰度
+  const SS=2;
+  cv.width=w*SS;cv.height=h*SS;
+  ctx.setTransform(SS,0,0,SS,0,0);
+  globe2D={ctx,cv,w,h,SS,rot:0,markers:[],globalCities:[],img:null,imgReady:false};
   GLOBAL_CITIES.forEach(gc=>{globe2D.globalCities.push({city:gc[0],lat:gc[1],lng:gc[2]})});
   const img=new Image();
   img.onload=()=>{globe2D.img=img;globe2D.imgReady=true;globe2D.imgW=img.width;globe2D.imgH=img.height;toast('🌍 2D 地球就绪');};
