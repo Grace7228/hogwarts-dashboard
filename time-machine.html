@@ -1053,7 +1053,13 @@ body.theme-day [style*="rgba(0,0,0,0.2)"],body.theme-day [style*="rgba(0,0,0,0.2
 
   function kindLabel(k){return {timer:'计时',note:'笔记',todo:'待办',event:'日程'}[k]||k}
 
-  function renderTimeline(){
+  function resetTimelineFilters(){
+  S.tlQuery='';S.tlKind='all';S.tlTag='';S.tlBucket='all';
+  save();renderTimeline();toast('🧹 筛选已清空');
+}
+window.resetTimelineFilters=resetTimelineFilters;
+
+function renderTimeline(){
     const box=$('tlView'); if(!box) return;
     const all=timelineItems(true);
     const items=filterTimelineItems(all);
@@ -1094,7 +1100,7 @@ body.theme-day [style*="rgba(0,0,0,0.2)"],body.theme-day [style*="rgba(0,0,0,0.2
       return;
     }
     if(!items.length){
-      html+='<div class="tl-empty">没有匹配的记录。<br>试试清空筛选，或换个关键词。</div>';
+      html+='<div class="tl-empty">没有匹配的记录。<br><button type="button" class="tl-chip" onclick="resetTimelineFilters()" style="margin-top:6px">🧹 清空筛选</button></div>';
       box.innerHTML=html;
       bindTimelineTools(box);
       return;
