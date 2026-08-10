@@ -680,7 +680,8 @@ function initGlobe2D(){
   container.appendChild(cv);
   const ctx=cv.getContext('2d');
   cv.width=w;cv.height=h;
-  globe2D={ctx,cv,w,h,rot:0,markers:[],img:null,imgReady:false};
+  globe2D={ctx,cv,w,h,rot:0,markers:[],globalCities:[],img:null,imgReady:false};
+  GLOBAL_CITIES.forEach(gc=>{globe2D.globalCities.push({city:gc[0],lat:gc[1],lng:gc[2]})});
   const img=new Image();
   img.onload=()=>{globe2D.img=img;globe2D.imgReady=true;globe2D.imgW=img.width;globe2D.imgH=img.height;toast('🌍 2D 地球就绪');};
   img.onerror=()=>{globe2D.imgReady=false;toast('⚠️ 贴图加载失败，显示经纬线球');};
@@ -732,7 +733,7 @@ function animateGlobe2D(){
   if(!globe2D.dragging)globe2D.rot+=0.002;
   // 大气光晕
   const g=ctx.createRadialGradient(cx,cy,r*0.9,cx,cy,r*1.15);
-  g.addColorStop(0,'rgba(212,168,83,0.10)');g.addColorStop(1,'rgba(212,168,83,0)');
+  g.addColorStop(0,'rgba(120,160,220,0.12)');g.addColorStop(1,'rgba(120,160,220,0)');
   ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,r*1.15,0,Math.PI*2);ctx.fill();
   if(globe2D.imgReady&&globe2D.img){
     // 逐列绘制旋转贴图球
@@ -746,27 +747,57 @@ function animateGlobe2D(){
       const colW=Math.max(0.8,depth*2);
       ctx.drawImage(globe2D.img,sx,0,colW,imgH,x-colW/2,cy-r*depth,colW,r*depth*2);
     }
+    // 夜间压暗（模拟夜景）
+    ctx.save();
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
+    ctx.fillStyle='rgba(8,12,30,0.55)';
+    ctx.fillRect(cx-r,cy-r,r*2,r*2);
+    ctx.restore();
   }else{
-    // 经纬线球
+    // 经纬线球（深蓝底）
+    ctx.save();
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
+    ctx.fillStyle='#0a1428';ctx.fillRect(cx-r,cy-r,r*2,r*2);
+    ctx.restore();
     ctx.strokeStyle='rgba(212,168,83,0.35)';ctx.lineWidth=1;
     for(let i=0;i<12;i++){const a=i/12*Math.PI*2+globe2D.rot;ctx.beginPath();ctx.ellipse(cx,cy,r,r*0.45,a,0,Math.PI*2);ctx.stroke()}
     for(let i=1;i<8;i++){const y=cy-r+i*r/4;ctx.beginPath();ctx.ellipse(cx,y,r*Math.sqrt(1-((i-4)/4)**2),r/4,0,Math.PI*2);ctx.stroke()}
   }
-  // 城市标记（与贴图绘制一致的投影：nx=sin(rel)，深度=cos(rel)，纬度线性映射）
+  // 内置全球城市灯光点（绿色小点，夜晚灯光效果）
+  if(globe2D.globalCities){
+    globe2D.globalCities.forEach(m=>{
+      const lonM=(m.lng+180)*Math.PI/180;
+      let rel=lonM-globe2D.rot;
+      rel=((rel+Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-Math.PI;
+      if(rel>Math.PI/2||rel<-Math.PI/2)return;
+      const depth=Math.cos(rel);
+      const sx=cx+r*Math.sin(rel);
+      const sy=cy-(m.lat/90)*r*depth;
+      ctx.beginPath();ctx.arc(sx,sy,1.6,0,Math.PI*2);
+      ctx.fillStyle='rgba(120,230,150,0.9)';
+      ctx.shadowColor='rgba(120,230,150,0.7)';ctx.shadowBlur=3;
+      ctx.fill();ctx.shadowBlur=0;
+    });
+  }
+  // 用户旅行标记（金色大点 + 城市名）
   globe2D.markers.forEach(m=>{
     const lonM=(m.lng+180)*Math.PI/180;
     let rel=lonM-globe2D.rot;
-    rel=((rel+Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-Math.PI; // 归一化到 [-π,π]
-    if(rel>Math.PI/2||rel<-Math.PI/2)return; // 背面不画
+    rel=((rel+Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-Math.PI;
+    if(rel>Math.PI/2||rel<-Math.PI/2)return;
     const depth=Math.cos(rel);
     m.sx=cx+r*Math.sin(rel);
     m.sy=cy-(m.lat/90)*r*depth;
     const sel=m.id===selectedTravelId;
-    ctx.beginPath();ctx.arc(m.sx,m.sy,sel?5:3,0,Math.PI*2);
+    ctx.beginPath();ctx.arc(m.sx,m.sy,sel?6:4,0,Math.PI*2);
     ctx.fillStyle=sel?'#ff6644':'#f0d68a';
-    ctx.shadowColor='rgba(240,214,138,0.8)';ctx.shadowBlur=8;ctx.fill();ctx.shadowBlur=0;
-    ctx.fillStyle='#f0d68a';ctx.font='9px sans-serif';ctx.textAlign='center';
-    ctx.fillText(m.city,m.sx,m.sy-8);
+    ctx.shadowColor='rgba(240,214,138,0.9)';ctx.shadowBlur=10;ctx.fill();ctx.shadowBlur=0;
+    // 光环
+    ctx.beginPath();ctx.arc(m.sx,m.sy,sel?10:8,0,Math.PI*2);
+    ctx.strokeStyle=sel?'rgba(255,102,68,0.4)':'rgba(240,214,138,0.3)';
+    ctx.lineWidth=1;ctx.stroke();
+    ctx.fillStyle=sel?'#ffd9d0':'#f0d68a';ctx.font='10px sans-serif';ctx.textAlign='center';
+    ctx.fillText(m.city,m.sx,m.sy-10);
   });
 }
 
