@@ -1228,13 +1228,13 @@ function renderDayTimeline(){
   const evts=(D.timelineEvents||[]).filter(e=>e.date===sel);
   const slotHour={morning:9,afternoon:14,night:20};
   const slotEnd={morning:12,afternoon:18,night:23};
-  const H=34; // 每小时像素
+  const H=38; // 每小时像素
   let html='';
   for(let h=6;h<=23;h++){
     const isNow=Math.floor(curMin/60)===h;
     const mins=curMin%60;
     html+='<div style="position:relative;height:'+H+'px;border-bottom:1px solid rgba(255,255,255,0.03)">';
-    html+='<span style="position:absolute;left:0;top:-6px;font-size:8px;color:var(--dim)">'+String(h).padStart(2,'0')+':00</span>';
+    html+='<span style="position:absolute;left:0;top:-7px;font-size:10px;color:var(--dim)">'+String(h).padStart(2,'0')+':00</span>';
     // 该小时内的任务（时间段块）
     tasks.forEach(t=>{
       if(t.done)return;
@@ -1242,7 +1242,7 @@ function renderDayTimeline(){
       const eh2=slotEnd[t.slot];
       if(sh===undefined||h<sh||h>=eh2)return;
       const pc={B1:'#e07060',B2:'#f0d68a',B3:'#e8a050',B4:'#8a8a94'}[t.prio]||'#8a8a94';
-      html+='<div onclick="tmStartFromMission(\''+t.id+'\')" title="点击在时光机开始计时" style="position:absolute;left:44px;right:6px;top:2px;padding:2px 6px;border-radius:4px;background:'+pc+'22;border-left:2px solid '+pc+';font-size:9px;color:var(--text);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+eh(t.name)+'</div>';
+      html+='<div onclick="tmStartFromMission(\''+t.id+'\')" title="点击在时光机开始计时" style="position:absolute;left:44px;right:6px;top:2px;padding:2px 6px;border-radius:4px;background:'+pc+'22;border-left:2px solid '+pc+';font-size:11px;color:var(--text);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+eh(t.name)+'</div>';
     });
     // 当前时间红线
     if(isNow){
@@ -1258,10 +1258,21 @@ function renderDayTimeline(){
     const top=Math.max(0,(startMin-6*60)/60)*H+2;
     const bottom=Math.min(18*60,(endMin-6*60)/60)*H-2;
     const hh=Math.max(14,bottom-top);
-    html+='<div onclick="toast(\''+ev.name.replace(/'/g,'')+' · '+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+'-'+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+'\')" title="时光机记录: '+ev.name+' ('+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' - '+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+')" style="position:absolute;left:44px;right:6px;top:'+top+'px;height:'+hh+'px;padding:2px 6px;border-radius:4px;background:rgba(120,170,240,.25);border-left:2px solid #78aaf0;font-size:9px;color:var(--text);cursor:pointer;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">⏱ '+ev.name+'</div>';
+    html+='<div style="position:absolute;left:44px;right:6px;top:'+top+'px;height:'+hh+'px;border-radius:4px;background:rgba(120,170,240,.25);border-left:2px solid #78aaf0;font-size:11px;color:var(--text);overflow:hidden">';
+    html+='<span style="display:block;padding:2px 6px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden" title="'+ev.name+' ('+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' - '+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+')">⏱ '+ev.name+'</span>';
+    html+='<span onclick="event.stopPropagation();delTimelineEvent(\''+ev.id+'\')" title="删除这条日程" style="position:absolute;top:1px;right:2px;font-size:9px;color:#e08070;cursor:pointer;padding:0 3px;opacity:.85">✕</span>';
+    html+='</div>';
   });
   el.innerHTML=html;
 }
+function delTimelineEvent(id){
+  if(!D.timelineEvents)return;
+  D.timelineEvents=D.timelineEvents.filter(e=>e.id!==id);
+  save();renderDayTimeline();
+  toast('🗑️ 日程已删除');
+}
+window.delTimelineEvent=delTimelineEvent;
+
 function tmStartFromMission(id){
   const t=(D.missionTasks||[]).find(x=>x.id===id);if(!t)return;
   const f=document.getElementById('tmFrame');
@@ -1773,6 +1784,13 @@ window.addEventListener('message',e=>{
     if(D.scheduleLog){Object.keys(D.scheduleLog).forEach(k=>{if(D.scheduleLog[k]==='running')D.scheduleLog[k]='done'})}
     renderSchedule(D.settings.currentDay);
   }
+  if(d.type==='tm-record-deleted'){
+    if(d.id&&D.timelineEvents){
+      D.timelineEvents=D.timelineEvents.filter(e=>e.tmId!==d.id);
+      save();renderDayTimeline();
+    }
+    return;
+  }
   if(d.type==='tm-stopped'){
     toast('⏹ 时光机已停止计时');
     // 把所有计时中的课标记为已完成
@@ -1785,6 +1803,7 @@ window.addEventListener('message',e=>{
       const ds=sm.getFullYear()+'-'+String(sm.getMonth()+1).padStart(2,'0')+'-'+String(sm.getDate()).padStart(2,'0');
       D.timelineEvents.push({
         id:'te'+Date.now(),
+        tmId:d.id||null,
         date:ds,
         name:d.name,
         note:d.note||'',
