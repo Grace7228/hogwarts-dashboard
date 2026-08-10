@@ -184,7 +184,7 @@ body.theme-oat{
   background-size: 6px 6px, auto;
   background-attachment: fixed;
 }
-body.theme-matcha{--dark:#eef2e3;--text:#33402e;--dim:#67725c;--gold:#6b8f5e;--gold-light:#587a4c;--card-border:rgba(107,143,94,.35);--accent:rgba(120,160,100,.6);--card-bg:rgba(252,255,248,.78);--panel-bg:rgba(252,255,248,.6);--input-bg:rgba(255,255,255,.9);--badge-bg:rgba(120,160,100,.15);--stat-bg:rgba(255,255,255,.55);--btn-bg:rgba(120,160,100,.1);--btn-border:rgba(120,160,100,.35);--btn-color:#587a4c}
+body.theme-matcha{--dark:#e2e6d4;--text:#33402e;--dim:#67725c;--gold:#6b8f5e;--gold-light:#587a4c;--card-border:rgba(107,143,94,.35);--accent:rgba(120,160,100,.6);--card-bg:rgba(226,233,208,.7);--panel-bg:rgba(230,236,216,.6);--input-bg:rgba(252,255,248,.9);--badge-bg:rgba(120,160,100,.18);--stat-bg:rgba(178,196,150,.3);--btn-bg:rgba(120,160,100,.12);--btn-border:rgba(120,160,100,.35);--btn-color:#587a4c}
 body.theme-mist{--dark:#e9eef5;--text:#2f3a48;--dim:#5f6b7d;--gold:#4a6fa5;--gold-light:#3d5f8f;--card-border:rgba(74,111,165,.35);--accent:rgba(90,130,180,.6);--card-bg:rgba(252,254,255,.78);--panel-bg:rgba(252,254,255,.6);--input-bg:rgba(255,255,255,.9);--badge-bg:rgba(90,130,180,.15);--stat-bg:rgba(255,255,255,.55);--btn-bg:rgba(90,130,180,.1);--btn-border:rgba(90,130,180,.35);--btn-color:#3d5f8f}
 /* --- 浅色通用元素覆盖 --- */
 body.theme-day .stars-layer,body.theme-day .castle-silhouette,body.theme-day .moon-glow,
@@ -266,10 +266,7 @@ body.theme-oat .theme-glow{background:
   radial-gradient(1100px 520px at 12% -5%, rgba(220,190,140,.25), transparent 60%),
   radial-gradient(900px 480px at 88% 8%, rgba(210,180,130,.18), transparent 60%),
   radial-gradient(700px 420px at 50% 108%, rgba(200,170,120,.15), transparent 60%)}
-body.theme-matcha .theme-glow{background:
-  radial-gradient(1100px 520px at 12% -5%, rgba(170,200,140,.25), transparent 60%),
-  radial-gradient(900px 480px at 88% 8%, rgba(140,180,120,.18), transparent 60%),
-  radial-gradient(700px 420px at 50% 108%, rgba(150,190,130,.15), transparent 60%)}
+body.theme-matcha .theme-glow,body.theme-matcha .theme-glow-b{display:none}
 body.theme-mist .theme-glow{background:
   radial-gradient(1100px 520px at 12% -5%, rgba(150,180,220,.25), transparent 60%),
   radial-gradient(900px 480px at 88% 8%, rgba(130,165,210,.18), transparent 60%),
@@ -367,6 +364,8 @@ body.theme-day .tp-dot{border-color:rgba(61,50,39,.3)}
 /* 燕麦内联灰块 → 同色系深褐 */
 body.theme-oat [style*="rgba(0,0,0,0.2)"],body.theme-oat [style*="rgba(0,0,0,0.25)"],body.theme-oat [style*="rgba(0,0,0,0.3)"]{background:rgba(184,144,96,.25)!important}
 body.theme-oat [style*="rgba(0,0,0,0.35)"],body.theme-oat [style*="rgba(0,0,0,0.4)"],body.theme-oat [style*="rgba(0,0,0,0.45)"]{background:rgba(174,134,88,.3)!important}
+body.theme-matcha [style*="rgba(0,0,0,0.2)"],body.theme-matcha [style*="rgba(0,0,0,0.25)"],body.theme-matcha [style*="rgba(0,0,0,0.3)"]{background:rgba(178,196,150,.28)!important}
+body.theme-matcha [style*="rgba(0,0,0,0.35)"],body.theme-matcha [style*="rgba(0,0,0,0.4)"],body.theme-matcha [style*="rgba(0,0,0,0.45)"]{background:rgba(168,186,140,.32)!important}
 /* 浅色主题：地球仪区域色块 → 同色系 */
 body.theme-day .globe-container,body.theme-oat .globe-container,body.theme-matcha .globe-container,body.theme-mist .globe-container{background:var(--stat-bg)!important}
 body.theme-day .asset-stat,body.theme-oat .asset-stat,body.theme-matcha .asset-stat,body.theme-mist .asset-stat{background:var(--stat-bg)!important}
