@@ -532,7 +532,7 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
     <button class="btn" onclick="calShift(1)" style="font-size:9px;padding:2px 7px">▶</button>
   </div>
   <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;margin-bottom:4px">
-    <span style="font-size:7px;color:var(--dim)">日</span><span style="font-size:7px;color:var(--dim)">一</span><span style="font-size:7px;color:var(--dim)">二</span><span style="font-size:7px;color:var(--dim)">三</span><span style="font-size:7px;color:var(--dim)">四</span><span style="font-size:7px;color:var(--dim)">五</span><span style="font-size:7px;color:var(--dim)">六</span>
+    <span style="font-size:11px;color:var(--dim)">日</span><span style="font-size:7px;color:var(--dim)">一</span><span style="font-size:7px;color:var(--dim)">二</span><span style="font-size:7px;color:var(--dim)">三</span><span style="font-size:7px;color:var(--dim)">四</span><span style="font-size:7px;color:var(--dim)">五</span><span style="font-size:7px;color:var(--dim)">六</span>
   </div>
   <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:0;text-align:center;margin-bottom:4px"></div>
   <div class="ctitle" style="border-top:1px solid rgba(255,255,255,0.04);padding-top:6px">⏱️ <span id="timelineDateLabel">当日时间轴</span></div>
@@ -979,10 +979,11 @@ let D={selectedRealm:0,currentView:'travel',notes:{},missionTasks:[],missionLog:
 function load(){
   try{const r=localStorage.getItem(SK);if(r)D={...D,...JSON.parse(r)}}catch(e){}
   realms.forEach(r=>{if(!D.notes[r.id])D.notes[r.id]=[]});
+  if(D.missionTasks){D.missionTasks=D.missionTasks.filter(t=>!['mt1','mt2','mt3'].includes(t.id));}
   if(!D._inited){
     D.notes['deep-reading']=[{id:'x1',content:'《好能量》核心：代谢健康 = 细胞能量充足',time:Date.now()-864e5}];
     D.notes['copywriting']=[{id:'x2',content:'感官占领法：眼鼻耳舌身心',time:Date.now()-1728e5}];
-    D.missionTasks=[{id:'mt1',name:'背 100 个英语单词',tag:'english',slot:'morning',prio:'B2',progress:65,done:false,time:Date.now()},{id:'mt2',name:'完成 40 道数学题',tag:'math',slot:'afternoon',prio:'B1',progress:40,done:false,time:Date.now()},{id:'mt3',name:'阅读《好能量》第 6 章',tag:'reading',slot:'night',prio:'B3',progress:100,done:true,time:Date.now()}];
+    D.missionTasks=[];
     D.missionLog=[{id:'ml1',text:'上午效率不错。',date:'2026-05-04',rating:'good',time:Date.now()},{id:'ml2',text:'状态一般。',date:'2026-05-03',rating:'neutral',time:Date.now()-864e5},{id:'ml3',text:'高效日！',date:'2026-05-02',rating:'good',time:Date.now()-1728e5}];
     D.points=1120;
     const d1=new Date('2025-09-15').getTime(),d2=new Date('2025-11-20').getTime();
@@ -1204,7 +1205,7 @@ function renderCalNav(){
     const ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
     const isSel=ds===sel;
     const isToday=ds===today;
-    h+='<span onclick="calPick(\''+ds+'\')" style="font-size:7px;padding:1px 0;border-radius:2px;cursor:pointer;color:var(--text);'+(isSel?'background:rgba(212,168,83,.3);font-weight:bold;color:var(--gold-light)':isToday?'border:1px solid rgba(224,112,96,.6)':'')+'">'+d+'</span>';
+    h+='<span onclick="calPick(\''+ds+'\')" style="font-size:13px;padding:4px 0;border-radius:3px;cursor:pointer;color:var(--text);'+(isSel?'background:rgba(212,168,83,.3);font-weight:bold;color:var(--gold-light)':isToday?'border:1px solid rgba(224,112,96,.6)':'')+'">'+d+'</span>';
   }
   const tt=fd+dim,rem=tt<=35?35-tt:42-tt;
   for(let d=1;d<=rem;d++)h+='<span style="font-size:8px;color:var(--dim);opacity:.4">'+d+'</span>';
