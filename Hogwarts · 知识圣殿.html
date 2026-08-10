@@ -525,7 +525,7 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px" id="dashMini"></div>
   </div>
 <div class="card" style="flex:1;display:flex;flex-direction:column;min-height:0">
-  <div class="ctitle">📅 日程 <span style="font-size:8px;color:var(--dim);font-weight:normal;margin-left:auto">点日期看当天 · 点任务可计时</span></div>
+  <div class="ctitle">📅 日程 <span style="margin-left:auto;display:flex;gap:6px"><span style="font-size:8px;color:var(--dim);font-weight:normal">点日期看当天</span><button class="btn" onclick="clearTimelineEvents()" style="font-size:8px;padding:1px 6px;color:#e08070">🗑 清空</button></span></div>
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
     <button class="btn" onclick="calShift(-1)" style="font-size:9px;padding:2px 7px">◀</button>
     <span id="calMonthLabel" style="font-size:11px;color:var(--gold-light);letter-spacing:1px"></span>
@@ -1260,12 +1260,20 @@ function renderDayTimeline(){
     const bottom=Math.min(18*60,(endMin-6*60)/60)*H-2;
     const hh=Math.max(14,bottom-top);
     html+='<div style="position:absolute;left:44px;right:6px;top:'+top+'px;height:'+hh+'px;border-radius:4px;background:rgba(120,170,240,.25);border-left:2px solid #78aaf0;font-size:11px;color:var(--text);overflow:hidden">';
-    html+='<span style="display:block;padding:2px 6px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden" title="'+ev.name+' ('+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' - '+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+')">⏱ '+ev.name+'</span>';
+    html+='<span style="display:block;padding:2px 6px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden" title="'+ev.name+' ('+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' - '+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+')">'+String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+' '+ev.name+'</span>';
     html+='<span onclick="event.stopPropagation();delTimelineEvent(\''+ev.id+'\')" title="删除这条日程" style="position:absolute;top:1px;right:2px;font-size:9px;color:#e08070;cursor:pointer;padding:0 3px;opacity:.85">✕</span>';
     html+='</div>';
   });
   el.innerHTML=html;
 }
+function clearTimelineEvents(){
+  if(!confirm('清空所有日程记录？此操作只影响日程表视图。'))return;
+  D.timelineEvents=[];
+  save();renderDayTimeline();
+  toast('🗑️ 日程已清空');
+}
+window.clearTimelineEvents=clearTimelineEvents;
+
 function delTimelineEvent(id){
   if(!D.timelineEvents)return;
   D.timelineEvents=D.timelineEvents.filter(e=>e.id!==id);
@@ -1802,15 +1810,13 @@ window.addEventListener('message',e=>{
       const sm=new Date(d.startMs||Date.now());
       const em=new Date(d.endMs||Date.now());
       const ds=sm.getFullYear()+'-'+String(sm.getMonth()+1).padStart(2,'0')+'-'+String(sm.getDate()).padStart(2,'0');
-      D.timelineEvents.push({
-        id:'te'+Date.now(),
-        tmId:d.id||null,
-        date:ds,
-        name:d.name,
-        note:d.note||'',
-        startH:sm.getHours(),startM:sm.getMinutes(),
-        endH:em.getHours(),endM:em.getMinutes()
-      });
+      const newEv={id:'te'+Date.now(),tmId:d.id||null,date:ds,name:d.name,note:d.note||'',startH:sm.getHours(),startM:sm.getMinutes(),endH:em.getHours(),endM:em.getMinutes()};
+      // 去重：同 tmId 的记录更新而不是重复添加
+      if(d.id&&D.timelineEvents.some(e=>e.tmId===d.id)){
+        D.timelineEvents=D.timelineEvents.map(e=>e.tmId===d.id?newEv:e);
+      }else{
+        D.timelineEvents.push(newEv);
+      }
       save();
       // 如果当前看的是当天，刷新时间轴
       const sel=D.timelineDate||todayKeyStr();
