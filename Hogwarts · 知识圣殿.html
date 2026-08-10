@@ -612,8 +612,14 @@ let selectedTravelId=null,flyTarget=null,flyStart=null,flyProgress=0;
 let globe2D=null,webglFailed=false;
 
 function initGlobe(){
-  // 强制 2D Canvas 超采样版（保证任何环境都能显示，放大清晰）
-  try{ initGlobe2D(); }catch(e){ console.error('globe2d init error', e); }
+  // 优先 3D WebGL（真实球体滚动+高精度），失败自动降级 2D
+  try{
+    startGlobe3D();
+    return;
+  }catch(e){
+    webglFailed=true;
+    try{ initGlobe2D(); }catch(e2){ console.error('globe fallback error', e2); }
+  }
 }
 function startGlobe3D(){
   try{
@@ -655,6 +661,7 @@ function startGlobe3D(){
         dirLight.position.set(5,3,5);globeScene.add(dirLight);
         // 标记
         addGlobeMarkers();
+        addGlobalCityPoints();
       },
       undefined,()=>{
         // 纹理加载失败 → 清理 3D 降级 2D
@@ -870,6 +877,22 @@ function latLngToVec3(lat,lng,r){
     r*Math.cos(phi),
     r*Math.sin(phi)*Math.sin(theta)
   );
+}
+
+function addGlobalCityPoints(){
+  if(!globeScene||!globeMesh)return;
+  try{
+    GLOBAL_CITIES.forEach(gc=>{
+      const lat=gc[1],lng=gc[2];
+      const pos=latLngToVec3(lat,lng,1.012);
+      const dot=new THREE.Mesh(
+        new THREE.SphereGeometry(0.013,6,6),
+        new THREE.MeshBasicMaterial({color:0x5ee88a})
+      );
+      dot.position.copy(pos);
+      globeScene.add(dot);
+    });
+  }catch(e){console.error('city points error',e)}
 }
 
 function addGlobeMarkers(){
