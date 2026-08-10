@@ -561,7 +561,7 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
   </div>
   <div id="calGrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:1px;text-align:center;margin-bottom:8px"></div>
   <div class="ctitle" style="border-top:1px solid rgba(255,255,255,0.04);padding-top:6px">⏱️ <span id="timelineDateLabel">当日时间轴</span></div>
-  <div id="dayTimeline" style="max-height:240px;overflow-y:auto;padding-right:4px"></div>
+  <div id="dayTimeline" style="max-height:420px;overflow-y:auto;padding-right:4px"></div>
 </div>
 
 
@@ -1432,6 +1432,7 @@ function renderScheduleHTML(){
   h+='<input id="schProf" placeholder="教授/来源" style="width:110px;background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none">';
   h+='<select id="schHouse" style="background:rgba(0,0,0,0.3);border:1px solid rgba(212,168,83,0.1);border-radius:4px;color:var(--text);font-family:inherit;font-size:10px;padding:5px;outline:none"><option value="拉文克劳">拉文克劳</option><option value="格兰芬多">格兰芬多</option><option value="斯莱特林">斯莱特林</option><option value="赫奇帕奇">赫奇帕奇</option><option value="__custom__">✏️ 自定义…</option></select>';
   h+='<button class="btn" onclick="addScheduleItem()">➕ 添加</button></div></div></div>';
+  h+='<div class="card" style="padding:6px;text-align:center"><div style="font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:4px">🍅 番茄钟</div><iframe src="presence-clock.html" style="width:100%;height:360px;border:none;background:transparent" title="番茄钟" loading="lazy"></iframe></div>';
   return h;
 }
 
