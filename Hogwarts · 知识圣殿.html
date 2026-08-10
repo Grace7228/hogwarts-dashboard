@@ -1204,7 +1204,7 @@ function renderCalNav(){
     const ds=y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
     const isSel=ds===sel;
     const isToday=ds===today;
-    h+='<span onclick="calPick(\''+ds+'\')" style="font-size:9px;padding:3px 0;border-radius:4px;cursor:pointer;color:var(--text);'+(isSel?'background:rgba(212,168,83,.3);font-weight:bold;color:var(--gold-light)':isToday?'border:1px solid rgba(224,112,96,.6)':'')+'">'+d+'</span>';
+    h+='<span onclick="calPick(\''+ds+'\')" style="font-size:7px;padding:1px 0;border-radius:2px;cursor:pointer;color:var(--text);'+(isSel?'background:rgba(212,168,83,.3);font-weight:bold;color:var(--gold-light)':isToday?'border:1px solid rgba(224,112,96,.6)':'')+'">'+d+'</span>';
   }
   const tt=fd+dim,rem=tt<=35?35-tt:42-tt;
   for(let d=1;d<=rem;d++)h+='<span style="font-size:8px;color:var(--dim);opacity:.4">'+d+'</span>';
