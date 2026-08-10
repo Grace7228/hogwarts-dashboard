@@ -1,0 +1,564 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>当下时钟 · Presence Clock</title>
+<style>
+:root{--accent:#d23b2e;--accent-dark:#a52b22;--accent-soft:#fbe7e3;--accent-deep:#7e1f19;--ink:#4a4a42;--ink-soft:#8c8c80;--card:#ffffff;--bg:#fbeeec;--leaf:#5f9e3f;--leaf-dark:#477a2c;--shadow:0 1.2rem 2.6rem rgba(120,30,20,.28);}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;width:100%;height:100%;background:transparent;overflow:hidden;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Segoe UI",sans-serif;-webkit-font-smoothing:antialiased;}
+#stage{position:relative;width:100%;height:100%;min-height:380px;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+/* ===== 番茄外形 ===== */
+.tomato{position:relative;width:min(27.5rem,100%);transform:scale(.92);transform-origin:center;}
+.leaf{position:absolute;top:-1.7rem;left:50%;transform:translateX(-50%);z-index:3;width:9rem;height:4.5rem;pointer-events:none;filter:drop-shadow(0 .3rem .4rem rgba(60,90,30,.35));}
+.leaf svg{display:block;width:100%;height:100%;}
+.body{position:relative;z-index:1;border-radius:25% 25% 44% 44%/21% 21% 50% 50%;background:radial-gradient(circle at 32% 26%, rgba(255,255,255,.55), rgba(255,255,255,0) 32%),radial-gradient(circle at 50% 40%, var(--accent), var(--accent-dark) 62%, var(--accent-deep) 100%);box-shadow:var(--shadow), inset -1.2rem -1.4rem 2.6rem rgba(80,15,10,.35), inset 1.1rem 1rem 2rem rgba(255,255,255,.18);padding:2.1rem 2.1rem 1.9rem;transition:background .4s ease,box-shadow .4s ease;}
+/* 番茄表面竖向分瓣的微光 + 顶部中央凹陷 */
+.body::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:radial-gradient(130% 80% at 16% 52%, rgba(0,0,0,.12), rgba(0,0,0,0) 38%),radial-gradient(130% 80% at 84% 52%, rgba(0,0,0,.12), rgba(0,0,0,0) 38%),radial-gradient(60% 26% at 50% 0%, rgba(0,0,0,.16), rgba(0,0,0,0) 70%);}
+/* 底部小白旋钮（厨房计时器的拧钮） */
+.knob{position:absolute;z-index:0;bottom:-1.1rem;left:50%;transform:translateX(-50%);width:5.5rem;height:2.6rem;border-radius:0 0 2.6rem 2.6rem;background:linear-gradient(#ffffff,#e4e4e0);box-shadow:0 .5rem .9rem rgba(80,15,10,.25), inset 0 .2rem .4rem rgba(255,255,255,.9);}
+.knob::before{content:"";position:absolute;left:50%;top:.55rem;transform:translateX(-50%);width:.28rem;height:1.4rem;border-radius:999px;background:var(--ink-soft);opacity:.5;}
+/* ===== 内部面板 ===== */
+.panel{position:relative;z-index:2;}
+.tabs{display:flex;gap:.35rem;justify-content:center;background:rgba(255,255,255,.92);padding:.28rem;border-radius:999px;width:fit-content;margin:0 auto 1rem;box-shadow:0 .3rem .7rem rgba(80,15,10,.18);}
+.tab{border:0;cursor:pointer;font-size:.88rem;font-weight:600;color:var(--ink-soft);background:transparent;padding:.42rem 1rem;border-radius:999px;display:flex;align-items:center;gap:.3rem;transition:.25s;white-space:nowrap;}
+.tab.active{background:var(--accent);color:#fff;box-shadow:0 .25rem .6rem rgba(0,0,0,.2);}
+.tab svg{width:.95rem;height:.95rem;}
+.display{position:relative;}
+.digits{display:flex;align-items:center;justify-content:center;gap:.34rem;}
+.group{display:flex;gap:.26rem;background:rgba(255,255,255,.25);padding:.4rem;border-radius:.9rem;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35);}
+/* ===== 整卡 3D 翻页数字：静止时无中缝 ===== */
+.digit{
+  position:relative;width:2.2rem;height:3.05rem;border-radius:.62rem;
+  perspective:5rem;color:var(--accent-dark);font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;filter:drop-shadow(0 .18rem .24rem rgba(80,15,10,.18));
+}
+.digit-card{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  border-radius:.62rem;background:linear-gradient(180deg,#fff 0%,#f4f1ee 100%);
+  border:1px solid rgba(126,31,25,.16);box-shadow:inset 0 1px 0 rgba(255,255,255,.9);
+  font-size:2.05rem;line-height:1;font-weight:750;letter-spacing:-.03em;color:inherit;
+  text-shadow:0 1px 0 rgba(255,255,255,.65);backface-visibility:hidden;
+  transform-style:preserve-3d;
+}
+.digit-current{z-index:1;}
+.flip-out{z-index:3;transform-origin:50% 50%;}
+.flip-in{z-index:2;transform-origin:50% 50%;transform:rotateX(90deg);}
+
+
+/* restored core UI after flip-digit rewrite */
+.colon{font-size:1.7rem;font-weight:700;color:#fff;transition:opacity .2s;line-height:1;padding:0 .05rem;}
+.colon.blink{opacity:.3;}
+.date{text-align:center;color:rgba(255,255,255,.9);font-size:.8rem;margin-top:.6rem;letter-spacing:.02em;text-shadow:0 1px 2px rgba(80,15,10,.3);}
+.countdown-ctrl{margin-top:.8rem;display:flex;flex-direction:column;align-items:center;gap:.55rem;}
+.presets{display:flex;gap:.4rem;flex-wrap:wrap;justify-content:center;}
+.chip{border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.9);color:var(--accent-dark);font-size:.76rem;font-weight:600;padding:.3rem .7rem;border-radius:999px;cursor:pointer;transition:.2s;}
+.chip:hover{background:#fff;}
+.chip.active{background:var(--accent-deep);color:#fff;border-color:transparent;}
+.stepper{display:flex;align-items:center;gap:.55rem;}
+.step-btn{width:1.9rem;height:1.9rem;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:var(--accent-dark);font-size:1.05rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1;transition:.2s;box-shadow:0 .2rem .4rem rgba(80,15,10,.2);}
+.step-btn:hover{background:#fff;}
+.step-label{font-size:.78rem;color:#fff;min-width:3.4rem;text-align:center;font-weight:600;}
+.actions{display:flex;gap:.45rem;}
+.btn{border:0;cursor:pointer;font-size:.82rem;font-weight:600;padding:.45rem 1.3rem;border-radius:999px;transition:.2s;}
+.btn-primary{background:#fff;color:var(--accent-dark);box-shadow:0 .25rem .6rem rgba(80,15,10,.25);}
+.btn-primary:hover{background:var(--accent-soft);}
+.btn-ghost{background:rgba(255,255,255,.18);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.45);}
+.btn-ghost:hover{background:rgba(255,255,255,.3);}
+.sound{margin-top:.75rem;display:flex;flex-direction:column;align-items:center;gap:.5rem;}
+.snd-presets{display:flex;gap:.4rem;justify-content:center;flex-wrap:wrap;}
+.snd{border:1px solid rgba(255,255,255,.7);background:rgba(255,255,255,.9);color:var(--accent-dark);font-size:.76rem;font-weight:600;padding:.3rem .65rem;border-radius:999px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:.25rem;}
+.snd:hover{background:#fff;}
+.snd.active{background:var(--accent-deep);color:#fff;border-color:transparent;}
+.vol{display:flex;align-items:center;gap:.5rem;background:rgba(255,255,255,.9);padding:.35rem .7rem;border-radius:999px;width:fit-content;box-shadow:0 .2rem .4rem rgba(80,15,10,.18);}
+.vol-ico{cursor:pointer;font-size:.95rem;line-height:1;user-select:none;}
+.vol input[type=range]{-webkit-appearance:none;appearance:none;height:.32rem;width:8rem;border-radius:999px;background:var(--accent-soft);accent-color:var(--accent);cursor:pointer;}
+.vol input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:.95rem;height:.95rem;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.vol input[type=range]::-moz-range-thumb{width:.95rem;height:.95rem;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid #fff;}
+.themes{position:absolute;right:.5rem;top:50%;transform:translateY(-50%);z-index:4;display:flex;flex-direction:column;gap:.45rem;align-items:center;background:rgba(255,255,255,.92);padding:.6rem .35rem;border-radius:999px;box-shadow:0 .3rem .6rem rgba(80,15,10,.25);}
+.timer-mode .themes{top:43%;}
+.clock-mode .themes{position:static;transform:none;flex-direction:row;gap:.55rem;width:fit-content;margin:.9rem auto 0;padding:.45rem .75rem;}
+.clock-mode .body{padding-top:2.9rem;padding-bottom:2.4rem;}
+.swatch{width:1.1rem;height:1.1rem;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:.2s;}
+.swatch.active{border-color:#fff;box-shadow:0 0 0 2px currentColor;}
+.swatch:hover{transform:scale(1.12);}
+.hidden{display:none !important;}
+@keyframes flash{0%,100%{filter:brightness(1);}50%{filter:brightness(1.25);}}
+.tomato.ringing .body{animation:flash .7s ease-in-out 6;}
+</style>
+</head>
+<body>
+<div id="stage">
+<div class="tomato" id="tomato">
+<div class="leaf">
+<svg viewBox="0 0 120 60">
+<path fill="var(--leaf-dark)" d="M57 8h6l-1 18h-4z"/>
+<g fill="var(--leaf)" stroke="var(--leaf-dark)" stroke-width="1.2" stroke-linejoin="round">
+<path d="M60 30 C44 30 30 22 14 26 C26 38 44 44 60 38 Z"/>
+<path d="M60 30 C76 30 90 22 106 26 C94 38 76 44 60 38 Z"/>
+<path d="M60 32 C50 30 40 18 34 6 C50 10 58 20 62 32 Z"/>
+<path d="M60 32 C70 30 80 18 86 6 C70 10 62 20 58 32 Z"/>
+<path d="M60 34 C57 24 60 12 60 2 C66 12 64 26 62 34 Z"/>
+</g>
+</svg>
+</div>
+<div class="knob"></div>
+<div class="body">
+<div class="panel">
+<div class="tabs">
+<button class="tab active" data-tab="clock">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>时钟
+</button>
+<button class="tab" data-tab="timer">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M10 2h4"/><circle cx="12" cy="13" r="8"/><path d="M12 13V9"/></svg>倒计时
+</button>
+</div>
+<div class="display" id="clockView">
+<div class="digits">
+<div class="group"><div class="digit" id="h1">0</div><div class="digit" id="h2">0</div></div>
+<div class="colon" id="c1">:</div>
+<div class="group"><div class="digit" id="m1">0</div><div class="digit" id="m2">0</div></div>
+<div class="colon" id="c2">:</div>
+<div class="group"><div class="digit" id="s1">0</div><div class="digit" id="s2">0</div></div>
+</div>
+<div class="date" id="dateText">—</div>
+</div>
+<div class="display hidden" id="timerView">
+<div class="digits">
+<div class="group"><div class="digit" id="tm1">2</div><div class="digit" id="tm2">5</div></div>
+<div class="colon">:</div>
+<div class="group"><div class="digit" id="ts1">0</div><div class="digit" id="ts2">0</div></div>
+</div>
+<div class="countdown-ctrl">
+<div class="presets" id="presets">
+<button class="chip" data-min="5">5分</button>
+<button class="chip" data-min="15">15分</button>
+<button class="chip active" data-min="25">25分</button>
+<button class="chip" data-min="45">45分</button>
+</div>
+<div class="stepper">
+<button class="step-btn" id="minus">−</button>
+<div class="step-label" id="stepLabel">25 分钟</div>
+<button class="step-btn" id="plus">+</button>
+</div>
+<div class="actions">
+<button class="btn btn-primary" id="startBtn">开始</button>
+<button class="btn btn-ghost" id="resetBtn">重置</button>
+</div>
+</div>
+</div>
+<div class="sound">
+<div id="sndStatus" style="font-size:.72rem;color:rgba(255,255,255,.92);background:rgba(0,0,0,.18);padding:.25rem .7rem;border-radius:999px;margin-bottom:.15rem;">🔈 点任一声音按钮开启</div>
+<div class="snd-presets">
+<button class="snd" data-snd="stream">💧 流水</button>
+<button class="snd" data-snd="fire">🔥 篝火</button>
+<button class="snd" data-snd="rain">🌧️ 小雨</button>
+<button class="snd" data-snd="custom" id="customBtn">🎵 我的音乐</button>
+<button class="snd pick" id="pickBtn">📁 上传</button>
+<input type="file" id="musicFile" accept="audio/*,.mp3,.wav,.m4a,.ogg,.aac,.flac" style="display:none">
+</div>
+<div class="vol">
+<span class="vol-ico" id="volIco">🔈</span>
+<input type="range" id="vol" min="0" max="1" step="0.01" value="0.5">
+</div>
+</div>
+</div>
+<div class="themes" id="themes"></div>
+</div>
+</div>
+</div>
+<script>
+const THEMES=[
+{name:'番茄红',accent:'#d23b2e',dark:'#a52b22',deep:'#7e1f19',soft:'#fbe7e3',bg:'#fbeeec',leaf:'#5f9e3f',leafDark:'#477a2c'},
+{name:'南瓜橙',accent:'#e07f2e',dark:'#b9631d',deep:'#8c4912',soft:'#fbeede',bg:'#fbf2e8',leaf:'#6f9e3f',leafDark:'#52792c'},
+{name:'青柿绿',accent:'#7fa83f',dark:'#62842c',deep:'#49641f',soft:'#eef3e1',bg:'#f4f7ec',leaf:'#5f9e3f',leafDark:'#477a2c'},
+{name:'茄紫',accent:'#8a5aa0',dark:'#6c4280',deep:'#4f2f60',soft:'#efe6f3',bg:'#f6f1f9',leaf:'#6f9e3f',leafDark:'#52792c'},
+{name:'蓝莓',accent:'#5277a8',dark:'#3f5d87',deep:'#2c4365',soft:'#e6edf5',bg:'#f1f5f9',leaf:'#5f9e3f',leafDark:'#477a2c'},
+{name:'墨黑',accent:'#5b5f66',dark:'#3f4248',deep:'#2a2c30',soft:'#e9eaec',bg:'#f5f5f6',leaf:'#6f9e3f',leafDark:'#52792c'}
+];
+const root=document.documentElement,tomato=document.getElementById('tomato');
+function applyTheme(i){
+const t=THEMES[i];
+root.style.setProperty('--accent',t.accent);
+root.style.setProperty('--accent-dark',t.dark);
+root.style.setProperty('--accent-deep',t.deep);
+root.style.setProperty('--accent-soft',t.soft);
+root.style.setProperty('--bg',t.bg);
+root.style.setProperty('--leaf',t.leaf);
+root.style.setProperty('--leaf-dark',t.leafDark);
+document.querySelectorAll('.swatch').forEach((s,idx)=>{s.classList.toggle('active',idx===i);s.style.color=THEMES[idx].accent;});
+try{localStorage.setItem('presence-clock-theme',i);}catch(e){}
+}
+const themesEl=document.getElementById('themes');
+THEMES.forEach((t,i)=>{const s=document.createElement('div');s.className='swatch';s.style.background=t.accent;s.title=t.name;s.onclick=()=>applyTheme(i);themesEl.appendChild(s);});
+let savedTheme=0;try{savedTheme=parseInt(localStorage.getItem('presence-clock-theme')||'0',10)||0;}catch(e){}
+applyTheme(savedTheme);
+const clockView=document.getElementById('clockView'),timerView=document.getElementById('timerView');
+document.querySelectorAll('.tab').forEach(tab=>{
+tab.onclick=()=>{
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+tab.classList.add('active');
+const isClock=tab.dataset.tab==='clock';
+clockView.classList.toggle('hidden',!isClock);
+timerView.classList.toggle('hidden',isClock);
+tomato.classList.toggle('clock-mode',isClock);
+tomato.classList.toggle('timer-mode',!isClock);
+fit();
+};
+});
+const WEEK=['周日','周一','周二','周三','周四','周五','周六'];
+function buildDigit(el,val){
+  val=String(val ?? '0').slice(-1);
+  el.dataset.val=val;
+  el.innerHTML='<div class="digit-card digit-current">'+val+'</div>';
+}
+function initAllDigits(){
+  ['h1','h2','m1','m2','s1','s2','tm1','tm2','ts1','ts2'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el)buildDigit(el,(el.textContent||'0').trim().slice(-1)||'0');
+  });
+}
+function setDigitFlip(el,next,force=false){
+  if(!el)return;
+  next=String(next).slice(-1);
+  const cur=el.dataset.val ?? next;
+  if(cur===next&&!force)return;
+  if(el._flipTimer){clearTimeout(el._flipTimer);el._flipTimer=null;buildDigit(el,cur);}
+  const current=el.querySelector('.digit-current');
+  if(!current){buildDigit(el,next);return;}
+  current.classList.remove('digit-current');
+  current.classList.add('flip-out');
+  el.insertAdjacentHTML('beforeend','<div class="digit-card flip-in">'+next+'</div>');
+  const incoming=el.querySelector('.flip-in');
+  /* Web Animations API: 不受页面的 reduced-motion 设置影响，确保嵌入里真的翻动 */
+  if(current.animate&&incoming&&incoming.animate){
+    current.animate([
+      {transform:'rotateX(0deg) scale(1)',filter:'brightness(1)',boxShadow:'0 .18rem .24rem rgba(80,15,10,.18)'},
+      {transform:'rotateX(-48deg) scale(.985)',filter:'brightness(.83)',boxShadow:'0 .55rem .75rem rgba(55,8,5,.38)',offset:.52},
+      {transform:'rotateX(-90deg) scale(.96)',filter:'brightness(.55)',boxShadow:'0 .1rem .2rem rgba(55,8,5,.15)'}
+    ],{duration:460,easing:'cubic-bezier(.48,.02,.88,.38)',fill:'forwards'});
+    incoming.animate([
+      {transform:'rotateX(90deg) scale(.96)',filter:'brightness(.55)',boxShadow:'0 .1rem .2rem rgba(55,8,5,.15)'},
+      {transform:'rotateX(42deg) scale(.985)',filter:'brightness(.84)',boxShadow:'0 -.5rem .7rem rgba(55,8,5,.28)',offset:.48},
+      {transform:'rotateX(0deg) scale(1)',filter:'brightness(1)',boxShadow:'0 .18rem .24rem rgba(80,15,10,.18)'}
+    ],{duration:500,delay:390,easing:'cubic-bezier(.12,.58,.22,1)',fill:'forwards'});
+  }else{
+    incoming.style.transform='rotateX(0deg)';
+  }
+  el.dataset.val=next;
+  el._flipTimer=setTimeout(()=>{buildDigit(el,next);el._flipTimer=null;},930);
+}
+function setDigits(ids,str,force=false){ids.forEach((id,i)=>setDigitFlip(document.getElementById(id),str[i],force));}
+initAllDigits();
+let blinkOn=true;
+function tickClock(){
+const d=new Date();
+const hh=String(d.getHours()).padStart(2,'0'),mm=String(d.getMinutes()).padStart(2,'0'),ss=String(d.getSeconds()).padStart(2,'0');
+setDigits(['h1','h2'],hh);setDigits(['m1','m2'],mm);setDigits(['s1','s2'],ss,true);
+document.getElementById('dateText').textContent=(d.getMonth()+1)+'/'+d.getDate()+' '+WEEK[d.getDay()];
+blinkOn=!blinkOn;
+document.getElementById('c1').classList.toggle('blink',!blinkOn);
+document.getElementById('c2').classList.toggle('blink',!blinkOn);
+}
+setInterval(tickClock,1000);tickClock();
+let totalMin=25,remain=25*60,running=false,timerId=null;
+const stepLabel=document.getElementById('stepLabel'),startBtn=document.getElementById('startBtn');
+function renderTimer(){const m=Math.floor(remain/60),s=remain%60;setDigits(['tm1','tm2'],String(m).padStart(2,'0'));setDigits(['ts1','ts2'],String(s).padStart(2,'0'),running);}
+function setMinutes(min){totalMin=Math.max(1,Math.min(180,min));if(!running){remain=totalMin*60;renderTimer();}stepLabel.textContent=totalMin+' 分钟';document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active',parseInt(c.dataset.min,10)===totalMin));}
+document.querySelectorAll('.chip').forEach(c=>{c.onclick=()=>{setMinutes(parseInt(c.dataset.min,10));};});
+document.getElementById('plus').onclick=()=>setMinutes(totalMin+1);
+document.getElementById('minus').onclick=()=>setMinutes(totalMin-1);
+function beep(){try{const c=audioCtx||new (window.AudioContext||window.webkitAudioContext)();let t=c.currentTime;for(let i=0;i<3;i++){const o=c.createOscillator(),g=c.createGain();o.frequency.value=880;o.type='sine';o.connect(g);g.connect(c.destination);g.gain.setValueAtTime(0.001,t);g.gain.exponentialRampToValueAtTime(0.3,t+0.02);g.gain.exponentialRampToValueAtTime(0.001,t+0.35);o.start(t);o.stop(t+0.36);t+=0.5;}}catch(e){}}
+function finish(){running=false;clearInterval(timerId);startBtn.textContent='开始';tomato.classList.add('ringing');beep();setTimeout(()=>tomato.classList.remove('ringing'),4500);}
+function tick(){if(remain<=0){finish();return;}remain--;renderTimer();if(remain<=0)finish();}
+startBtn.onclick=()=>{if(running){running=false;clearInterval(timerId);startBtn.textContent='继续';}else{if(remain<=0)remain=totalMin*60;running=true;startBtn.textContent='暂停';timerId=setInterval(tick,1000);}};
+document.getElementById('resetBtn').onclick=()=>{running=false;clearInterval(timerId);startBtn.textContent='开始';remain=totalMin*60;renderTimer();};
+setMinutes(25);renderTimer();
+let audioCtx=null,noiseBuf=null,srcNode=null,masterGain=null,crackleTimer=null,lfoNode=null,currentSound=null;
+const volSlider=document.getElementById('vol'),volIco=document.getElementById('volIco');
+let savedVol=0.5;try{savedVol=parseFloat(localStorage.getItem('presence-clock-vol')||'0.5');}catch(e){}
+volSlider.value=savedVol;
+function makeNoise(ctx,sec){const len=Math.floor(ctx.sampleRate*sec);const buf=ctx.createBuffer(1,len,ctx.sampleRate);const data=buf.getChannelData(0);for(let i=0;i<len;i++){data[i]=Math.random()*2-1;}return buf;}
+function setStatus(msg){const el=document.getElementById('sndStatus');if(el)el.textContent=msg;}
+async function ensureCtx(){
+  try{
+    if(!window.AudioContext&&!window.webkitAudioContext){setStatus('🔇 此环境不支持音频');return false;}
+    if(!audioCtx){
+      audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+      masterGain=audioCtx.createGain();
+      masterGain.gain.value=Math.max(0.05, parseFloat(volSlider.value)||0.5);
+      masterGain.connect(audioCtx.destination);
+      noiseBuf=makeNoise(audioCtx,3);
+    }
+    if(audioCtx.state==='suspended'){
+      await audioCtx.resume();
+    }
+    if(audioCtx.state!=='running'){
+      setStatus('🔇 请再点一次开启声音');
+      return false;
+    }
+    return true;
+  }catch(e){
+    console.error(e);
+    setStatus('🔇 音频被沙箱拦截');
+    return false;
+  }
+}
+// 任意首次点击先解锁音频（iframe 沙箱常见要求）
+let audioUnlocked=false;
+async function unlockAudio(){
+  if(audioUnlocked) return audioUnlocked;
+  const ok=await ensureCtx();
+  if(ok){
+    // 极短静音脉冲，强制拉起输出链路
+    try{
+      const o=audioCtx.createOscillator();const g=audioCtx.createGain();
+      g.gain.value=0.0001;o.connect(g);g.connect(masterGain);
+      o.start();o.stop(audioCtx.currentTime+0.03);
+      audioUnlocked=true;setStatus('🔊 声音已就绪');
+    }catch(e){console.error(e);}
+  }
+  return audioUnlocked;
+}
+document.addEventListener('pointerdown',()=>{unlockAudio();},{once:false,passive:true});
+function stopSound(){if(srcNode){try{srcNode.stop();}catch(e){}try{srcNode.disconnect();}catch(e){}srcNode=null;}if(lfoNode){try{lfoNode.stop();}catch(e){}lfoNode=null;}stopCustomSource();clearTimeout(crackleTimer);currentSound=null;document.querySelectorAll('.snd').forEach(b=>b.classList.remove('active'));}
+function scheduleCrackle(){clearTimeout(crackleTimer);function pop(){if(currentSound!=='fire'||!audioCtx)return;const b=audioCtx.createBufferSource();b.buffer=noiseBuf;const f=audioCtx.createBiquadFilter();f.type='bandpass';f.frequency.value=650+Math.random()*1500;f.Q.value=2.2;const g=audioCtx.createGain();const t=audioCtx.currentTime;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.07+Math.random()*0.12,t+0.006);g.gain.exponentialRampToValueAtTime(0.0001,t+0.05+Math.random()*0.11);b.connect(f);f.connect(g);g.connect(masterGain);b.start(t);b.stop(t+0.22);crackleTimer=setTimeout(pop,170+Math.random()*640);}pop();}
+function scheduleBubble(){clearTimeout(crackleTimer);function gloop(){if(currentSound!=='stream'||!audioCtx)return;const t=audioCtx.currentTime;const o=audioCtx.createOscillator();o.type='sine';const f0=120+Math.random()*180;o.frequency.setValueAtTime(f0,t);o.frequency.exponentialRampToValueAtTime(f0*(1.5+Math.random()*0.9),t+0.06+Math.random()*0.09);const g=audioCtx.createGain();g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.03+Math.random()*0.045,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+0.15+Math.random()*0.18);o.connect(g);g.connect(masterGain);o.start(t);o.stop(t+0.42);crackleTimer=setTimeout(gloop,75+Math.random()*180);}gloop();}
+function scheduleDrops(){
+  clearTimeout(crackleTimer);
+  // soft continuous bed: very light high mist
+  // (main character is sparse drips below)
+  function drip(){
+    if(currentSound!=='rain'||!audioCtx)return;
+    const t=audioCtx.currentTime;
+    // single droplet: short bandpass click + soft tail
+    const b=audioCtx.createBufferSource();
+    b.buffer=noiseBuf;
+    const bp=audioCtx.createBiquadFilter();
+    bp.type='bandpass';
+    // higher, narrower = more "滴答" less wash
+    bp.frequency.value=2800+Math.random()*2200;
+    bp.Q.value=8+Math.random()*6;
+    const hp=audioCtx.createBiquadFilter();
+    hp.type='highpass'; hp.frequency.value=1200;
+    const g=audioCtx.createGain();
+    const peak=0.012+Math.random()*0.018; // much quieter than before
+    g.gain.setValueAtTime(0.0001,t);
+    g.gain.exponentialRampToValueAtTime(peak,t+0.003);
+    g.gain.exponentialRampToValueAtTime(0.0001,t+0.045+Math.random()*0.05);
+    b.connect(hp); hp.connect(bp); bp.connect(g); g.connect(masterGain);
+    b.start(t); b.stop(t+0.12);
+    // occasional softer secondary drip nearby
+    if(Math.random()<0.28){
+      const t2=t+0.04+Math.random()*0.08;
+      const b2=audioCtx.createBufferSource(); b2.buffer=noiseBuf;
+      const bp2=audioCtx.createBiquadFilter(); bp2.type='bandpass';
+      bp2.frequency.value=2200+Math.random()*1800; bp2.Q.value=10;
+      const g2=audioCtx.createGain();
+      g2.gain.setValueAtTime(0.0001,t2);
+      g2.gain.exponentialRampToValueAtTime(0.008+Math.random()*0.01,t2+0.002);
+      g2.gain.exponentialRampToValueAtTime(0.0001,t2+0.035);
+      b2.connect(bp2); bp2.connect(g2); g2.connect(masterGain);
+      b2.start(t2); b2.stop(t2+0.08);
+    }
+    // sparse interval: 淅沥滴答, not continuous downpour
+    crackleTimer=setTimeout(drip, 90+Math.random()*220);
+  }
+  drip();
+}
+const SONGS=[
+{name:'致爱丽丝',bpm:78,mel:[{n:'E5',d:.5},{n:'D#5',d:.5},{n:'E5',d:.5},{n:'D#5',d:.5},{n:'E5',d:.5},{n:'B4',d:.5},{n:'D5',d:.5},{n:'C5',d:.5},{n:'A4',d:1,ch:['A2','E3']},{n:'R',d:.5},{n:'C4',d:.5},{n:'E4',d:.5},{n:'A4',d:.5},{n:'B4',d:1,ch:['E2','E3']},{n:'R',d:.5},{n:'E4',d:.5},{n:'G#4',d:.5},{n:'B4',d:.5},{n:'C5',d:1,ch:['A2','E3']},{n:'R',d:.5},{n:'E5',d:.5},{n:'D#5',d:.5},{n:'E5',d:.5},{n:'D#5',d:.5},{n:'E5',d:.5},{n:'B4',d:.5},{n:'D5',d:.5},{n:'C5',d:.5},{n:'A4',d:1,ch:['A2','E3']},{n:'R',d:.5},{n:'C4',d:.5},{n:'E4',d:.5},{n:'A4',d:.5},{n:'B4',d:1,ch:['E2','E3']},{n:'R',d:.5},{n:'E4',d:.5},{n:'C5',d:.5},{n:'B4',d:.5},{n:'A4',d:1.5,ch:['A2','E3']},{n:'R',d:1}]},
+{name:'卡农',bpm:92,mel:[{n:'F#5',d:1,ch:['D3','A3']},{n:'E5',d:1,ch:['A2','E3']},{n:'D5',d:1,ch:['B2','F#3']},{n:'C#5',d:1,ch:['F#2','C#3']},{n:'B4',d:1,ch:['G2','D3']},{n:'A4',d:1,ch:['D3','A3']},{n:'B4',d:1,ch:['G2','D3']},{n:'C#5',d:1,ch:['A2','E3']},{n:'D5',d:1,ch:['D3','A3']},{n:'C#5',d:1,ch:['A2','E3']},{n:'B4',d:1,ch:['B2','F#3']},{n:'A4',d:1,ch:['F#2','C#3']},{n:'G4',d:1,ch:['G2','D3']},{n:'F#4',d:1,ch:['D3','A3']},{n:'G4',d:1,ch:['G2','D3']},{n:'E4',d:1,ch:['A2','E3']},{n:'R',d:1}]},
+{name:'欢乐颂',bpm:104,mel:[{n:'E4',d:1},{n:'E4',d:1},{n:'F4',d:1},{n:'G4',d:1},{n:'G4',d:1},{n:'F4',d:1},{n:'E4',d:1},{n:'D4',d:1},{n:'C4',d:1},{n:'C4',d:1},{n:'D4',d:1},{n:'E4',d:1},{n:'E4',d:1.5},{n:'D4',d:.5},{n:'D4',d:2},{n:'E4',d:1},{n:'E4',d:1},{n:'F4',d:1},{n:'G4',d:1},{n:'G4',d:1},{n:'F4',d:1},{n:'E4',d:1},{n:'D4',d:1},{n:'C4',d:1},{n:'C4',d:1},{n:'D4',d:1},{n:'E4',d:1},{n:'D4',d:1.5},{n:'C4',d:.5},{n:'C4',d:2},{n:'R',d:1}]}
+];
+function freqOf(n){if(!n||n==='R')return 0;const map={C:0,'C#':1,D:2,'D#':3,E:4,F:5,'F#':6,G:7,'G#':8,A:9,'A#':10,B:11};const oct=parseInt(n.slice(-1),10);const key=n.slice(0,-1);const midi=map[key]+(oct+1)*12;return 440*Math.pow(2,(midi-69)/12);}
+function tone(freq,dur,vel){if(!freq||!audioCtx)return;const t=audioCtx.currentTime;const g=audioCtx.createGain();const lp=audioCtx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2400;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(vel,t+0.014);g.gain.exponentialRampToValueAtTime(0.0001,t+dur);const o1=audioCtx.createOscillator();o1.type='triangle';o1.frequency.value=freq;const o2=audioCtx.createOscillator();o2.type='sine';o2.frequency.value=freq*2;const g2=audioCtx.createGain();g2.gain.value=0.2;o1.connect(g);o2.connect(g2);g2.connect(g);g.connect(lp);lp.connect(masterGain);o1.start(t);o2.start(t);o1.stop(t+dur+0.2);o2.stop(t+dur+0.2);}
+let pianoSong=0,pianoEvt=0;
+function schedulePiano(){clearTimeout(crackleTimer);pianoSong=Math.floor(Math.random()*SONGS.length);pianoEvt=0;function step(){if(currentSound!=='piano'||!audioCtx)return;const song=SONGS[pianoSong];const beat=60/song.bpm;if(pianoEvt>=song.mel.length){pianoSong=(pianoSong+1)%SONGS.length;pianoEvt=0;crackleTimer=setTimeout(step,1100);return;}const ev=song.mel[pianoEvt++];const dur=ev.d*beat;const f=freqOf(ev.n);if(f)tone(f,Math.min(dur*1.5,3),0.14);if(ev.ch){ev.ch.forEach(cn=>{const cf=freqOf(cn);if(cf)tone(cf,Math.min(dur*1.7,3.2),0.07);});}crackleTimer=setTimeout(step,dur*1000);}step();}
+async function startSound(type){
+  const ok=await unlockAudio();
+  if(!ok||!audioCtx){setStatus('🔇 无法播放，请再点一次');return;}
+  stopSound();
+  currentSound=type;
+  try{
+    if(type==='rain'||type==='stream'||type==='fire'){
+      srcNode=audioCtx.createBufferSource();
+      srcNode.buffer=noiseBuf;
+      srcNode.loop=true;
+      if(type==='rain'){
+        // ultra-soft distant mist bed + sparse drips
+        const hp=audioCtx.createBiquadFilter();hp.type='highpass';hp.frequency.value=1800;
+        const lp=audioCtx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=5200;
+        const g=audioCtx.createGain();g.gain.value=0.035; // was ~0.28, now whisper bed
+        srcNode.connect(hp);hp.connect(lp);lp.connect(g);g.connect(masterGain);
+        scheduleDrops();
+      }else if(type==='stream'){
+        const bp=audioCtx.createBiquadFilter();bp.type='bandpass';bp.frequency.value=380;bp.Q.value=0.7;
+        const lp=audioCtx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=1100;
+        lfoNode=audioCtx.createOscillator();lfoNode.frequency.value=0.4;
+        const lg=audioCtx.createGain();lg.gain.value=140;lfoNode.connect(lg);lg.connect(bp.frequency);lfoNode.start();
+        const g=audioCtx.createGain();g.gain.value=0.26;
+        srcNode.connect(bp);bp.connect(lp);lp.connect(g);g.connect(masterGain);
+        scheduleBubble();
+      }else if(type==='fire'){
+        const lp=audioCtx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=440;
+        const lp2=audioCtx.createBiquadFilter();lp2.type='lowpass';lp2.frequency.value=440;
+        const g=audioCtx.createGain();g.gain.value=0.55;
+        srcNode.connect(lp);lp.connect(lp2);lp2.connect(g);g.connect(masterGain);
+        scheduleCrackle();
+      }
+      srcNode.start();
+      setStatus({rain:'🌧️ 淅沥小雨',stream:'💧 流水中',fire:'🔥 篝火中'}[type]);
+    }else if(type==='custom'){
+      if(customBuffer && customBuffer.__htmlAudio){
+        // resume html audio element if present
+        if(customSource && customSource._el){
+          try{ await customSource._el.play(); setStatus('🎵 我的音乐播放中'); }
+          catch(e){ setStatus('🔇 播放失败，请重新上传 mp3/wav'); }
+        }else{
+          setStatus('📁 请重新上传音乐');
+          currentSound=null;
+        }
+      }else if(customBuffer){
+        playCustomBuffer();
+        setStatus('🎵 我的音乐播放中');
+      }else{
+        setStatus('📁 请先上传音乐');
+        currentSound=null;
+      }
+    }
+  }catch(e){
+    console.error(e);
+    setStatus('🔇 播放失败：'+(e&&e.message?e.message:'unknown'));
+  }
+}
+document.querySelectorAll('.snd').forEach(btn=>{
+  btn.onclick=async ()=>{
+    const type=btn.dataset.snd;
+    if(!type) return; // pick button handled separately
+    if(btn.id==='pickBtn') return;
+    if(currentSound===type){stopSound();setStatus('🔈 已停止');document.querySelectorAll('.snd').forEach(b=>b.classList.remove('active'));return;}
+    document.querySelectorAll('.snd').forEach(b=>b.classList.toggle('active',b===btn));
+    await startSound(type);
+  };
+});
+let customURL=null, customBuffer=null, customSource=null, customName='';
+function stopCustomSource(){
+  if(customSource){
+    try{customSource.stop();}catch(e){}
+    try{customSource.disconnect();}catch(e){}
+    customSource=null;
+  }
+}
+function playCustomBuffer(){
+  if(!audioCtx||!customBuffer||!masterGain) return;
+  stopCustomSource();
+  if(customBuffer && customBuffer.__htmlAudio){
+    // already handled in load path; if re-start, need re-upload or keep element
+    return;
+  }
+  const src=audioCtx.createBufferSource();
+  src.buffer=customBuffer;
+  src.loop=true;
+  src.connect(masterGain);
+  src.start();
+  customSource=src;
+  src.onended=()=>{ if(customSource===src) customSource=null; };
+}
+
+
+const musicFile=document.getElementById('musicFile'),customBtn=document.getElementById('customBtn'),pickBtn=document.getElementById('pickBtn');
+async function loadCustomFile(f){
+  if(!f) return;
+  setStatus('⏳ 解码音乐中…');
+  try{
+    const ok=await unlockAudio();
+    if(!ok){ setStatus('🔇 请先点一下页面再上传'); return; }
+    const buf=await f.arrayBuffer();
+    let decoded=null;
+    const tryDecode=async (ab)=>{
+      try{ return await audioCtx.decodeAudioData(ab.slice(0)); }
+      catch(e){
+        return await new Promise((resolve,reject)=>{
+          try{ audioCtx.decodeAudioData(ab.slice(0), resolve, reject); }
+          catch(err){ reject(err); }
+        });
+      }
+    };
+    try{
+      decoded=await tryDecode(buf);
+    }catch(e1){
+      console.warn('decode fail', e1);
+      // fallback: HTMLAudioElement + MediaElementSource (some formats)
+      try{
+        if(customURL) URL.revokeObjectURL(customURL);
+        customURL=URL.createObjectURL(f);
+        const a=new Audio();
+        a.preload='auto'; a.loop=true; a.crossOrigin='anonymous';
+        a.src=customURL;
+        await new Promise((resolve,reject)=>{
+          a.oncanplaythrough=()=>resolve();
+          a.onerror=()=>reject(new Error('no supported source'));
+          a.load();
+          setTimeout(()=>resolve(), 1200);
+        });
+        // route through WebAudio graph
+        stopCustomSource();
+        const srcNode=audioCtx.createMediaElementSource(a);
+        srcNode.connect(masterGain);
+        customSource={ stop(){ try{a.pause(); a.currentTime=0;}catch(e){} }, disconnect(){ try{srcNode.disconnect();}catch(e){} }, _el:a, _node:srcNode };
+        customBuffer={ __htmlAudio:true }; // marker
+        customName=f.name.replace(/\.[^.]+$/,'');
+        customBtn.textContent='🎵 '+(customName.length>8?customName.slice(0,8)+'…':customName);
+        document.querySelectorAll('.snd').forEach(b=>b.classList.toggle('active',b===customBtn));
+        currentSound='custom';
+        await a.play();
+        setStatus('🎵 我的音乐播放中');
+        return;
+      }catch(e2){
+        console.error(e2);
+        customBuffer=null;
+        setStatus('🔇 无法解码此音频（请用 mp3/wav）');
+        return;
+      }
+    }
+    customBuffer=decoded;
+    customName=f.name.replace(/\.[^.]+$/,'');
+    customBtn.textContent='🎵 '+(customName.length>8?customName.slice(0,8)+'…':customName);
+    document.querySelectorAll('.snd').forEach(b=>b.classList.toggle('active',b===customBtn));
+    await startSound('custom');
+  }catch(e){
+    console.error(e);
+    customBuffer=null;
+    setStatus('🔇 无法解码此音频（请用 mp3/wav）');
+  }
+}
+musicFile.onchange=(e)=>{
+  const f=e.target.files&&e.target.files[0];
+  if(f) loadCustomFile(f);
+  e.target.value='';
+};
+customBtn.onclick=async ()=>{
+  if(!customBuffer){ musicFile.click(); return; }
+  if(currentSound==='custom'){ stopSound(); setStatus('🔈 已停止'); return; }
+  document.querySelectorAll('.snd').forEach(b=>b.classList.toggle('active',b===customBtn));
+  await startSound('custom');
+};
+pickBtn.onclick=()=>{ musicFile.click(); };
+function updateVolIco(){const v=parseFloat(volSlider.value);volIco.textContent=v<=0?'🔇':(v<0.5?'🔈':'🔊');}
+updateVolIco();
+let preMute=0.5;
+volSlider.oninput=()=>{const v=parseFloat(volSlider.value);if(masterGain)masterGain.gain.value=v;updateVolIco();try{localStorage.setItem('presence-clock-vol',v);}catch(e){};};
+volIco.onclick=()=>{const v=parseFloat(volSlider.value);if(v>0){preMute=v;volSlider.value=0;}else{volSlider.value=preMute||0.5;}volSlider.oninput();};
+const stage=document.getElementById('stage');
+function fit(){const w=stage.clientWidth,h=stage.clientHeight;if(!w||!h)return;const APP_W_REM=27.5;const appH=document.querySelector('.tomato').offsetHeight;const curFont=parseFloat(root.style.fontSize)||16;const appH_REM=appH/curFont;const byW=w/(APP_W_REM+2);const byH=h/((appH_REM||34)+2);let fs=Math.min(byW,byH)*0.96;fs=Math.max(6,Math.min(fs,28));root.style.fontSize=fs+'px';}
+if(window.ResizeObserver){new ResizeObserver(fit).observe(stage);}
+window.addEventListener('resize',fit);
+window.addEventListener('load',fit);
+tomato.classList.add('clock-mode');
+root.style.fontSize='16px';
+fit();requestAnimationFrame(fit);setTimeout(fit,60);
+</script>
+</body>
+</html>

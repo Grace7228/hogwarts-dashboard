@@ -554,17 +554,9 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
     <div class="nlist" id="notesList" style="flex:1"><div class="empty" id="notesEmpty">👆 在「知识幻境」中选择</div></div>
     <div class="addrow"><textarea id="addNoteInput" placeholder="记录……" rows="1"></textarea><button class="btn" onclick="addNote()">✨</button></div>
   </div>
-  <div class="card" style="text-align:center">
+  <div class="card" style="padding:6px;text-align:center">
     <div style="font-size:10px;color:var(--gold);letter-spacing:1px;margin-bottom:4px">🍅 番茄钟</div>
-    <div style="display:flex;gap:4px;justify-content:center;margin-bottom:4px">
-      <button class="btn" onclick="setPomodoro(25)" id="pom25" style="font-size:9px;padding:3px 8px">25min</button>
-      <button class="btn" onclick="setPomodoro(45)" id="pom45" style="font-size:9px;padding:3px 8px">45min</button>
-      <button class="btn" onclick="setPomodoro(5)" id="pom5" style="font-size:9px;padding:3px 8px">休息</button>
-    </div>
-    <div style="font-size:28px;color:var(--gold-light);font-weight:bold;letter-spacing:2px;font-variant-numeric:tabular-nums" id="pomoClock">25:00</div>
-    <div style="margin-top:4px">
-      <button class="btn" onclick="togglePomodoro()" id="pomoToggle" style="background:rgba(100,180,120,0.12);border-color:rgba(100,180,120,0.3);color:#a0d8a0;font-size:10px;padding:4px 14px">▶ 开始</button>
-    </div>
+    <iframe src="presence-clock.html" style="width:100%;height:400px;border:none;background:transparent" title="番茄钟" loading="lazy"></iframe>
   </div>
   <div class="card">
     <div class="ctitle"><span class="icon">📋</span> 最近笔记</div>
