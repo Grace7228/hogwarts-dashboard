@@ -830,7 +830,7 @@ function animateGlobe2D(){
     ctx.restore();
     ctx.strokeStyle='rgba(212,168,83,0.35)';ctx.lineWidth=1;
     for(let i=0;i<12;i++){const a=i/12*Math.PI*2+globe2D.rot;ctx.beginPath();ctx.ellipse(cx,cy,r,r*0.45,a,0,Math.PI*2);ctx.stroke()}
-    for(let i=1;i<8;i++){const y=cy-r+i*r/4;ctx.beginPath();ctx.ellipse(cx,y,r*Math.sqrt(1-((i-4)/4)**2),r/4,0,Math.PI*2);ctx.stroke()}
+    for(let i=1;i<8;i++){const y=cy-r+i*r/4;ctx.beginPath();ctx.ellipse(cx,y,r*Math.sqrt(1-((i-4)/4)**2),r/4,0,0,Math.PI*2);ctx.stroke()}
   }
   // 内置全球城市灯光点（绿色小点，夜晚灯光效果）
   if(globe2D.globalCities){
