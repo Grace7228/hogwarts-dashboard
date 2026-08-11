@@ -1723,6 +1723,28 @@ function renderTimeline(){
   };
 
 })();
+// 跨窗口桥监听：主系统清空/删除日程 → 同步时光机
+window.addEventListener('storage',function(e){
+  if(e.key!=='hogwarts_tm_bridge'||!e.newValue)return;
+  var d=null;try{d=JSON.parse(e.newValue)}catch(err){return}
+  if(d&&d.type==='tm-clear-today'){
+    var k=d.date||todayKey();
+    var before=S.records.length;
+    S.records=S.records.filter(function(r){return dayKey(r.endMs)!==k&&dayKey(r.startMs)!==k});
+    S.pending=S.pending.filter(function(p){return dayKey(p.endMs||p.startMs)!==k});
+    S.synced=S.synced.filter(function(s){return dayKey(s.endMs||s.startMs)!==k});
+    if(S.records.length!==before)save();
+    renderAll();renderTimeline();
+  }
+  if(d&&d.type==='tm-record-deleted'&&d.id){
+    var bb=S.records.length;
+    S.records=S.records.filter(function(r){return r.id!==d.id});
+    S.pending=S.pending.filter(function(p){return p.id!==d.id});
+    S.synced=S.synced.filter(function(s){return s.id!==d.id});
+    if(S.records.length!==bb)save();
+    renderAll();renderTimeline();
+  }
+});
 </script>
 </body>
 </html>

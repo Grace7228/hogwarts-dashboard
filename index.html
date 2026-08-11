@@ -1274,14 +1274,23 @@ function clearTimelineEvents(){
     const f=document.getElementById(id);
     if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'tm-clear-today',date:today},'*');
   });
+  try{localStorage.setItem('hogwarts_tm_bridge',JSON.stringify({t:Date.now(),type:'tm-clear-today',date:today}));}catch(e){}
   toast('🗑️ 日程已清空（含时光机当日记录）');
 }
 window.clearTimelineEvents=clearTimelineEvents;
 
 function delTimelineEvent(id){
   if(!D.timelineEvents)return;
+  const ev=D.timelineEvents.find(e=>e.id===id);
   D.timelineEvents=D.timelineEvents.filter(e=>e.id!==id);
   save();renderDayTimeline();
+  if(ev&&ev.tmId){
+    ['tmFrameDash','tmFrame'].forEach(fid=>{
+      const f=document.getElementById(fid);
+      if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'tm-record-deleted',id:ev.tmId},'*');
+    });
+    try{localStorage.setItem('hogwarts_tm_bridge',JSON.stringify({t:Date.now(),type:'tm-record-deleted',id:ev.tmId}));}catch(e){}
+  }
   toast('🗑️ 日程已删除');
 }
 window.delTimelineEvent=delTimelineEvent;
