@@ -1142,7 +1142,7 @@ function renderTimeline(){
           (it.kind==='todo'?('<button type="button" data-act="toggle" data-id="'+it.id+'">'+(it.done?'撤销':'完成')+'</button>'):'')+
           '<button type="button" data-act="del" data-id="'+it.id+'">删除</button></div>';
       } else if(it.kind==='timer' && !it.live && it.end){
-        actions='<div class="tl-actions"><span style="font-size:11px;color:#9a9288">'+fmtHMS(Math.floor((it.end-it.at)/1000))+'</span></div>';
+        actions='<div class="tl-actions"><span style="font-size:11px;color:#9a9288">'+fmtHMS(Math.floor((it.end-it.at)/1000))+'</span><button type="button" data-act="delrec" data-id="'+it.id+'">删除</button></div>';
       }
       const rep = it.recurLabel ? ('<span class="rep">🔁 '+esc(it.recurLabel)+'</span>') : '';
       const pri=(it.priority>=2?'<span class="pri">!!</span>':(it.priority===1?'<span class="pri">!</span>':''));
@@ -1169,6 +1169,14 @@ function renderTimeline(){
         if(act==='toggle'){ S.notes=S.notes.map(n=>n.id===id?Object.assign({},n,{done:!n.done}):n); save(); renderTimeline(); }
         if(act==='star'){ S.notes=S.notes.map(n=>n.id===id?Object.assign({},n,{starred:!n.starred, priority:(!n.starred?Math.max(n.priority||0,1):(n.priority||0))}):n); save(); renderTimeline(); toast('已更新加星'); }
         if(act==='del'){ S.notes=S.notes.filter(n=>n.id!==id); save(); renderTimeline(); toast('已删除'); }
+        if(act==='delrec'){
+          S.records=S.records.filter(r=>r.id!==id);
+          S.pending=S.pending.filter(p=>p.id!==id);
+          S.synced=S.synced.filter(s=>s.id!==id);
+          save();renderAll();renderTimeline();toast('已删除计时记录');
+          try{parent.postMessage({source:'timemachine',type:'tm-record-deleted',id:id},'*');}catch(e){}
+          try{localStorage.setItem('hogwarts_tm_bridge',JSON.stringify({t:Date.now(),type:'tm-record-deleted',id:id}));}catch(e){}
+        }
       };
     });
     box.querySelectorAll('input[data-todo]').forEach(inp=>{

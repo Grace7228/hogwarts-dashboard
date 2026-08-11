@@ -1835,6 +1835,30 @@ window.addEventListener('message',e=>{
   }
 });
 
+// 跨窗口桥：独立窗口时光机停止/删除 → 同步
+window.addEventListener('storage',function(e){
+  if(e.key!=='hogwarts_tm_bridge'||!e.newValue)return;
+  var d=null;try{d=JSON.parse(e.newValue)}catch(err){return}
+  if(d&&d.type==='tm-stopped'){
+    if(!D.timelineEvents)D.timelineEvents=[];
+    var sm=new Date(d.startMs||Date.now());
+    var em=new Date(d.endMs||Date.now());
+    var ds=sm.getFullYear()+'-'+String(sm.getMonth()+1).padStart(2,'0')+'-'+String(sm.getDate()).padStart(2,'0');
+    var newEv={id:'te'+Date.now(),tmId:d.id||null,date:ds,name:d.name,note:d.note||'',startH:sm.getHours(),startM:sm.getMinutes(),endH:em.getHours(),endM:em.getMinutes()};
+    if(d.id&&D.timelineEvents.some(function(x){return x.tmId===d.id})){
+      D.timelineEvents=D.timelineEvents.map(function(x){return x.tmId===d.id?newEv:x});
+    }else{D.timelineEvents.push(newEv)}
+    save();
+    var sel=D.timelineDate||todayKeyStr();
+    if(sel===ds)renderDayTimeline();
+    toast('⏹ 时光机记录已同步到日程');
+  }
+  if(d&&d.type==='tm-record-deleted'&&d.id){
+    D.timelineEvents=D.timelineEvents.filter(function(x){return x.tmId!==d.id});
+    save();renderDayTimeline();
+  }
+});
+
 document.addEventListener('keydown',e=>{
   if(e.ctrlKey||e.metaKey){
     if(e.key==='n'){e.preventDefault();switchView('realms');setTimeout(()=>document.getElementById('addNoteInput').focus(),100)}
