@@ -1117,7 +1117,7 @@ function renderDashMini(){
     ['📚 笔记',tn],['✅ 待办',tc],['⭐ 积分',D.points||0],
     ['💰 资产',(D.assets||[]).length],['❤️ 健康',(D.healthLog||[]).length],['🌍 旅行',(D.travelLog||[]).length],
   ];
-  el.innerHTML=stats.map(s=>`<div style="background:rgba(0,0,0,0.2);border-radius:6px;padding:6px 4px;text-align:center"><div style="font-size:15px;color:var(--gold-light);font-weight:bold">${s[1]}</div><div style="font-size:8px;color:var(--dim);margin-top:1px">${s[0]}</div></div>`).join('');
+  el.innerHTML=stats.map(s=>`<div style="background:rgba(0,0,0,0.2);border-radius:4px;padding:4px 2px;text-align:center"><div style="font-size:12px;color:var(--gold-light);font-weight:bold">${s[1]}</div><div style="font-size:7px;color:var(--dim);margin-top:0">${s[0]}</div></div>`).join('');
 }
 
 // ==================== HTML渲染器 ====================

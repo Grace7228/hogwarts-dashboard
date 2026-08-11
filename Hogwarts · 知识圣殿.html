@@ -1117,7 +1117,7 @@ function renderDashMini(){
     ['📚 笔记',tn],['✅ 待办',tc],['⭐ 积分',D.points||0],
     ['💰 资产',(D.assets||[]).length],['❤️ 健康',(D.healthLog||[]).length],['🌍 旅行',(D.travelLog||[]).length],
   ];
-  el.innerHTML=stats.map(s=>`<div style="background:rgba(0,0,0,0.2);border-radius:6px;padding:6px 4px;text-align:center"><div style="font-size:15px;color:var(--gold-light);font-weight:bold">${s[1]}</div><div style="font-size:8px;color:var(--dim);margin-top:1px">${s[0]}</div></div>`).join('');
+  el.innerHTML=stats.map(s=>`<div style="background:rgba(0,0,0,0.2);border-radius:4px;padding:4px 2px;text-align:center"><div style="font-size:12px;color:var(--gold-light);font-weight:bold">${s[1]}</div><div style="font-size:7px;color:var(--dim);margin-top:0">${s[0]}</div></div>`).join('');
 }
 
 // ==================== HTML渲染器 ====================
@@ -1265,10 +1265,16 @@ function renderDayTimeline(){
   el.innerHTML=html;
 }
 function clearTimelineEvents(){
-  if(!confirm('清空所有日程记录？此操作只影响日程表视图。'))return;
+  if(!confirm('清空所有日程记录？将同步清空时光机的当日记录。'))return;
   D.timelineEvents=[];
   save();renderDayTimeline();
-  toast('🗑️ 日程已清空');
+  // 同步通知时光机清空当天记录（今日摘要同步）
+  const today=todayKeyStr();
+  ['tmFrameDash','tmFrame'].forEach(id=>{
+    const f=document.getElementById(id);
+    if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'tm-clear-today',date:today},'*');
+  });
+  toast('🗑️ 日程已清空（含时光机当日记录）');
 }
 window.clearTimelineEvents=clearTimelineEvents;
 
