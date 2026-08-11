@@ -213,7 +213,7 @@ body.theme-day .schedule-table td,body.theme-oat .schedule-table td,body.theme-m
 body.theme-day .toast,body.theme-oat .toast,body.theme-matcha .toast,body.theme-mist .toast{background:rgba(61,50,39,.92);color:#f0e8d8}
 body.theme-day .stat-item,body.theme-oat .stat-item,body.theme-matcha .stat-item,body.theme-mist .stat-item{color:var(--dim)}
 body.theme-day .note-item,body.theme-day .task-item,body.theme-day .log-item,body.theme-oat .note-item,body.theme-oat .task-item,body.theme-oat .log-item,body.theme-matcha .note-item,body.theme-matcha .task-item,body.theme-matcha .log-item,body.theme-mist .note-item,body.theme-mist .task-item,body.theme-mist .log-item{border-color:rgba(61,50,39,.08)}
-body.theme-day #tmFrameDash,body.theme-day #tmFrame,body.theme-oat #tmFrameDash,body.theme-oat #tmFrame,body.theme-matcha #tmFrameDash,body.theme-matcha #tmFrame,body.theme-mist #tmFrameDash,body.theme-mist #tmFrame{background:var(--dark)!important}
+body.theme-day #tmFrameDash,body.theme-day #tmFrame,body.theme-oat #tmFrameDash,body.theme-oat #tmFrame,body.theme-matcha #tmFrameDash,body.theme-matcha #tmFrame,body.theme-mist #tmFrameDash,body.theme-mist #tmFrame{background:transparent!important}
 /* ===== 主题辉光层：四周淡色光晕呼吸闪烁 ===== */
 .theme-glow{position:fixed;inset:0;pointer-events:none;z-index:1;opacity:1;animation:glowA 4s ease-in-out infinite;background:
   radial-gradient(1700px 800px at 5% -10%, rgba(28,42,72,.72), transparent 58%),
@@ -450,8 +450,8 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
 
 <!-- 其他视图占位 -->
 <div id="view-dashboard" style="display:none;flex-direction:column;gap:8px">
-  <div class="card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden;border-radius:10px">
-    <iframe src="time-machine.html" id="tmFrameDash" style="width:100%;height:calc(100vh - 160px);border:none;background:#16161a" title="时光机"></iframe>
+  <div class="card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden;border-radius:10px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)">
+    <iframe src="time-machine.html" id="tmFrameDash" style="width:100%;height:calc(100vh - 160px);border:none;background:transparent" title="时光机"></iframe>
   </div>
 </div>
 <div id="view-mission" style="display:none"></div>
@@ -508,8 +508,8 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
 
 <!-- 时光机 iframe 视图 -->
 <div id="view-time" style="display:none;flex-direction:column;gap:8px;height:calc(100vh - 160px)">
-  <div class="card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden">
-    <iframe src="time-machine.html" id="tmFrame" style="flex:1;width:100%;border:none;background:#121a26;border-radius:8px" title="时光机"></iframe>
+  <div class="card" style="flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)">
+    <iframe src="time-machine.html" id="tmFrame" style="flex:1;width:100%;border:none;background:transparent;border-radius:8px" title="时光机"></iframe>
   </div>
 </div>
 
