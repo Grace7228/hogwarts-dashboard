@@ -1779,6 +1779,10 @@ window.cycleTheme=cycleTheme;
 window.toggleThemePanel=toggleThemePanel;
 window.renderThemePanel=renderThemePanel;
 applyTheme(getThemeIdx(),true);
+// 每次打开默认显示今天（查历史再手动点日历）
+D.timelineDate=todayKeyStr();
+D.calOffset=0;
+save();
 try{renderCalNav();renderDayTimeline();}catch(e){console.error(e)}
 document.addEventListener('DOMContentLoaded',function(){
   try{renderCalNav();renderDayTimeline();}catch(e){console.error(e)}
