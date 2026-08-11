@@ -1737,9 +1737,10 @@ function applyTheme(idx,silent){
   localStorage.setItem('h_theme',t.key);
   const btn=document.getElementById('themeToggle');
   if(btn)btn.textContent=(t.dark?'🌙 ':'☀️ ')+t.label;
+  const TM_BG={night:'#20222a',indigo:'#121a2a',forest:'#12201a',violetgray:'#16161e',day:'#f1ece1',oat:'#efe7da',matcha:'#e9eddc',mist:'#dfe6ec'};
   ['tmFrameDash','tmFrame'].forEach(id=>{
     const f=document.getElementById(id);
-    if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'theme',theme:t.dark?'night':'day'},'*');
+    if(f&&f.contentWindow)f.contentWindow.postMessage({source:'hogwarts',type:'theme',theme:t.dark?'night':'day',bg:TM_BG[t.key]||'#20222a'},'*');
   });
   renderThemePanel();
   if(!silent)toast('🎨 主题：'+t.label);

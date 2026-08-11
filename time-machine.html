@@ -1670,7 +1670,19 @@ function renderTimeline(){
   window.addEventListener('message', function(e){
     var d = e.data || {};
     if(d.source !== 'hogwarts') return;
-    if(d.type === 'theme'){ document.body.className=(d.theme==='day')?'theme-day':''; return; }
+    if(d.type === 'theme'){
+      var appEl=document.getElementById('app');
+      if(d.theme==='day'){
+        document.body.className='theme-day';
+        document.body.style.background='';
+        if(appEl)appEl.style.background='';
+      }else{
+        document.body.className='';
+        document.body.style.background=d.bg||'#16161a';
+        if(appEl)appEl.style.background='linear-gradient(180deg,'+(d.bg||'#20222a')+',#0c0e12)';
+      }
+      return;
+    }
     if(d.type === 'tm-clear-today'){
       const k=d.date||todayKey();
       const before=S.records.length;
