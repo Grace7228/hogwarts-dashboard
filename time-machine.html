@@ -746,7 +746,9 @@ body.theme-day [style*="rgba(0,0,0,0.2)"],body.theme-day [style*="rgba(0,0,0,0.2
         if(S.running && (S.running.tags||[]).length===1 && S.running.tags[0]===tag){
           stopTimer(); return;
         }
-        startTimer([tag]);
+        const tplTag={'用餐':'生活','看视频':'生活','洗澡':'生活'};
+        if(tplTag[tag]){ startTimer([tplTag[tag]], tag); }
+        else { startTimer([tag]); }
       };
     });
   }
