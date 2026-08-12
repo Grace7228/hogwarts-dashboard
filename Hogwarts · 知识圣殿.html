@@ -1231,6 +1231,13 @@ function renderClockChart(){
   const el=document.getElementById('dayTimeline');if(!el)return;
   const sel=D.timelineDate||todayKeyStr();
   const evts=(D.timelineEvents||[]).filter(e=>e.date===sel).sort((a,b)=>(a.startH*60+a.startM)-(b.startH*60+b.startM));
+  // 主题变量取色（深浅主题都清晰）
+  const cs=getComputedStyle(document.body);
+  const cText=(cs.getPropertyValue('--text')||'#e8e0dc').trim();
+  const cDim=(cs.getPropertyValue('--dim')||'rgba(233,224,208,.6)').trim();
+  const cGold=(cs.getPropertyValue('--gold')||'#d4a853').trim();
+  const cGoldLight=(cs.getPropertyValue('--gold-light')||'#f0d68a').trim();
+  const isLight=/^#(f|e|d|c|b)/i.test(cText)&&!/^#(0|1|2|3|4)/.test(cText);
   const w=el.clientWidth||300,h=el.clientHeight||400;
   const cvs=document.createElement('canvas');
   cvs.width=w;cvs.height=h;
@@ -1242,8 +1249,8 @@ function renderClockChart(){
   const R2=R-36;
   // 表盘底
   ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);
-  ctx.fillStyle='rgba(255,255,255,.045)';ctx.fill();
-  ctx.strokeStyle='rgba(212,168,83,.25)';ctx.lineWidth=1;ctx.stroke();
+  ctx.fillStyle=isLight?'rgba(0,0,0,.05)':'rgba(255,255,255,.045)';ctx.fill();
+  ctx.strokeStyle=cGold;ctx.lineWidth=1;ctx.stroke();
   // 小时刻度 + 数字
   for(let hh=0;hh<24;hh++){
     const a=(hh/24)*Math.PI*2-Math.PI/2;
@@ -1251,16 +1258,17 @@ function renderClockChart(){
     ctx.beginPath();
     ctx.moveTo(cx+Math.cos(a)*r1,cy+Math.sin(a)*r1);
     ctx.lineTo(cx+Math.cos(a)*R,cy+Math.sin(a)*R);
-    ctx.strokeStyle=(hh%3===0)?'rgba(212,168,83,.5)':'rgba(212,168,83,.22)';
+    ctx.strokeStyle=(hh%3===0)?cGold:cGoldLight;
+    ctx.lineWidth=(hh%3===0)?1.4:1;
     ctx.stroke();
-    ctx.fillStyle='rgba(233,224,208,.55)';
+    ctx.fillStyle=cDim;
     ctx.font=(hh%3===0)?'bold 9px sans-serif':'8px sans-serif';
     ctx.textAlign='center';ctx.textBaseline='middle';
     ctx.fillText(hh,cx+Math.cos(a)*(R-20),cy+Math.sin(a)*(R-20));
   }
   // 空闲底色环
   ctx.beginPath();ctx.arc(cx,cy,R2,0,Math.PI*2);
-  ctx.fillStyle='rgba(255,255,255,.03)';ctx.fill();
+  ctx.fillStyle=isLight?'rgba(0,0,0,.04)':'rgba(255,255,255,.03)';ctx.fill();
   // 事件扇形
   evts.forEach(ev=>{
     const sm=ev.startH*60+ev.startM,em=ev.endH*60+ev.endM;
@@ -1268,24 +1276,23 @@ function renderClockChart(){
     const a0=(sm/1440)*Math.PI*2-Math.PI/2;
     const a1=(em/1440)*Math.PI*2-Math.PI/2;
     ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R2,a0,a1);ctx.closePath();
-    ctx.fillStyle='rgba(120,170,240,.32)';ctx.fill();
-    ctx.strokeStyle='rgba(150,190,250,.7)';ctx.lineWidth=1;ctx.stroke();
+    ctx.fillStyle=isLight?'rgba(84,120,220,.38)':'rgba(120,170,240,.32)';ctx.fill();
+    ctx.strokeStyle=isLight?'rgba(52,86,180,.85)':'rgba(150,190,250,.7)';ctx.lineWidth=1;ctx.stroke();
     const am=(a0+a1)/2;
     const dur=(em-sm)/60;
     if((a1-a0)>0.22){
-      // 任务名沿径向
       const rn=R2*0.62;
       const x=cx+Math.cos(am)*rn,y=cy+Math.sin(am)*rn;
       ctx.save();
       ctx.translate(x,y);ctx.rotate(am+Math.PI/2);
       if(am>Math.PI/2&&am<Math.PI*1.5)ctx.rotate(Math.PI);
-      ctx.fillStyle='#fff';ctx.font='bold 10px sans-serif';
+      ctx.fillStyle=cText;ctx.font='bold 10px sans-serif';
       ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.fillText(ev.name,0,0);
       ctx.restore();
     }else if(dur>=0.4){
       const rn=R2*0.7;
-      ctx.fillStyle='rgba(255,255,255,.85)';ctx.font='9px sans-serif';
+      ctx.fillStyle=cText;ctx.font='9px sans-serif';
       ctx.textAlign='center';ctx.textBaseline='middle';
       ctx.fillText(ev.name,cx+Math.cos(am)*rn,cy+Math.sin(am)*rn);
     }
@@ -1302,25 +1309,25 @@ function renderClockChart(){
   }
   // 中心时间
   const nowMin=now.getHours()*60+now.getMinutes();
-  ctx.fillStyle='#e8e0dc';
+  ctx.fillStyle=cText;
   ctx.font='bold 17px sans-serif';
   ctx.textAlign='center';ctx.textBaseline='middle';
   ctx.fillText(sel===todayKeyStr()?(String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')):'--:--',cx,cy-8);
-  ctx.fillStyle='rgba(233,224,208,.6)';ctx.font='9px sans-serif';
+  ctx.fillStyle=cDim;ctx.font='9px sans-serif';
   ctx.fillText(sel,cx,cy+10);
   // 图例（底部）
   let ly=h-14;
   ctx.textAlign='left';ctx.textBaseline='middle';
   evts.slice(0,8).forEach(ev=>{
     const sm=ev.startH*60+ev.startM,em=ev.endH*60+ev.endM;
-    ctx.fillStyle='rgba(120,170,240,.9)';
+    ctx.fillStyle=isLight?'rgba(84,120,220,.9)':'rgba(120,170,240,.9)';
     ctx.fillRect(12,ly-3,8,8);
-    ctx.fillStyle='rgba(233,224,208,.85)';ctx.font='10px sans-serif';
+    ctx.fillStyle=cText;ctx.font='10px sans-serif';
     ctx.fillText(String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+'-'+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+' '+ev.name+' ('+((em-sm)/60).toFixed(1)+'h)',24,ly);
     ly-=15;
   });
   if(!evts.length){
-    ctx.fillStyle='rgba(233,224,208,.5)';ctx.font='10px sans-serif';
+    ctx.fillStyle=cDim;ctx.font='10px sans-serif';
     ctx.textAlign='center';
     ctx.fillText('当天暂无计时记录',cx,h-20);
   }
