@@ -1228,7 +1228,8 @@ function syncFromTm(){
     recs.forEach(r=>{
       if(D.timelineEvents.some(e=>e.tmId===r.id))return;
       const sm=new Date(r.startMs);
-      const em=new Date(r.endMs||Date.now());
+      let em=new Date(r.endMs||Date.now());
+      if(isNaN(em.getTime())||em<sm)em=new Date();
       const ds=sm.getFullYear()+'-'+String(sm.getMonth()+1).padStart(2,'0')+'-'+String(sm.getDate()).padStart(2,'0');
       D.timelineEvents.push({id:'te'+Date.now()+Math.random().toString(36).slice(2,6),tmId:r.id,date:ds,name:r.name||'未命名时段',note:r.note||'',startH:sm.getHours(),startM:sm.getMinutes(),endH:em.getHours(),endM:em.getMinutes()});
       added++;

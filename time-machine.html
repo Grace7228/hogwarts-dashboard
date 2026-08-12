@@ -1287,7 +1287,13 @@ function renderTimeline(){
     if(S.running) recs.push({name:S.running.name, tags:S.running.tags, startMs:S.running.startMs, endMs:Date.now(), live:true});
     if(recs.length){
       lines.push('【计时】');
-      recs.forEach(r=>{ lines.push(hm(r.startMs)+'-'+hm(r.endMs||Date.now())+' '+(r.name||'')+(r.live?' (进行中)':'')); });
+      recs.forEach(r=>{
+        let sMs=new Date(r.startMs).getTime();
+        let eMs=(r.endMs!=null)?new Date(r.endMs).getTime():Date.now();
+        if(isNaN(sMs))sMs=Date.now();
+        if(isNaN(eMs)||eMs<sMs)eMs=Date.now();
+        lines.push(hm(sMs)+'-'+hm(eMs)+' '+(r.name||'')+(r.live?' (进行中)':''));
+      });
       lines.push('');
     }
     const notes=S.notes.filter(n=>dayKey(n.at)===k).sort((a,b)=>a.at-b.at);
