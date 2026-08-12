@@ -562,6 +562,11 @@ body.theme-day [style*="rgba(0,0,0,0.2)"],body.theme-day [style*="rgba(0,0,0,0.2
     if(!Array.isArray(S.synced))S.synced=[];
     if(!Array.isArray(S.notes))S.notes=[];
     if(!Array.isArray(S.selected))S.selected=[];
+    // 清洗异常元素（null/非对象），防止渲染崩溃
+    S.records=S.records.filter(x=>x&&typeof x==='object');
+    S.notes=S.notes.filter(x=>x&&typeof x==='object');
+    S.pending=S.pending.filter(x=>x&&typeof x==='object');
+    S.synced=S.synced.filter(x=>x&&typeof x==='object');
     if(!S.viewMode)S.viewMode='home';
     if(!S.diary||typeof S.diary!=='object')S.diary={};
     if(typeof S.tlQuery!=='string')S.tlQuery='';
@@ -980,8 +985,8 @@ body.theme-day [style*="rgba(0,0,0,0.2)"],body.theme-day [style*="rgba(0,0,0,0.2
     if(S.running){
       items.push({kind:'timer', live:true, at:S.running.startMs, end:Date.now(), name:S.running.name, tags:S.running.tags||[], id:S.running.id, note:S.running.note||''});
     }
-    S.records.forEach(r=>items.push({kind:'timer', live:false, at:r.startMs, end:r.endMs, name:r.name, tags:r.tags||[], id:r.id, note:r.note||''}));
-    S.notes.forEach(n=>items.push({kind:n.type, live:false, at:n.at, name:n.title, text:n.text, tags:n.tags||[], id:n.id, done:!!n.done, seriesId:n.seriesId||null, recurLabel:n.recurLabel||null, starred:!!n.starred, priority:n.priority||0}));
+    S.records.forEach(r=>{if(!r)return;items.push({kind:'timer', live:false, at:r.startMs, end:r.endMs, name:r.name, tags:r.tags||[], id:r.id, note:r.note||''})});
+    S.notes.forEach(n=>{if(!n)return;items.push({kind:n.type, live:false, at:n.at, name:n.title, text:n.text, tags:n.tags||[], id:n.id, done:!!n.done, seriesId:n.seriesId||null, recurLabel:n.recurLabel||null, starred:!!n.starred, priority:n.priority||0})});
     if(raw){ items.sort((a,b)=>b.at-a.at); return items; }
     return filterTimelineItems(items);
   }
@@ -1297,7 +1302,7 @@ function renderTimeline(){
       });
       lines.push('');
     }
-    const notes=S.notes.filter(n=>dayKey(n.at)===k).sort((a,b)=>a.at-b.at);
+    const notes=S.notes.filter(n=>n&&dayKey(n.at)===k).sort((a,b)=>a.at-b.at);
     const todos=notes.filter(n=>n.type==='todo');
     const events=notes.filter(n=>n.type==='event');
     const ns=notes.filter(n=>n.type==='note');
