@@ -1216,6 +1216,28 @@ function calPick(ds){
   toast('📅 '+ds);
 }
 window.calPick=calPick;
+// 启动时从时光机 localStorage 补同步缺失的计时记录
+function syncFromTm(){
+  try{
+    const raw=localStorage.getItem('presence-timer-notion-v2');
+    if(!raw)return;
+    const saved=JSON.parse(raw);
+    const recs=(saved.records||[]).filter(r=>r&&r.startMs);
+    if(!D.timelineEvents)D.timelineEvents=[];
+    let added=0;
+    recs.forEach(r=>{
+      if(D.timelineEvents.some(e=>e.tmId===r.id))return;
+      const sm=new Date(r.startMs);
+      const em=new Date(r.endMs||Date.now());
+      const ds=sm.getFullYear()+'-'+String(sm.getMonth()+1).padStart(2,'0')+'-'+String(sm.getDate()).padStart(2,'0');
+      D.timelineEvents.push({id:'te'+Date.now()+Math.random().toString(36).slice(2,6),tmId:r.id,date:ds,name:r.name||'未命名时段',note:r.note||'',startH:sm.getHours(),startM:sm.getMinutes(),endH:em.getHours(),endM:em.getMinutes()});
+      added++;
+    });
+    if(added){save();renderTlMode();}
+  }catch(e){}
+}
+window.syncFromTm=syncFromTm;
+
 function renderTlMode(){
   const btn=document.getElementById('tlModeBtn');
   if(btn)btn.textContent=(D.tlMode==='clock')?'📊 时间轴':'◔ 时钟';
@@ -1917,7 +1939,7 @@ document.addEventListener('DOMContentLoaded',function(){
   try{renderCalNav();renderTlMode();}catch(e){console.error(e)}
 });
 window.addEventListener('load',function(){
-  try{renderCalNav();renderTlMode();}catch(e){console.error(e)}
+  try{renderCalNav();renderTlMode();syncFromTm();}catch(e){console.error(e)}
 });
 
 // 时光机 ↔ 课表联动：监听时光机消息
