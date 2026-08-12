@@ -522,7 +522,7 @@ body.theme-day [style*="rgba(0,0,0,0.35)"],body.theme-day [style*="rgba(0,0,0,0.
     <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:3px" id="dashMini"></div>
   </div>
 <div class="card" style="flex:1;display:flex;flex-direction:column;min-height:0">
-  <div class="ctitle">📅 日程 <span style="margin-left:auto;display:flex;gap:6px"><span style="font-size:8px;color:var(--dim);font-weight:normal">点日期看当天</span><button class="btn" onclick="clearTimelineEvents()" style="font-size:8px;padding:1px 6px;color:#e08070">🗑 清空</button></span></div>
+  <div class="ctitle">📅 日程 <span style="margin-left:auto;display:flex;gap:6px"><span style="font-size:8px;color:var(--dim);font-weight:normal">点日期看当天</span><button class="btn" id="tlModeBtn" onclick="toggleTlMode()" style="font-size:8px;padding:1px 6px" title="切换时间轴/环形时钟">◔ 时钟</button><button class="btn" onclick="clearTimelineEvents()" style="font-size:8px;padding:1px 6px;color:#e08070">🗑 清空</button></span></div>
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
     <button class="btn" onclick="calShift(-1)" style="font-size:9px;padding:2px 7px">◀</button>
     <span id="calMonthLabel" style="font-size:11px;color:var(--gold-light);letter-spacing:1px"></span>
@@ -1211,10 +1211,122 @@ function renderCalNav(){
 function calPick(ds){
   D.timelineDate=ds;save();
   renderCalNav();
+  renderTlMode();
   if(document.getElementById('missionTaskList'))setupMissionEvents();
   toast('📅 '+ds);
 }
 window.calPick=calPick;
+function renderTlMode(){
+  const btn=document.getElementById('tlModeBtn');
+  if(btn)btn.textContent=(D.tlMode==='clock')?'📊 时间轴':'◔ 时钟';
+  if(D.tlMode==='clock'){renderClockChart();}else{renderDayTimeline();}
+}
+window.renderTlMode=renderTlMode;
+function toggleTlMode(){
+  D.tlMode=(D.tlMode==='clock')?'axis':'clock';
+  save();renderTlMode();
+}
+window.toggleTlMode=toggleTlMode;
+function renderClockChart(){
+  const el=document.getElementById('dayTimeline');if(!el)return;
+  const sel=D.timelineDate||todayKeyStr();
+  const evts=(D.timelineEvents||[]).filter(e=>e.date===sel).sort((a,b)=>(a.startH*60+a.startM)-(b.startH*60+b.startM));
+  const w=el.clientWidth||300,h=el.clientHeight||400;
+  const cvs=document.createElement('canvas');
+  cvs.width=w;cvs.height=h;
+  el.innerHTML='';
+  el.appendChild(cvs);
+  const ctx=cvs.getContext('2d');
+  const cx=w/2,cy=h/2-10;
+  const R=Math.min(w,h)/2-8;
+  const R2=R-36;
+  // 表盘底
+  ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);
+  ctx.fillStyle='rgba(255,255,255,.045)';ctx.fill();
+  ctx.strokeStyle='rgba(212,168,83,.25)';ctx.lineWidth=1;ctx.stroke();
+  // 小时刻度 + 数字
+  for(let hh=0;hh<24;hh++){
+    const a=(hh/24)*Math.PI*2-Math.PI/2;
+    const r1=(hh%3===0)?R-13:R-7;
+    ctx.beginPath();
+    ctx.moveTo(cx+Math.cos(a)*r1,cy+Math.sin(a)*r1);
+    ctx.lineTo(cx+Math.cos(a)*R,cy+Math.sin(a)*R);
+    ctx.strokeStyle=(hh%3===0)?'rgba(212,168,83,.5)':'rgba(212,168,83,.22)';
+    ctx.stroke();
+    ctx.fillStyle='rgba(233,224,208,.55)';
+    ctx.font=(hh%3===0)?'bold 9px sans-serif':'8px sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(hh,cx+Math.cos(a)*(R-20),cy+Math.sin(a)*(R-20));
+  }
+  // 空闲底色环
+  ctx.beginPath();ctx.arc(cx,cy,R2,0,Math.PI*2);
+  ctx.fillStyle='rgba(255,255,255,.03)';ctx.fill();
+  // 事件扇形
+  evts.forEach(ev=>{
+    const sm=ev.startH*60+ev.startM,em=ev.endH*60+ev.endM;
+    if(em<=sm)return;
+    const a0=(sm/1440)*Math.PI*2-Math.PI/2;
+    const a1=(em/1440)*Math.PI*2-Math.PI/2;
+    ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,R2,a0,a1);ctx.closePath();
+    ctx.fillStyle='rgba(120,170,240,.32)';ctx.fill();
+    ctx.strokeStyle='rgba(150,190,250,.7)';ctx.lineWidth=1;ctx.stroke();
+    const am=(a0+a1)/2;
+    const dur=(em-sm)/60;
+    if((a1-a0)>0.22){
+      // 任务名沿径向
+      const rn=R2*0.62;
+      const x=cx+Math.cos(am)*rn,y=cy+Math.sin(am)*rn;
+      ctx.save();
+      ctx.translate(x,y);ctx.rotate(am+Math.PI/2);
+      if(am>Math.PI/2&&am<Math.PI*1.5)ctx.rotate(Math.PI);
+      ctx.fillStyle='#fff';ctx.font='bold 10px sans-serif';
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(ev.name,0,0);
+      ctx.restore();
+    }else if(dur>=0.4){
+      const rn=R2*0.7;
+      ctx.fillStyle='rgba(255,255,255,.85)';ctx.font='9px sans-serif';
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(ev.name,cx+Math.cos(am)*rn,cy+Math.sin(am)*rn);
+    }
+  });
+  // 当前时间指针（仅当天）
+  const now=new Date();
+  if(sel===todayKeyStr()){
+    const curMin=now.getHours()*60+now.getMinutes();
+    const ac=(curMin/1440)*Math.PI*2-Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(cx-Math.cos(ac)*6,cy-Math.sin(ac)*6);
+    ctx.lineTo(cx+Math.cos(ac)*(R2-2),cy+Math.sin(ac)*(R2-2));
+    ctx.strokeStyle='#e07060';ctx.lineWidth=2;ctx.stroke();
+  }
+  // 中心时间
+  const nowMin=now.getHours()*60+now.getMinutes();
+  ctx.fillStyle='#e8e0dc';
+  ctx.font='bold 17px sans-serif';
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillText(sel===todayKeyStr()?(String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0')):'--:--',cx,cy-8);
+  ctx.fillStyle='rgba(233,224,208,.6)';ctx.font='9px sans-serif';
+  ctx.fillText(sel,cx,cy+10);
+  // 图例（底部）
+  let ly=h-14;
+  ctx.textAlign='left';ctx.textBaseline='middle';
+  evts.slice(0,8).forEach(ev=>{
+    const sm=ev.startH*60+ev.startM,em=ev.endH*60+ev.endM;
+    ctx.fillStyle='rgba(120,170,240,.9)';
+    ctx.fillRect(12,ly-3,8,8);
+    ctx.fillStyle='rgba(233,224,208,.85)';ctx.font='10px sans-serif';
+    ctx.fillText(String(ev.startH).padStart(2,'0')+':'+String(ev.startM).padStart(2,'0')+'-'+String(ev.endH).padStart(2,'0')+':'+String(ev.endM).padStart(2,'0')+' '+ev.name+' ('+((em-sm)/60).toFixed(1)+'h)',24,ly);
+    ly-=15;
+  });
+  if(!evts.length){
+    ctx.fillStyle='rgba(233,224,208,.5)';ctx.font='10px sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText('当天暂无计时记录',cx,h-20);
+  }
+}
+window.renderClockChart=renderClockChart;
+
 function renderDayTimeline(){
   const el=document.getElementById('dayTimeline');if(!el)return;
   const now=new Date();
@@ -1267,7 +1379,7 @@ function renderDayTimeline(){
 function clearTimelineEvents(){
   if(!confirm('清空所有日程记录？将同步清空时光机的当日记录。'))return;
   D.timelineEvents=[];
-  save();renderDayTimeline();
+  save();renderTlMode();
   // 同步通知时光机清空当天记录（今日摘要同步）
   const today=todayKeyStr();
   ['tmFrameDash','tmFrame'].forEach(id=>{
@@ -1283,7 +1395,7 @@ function delTimelineEvent(id){
   if(!D.timelineEvents)return;
   const ev=D.timelineEvents.find(e=>e.id===id);
   D.timelineEvents=D.timelineEvents.filter(e=>e.id!==id);
-  save();renderDayTimeline();
+  save();renderTlMode();
   if(ev&&ev.tmId){
     ['tmFrameDash','tmFrame'].forEach(fid=>{
       const f=document.getElementById(fid);
@@ -1352,7 +1464,7 @@ function setupMissionEvents(){
   if(!mll)return;
   if(logs.length===0)mll.innerHTML='<div class="empty">暂无</div>';
   else mll.innerHTML=logs.slice().reverse().map(l=>`<div class="log-item"><div class="log-date">${l.date}</div><div style="flex:1">${eh(l.text)}</div><div class="log-rating"><span class="good${l.rating==='good'?' active':''}" onclick="rateLog('${l.id}','good')">✓ 好</span><span class="bad${l.rating==='bad'?' active':''}" onclick="rateLog('${l.id}','bad')">✗ 差</span></div></div>`).join('');
-  renderDayTimeline();
+  renderTlMode();
   renderCalNav();
   renderMissionRealm();
 }
@@ -1793,12 +1905,12 @@ applyTheme(getThemeIdx(),true);
 D.timelineDate=todayKeyStr();
 D.calOffset=0;
 save();
-try{renderCalNav();renderDayTimeline();}catch(e){console.error(e)}
+try{renderCalNav();renderTlMode();}catch(e){console.error(e)}
 document.addEventListener('DOMContentLoaded',function(){
-  try{renderCalNav();renderDayTimeline();}catch(e){console.error(e)}
+  try{renderCalNav();renderTlMode();}catch(e){console.error(e)}
 });
 window.addEventListener('load',function(){
-  try{renderCalNav();renderDayTimeline();}catch(e){console.error(e)}
+  try{renderCalNav();renderTlMode();}catch(e){console.error(e)}
 });
 
 // 时光机 ↔ 课表联动：监听时光机消息
@@ -1814,7 +1926,7 @@ window.addEventListener('message',e=>{
   if(d.type==='tm-record-deleted'){
     if(d.id&&D.timelineEvents){
       D.timelineEvents=D.timelineEvents.filter(e=>e.tmId!==d.id);
-      save();renderDayTimeline();
+      save();renderTlMode();
     }
     return;
   }
@@ -1838,7 +1950,7 @@ window.addEventListener('message',e=>{
       save();
       // 如果当前看的是当天，刷新时间轴
       const sel=D.timelineDate||todayKeyStr();
-      if(sel===ds)renderDayTimeline();
+      if(sel===ds)renderTlMode();
       if(document.getElementById('missionTaskList'))setupMissionEvents();
     }
     save();renderSchedule(D.settings.currentDay);
@@ -1860,12 +1972,12 @@ window.addEventListener('storage',function(e){
     }else{D.timelineEvents.push(newEv)}
     save();
     var sel=D.timelineDate||todayKeyStr();
-    if(sel===ds)renderDayTimeline();
+    if(sel===ds)renderTlMode();
     toast('⏹ 时光机记录已同步到日程');
   }
   if(d&&d.type==='tm-record-deleted'&&d.id){
     D.timelineEvents=D.timelineEvents.filter(function(x){return x.tmId!==d.id});
-    save();renderDayTimeline();
+    save();renderTlMode();
   }
 });
 
