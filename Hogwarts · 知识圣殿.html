@@ -1357,7 +1357,7 @@ function renderDayTimeline(){
       if(t.done)return;
       const sh=slotHour[t.slot];
       const eh2=slotEnd[t.slot];
-      if(sh===undefined||h<sh||h>=eh2)return;
+      if(sh===undefined||h!==sh)return;
       const pc={B1:'#e07060',B2:'#f0d68a',B3:'#e8a050',B4:'#8a8a94'}[t.prio]||'#8a8a94';
       html+='<div onclick="tmStartFromMission(\''+t.id+'\')" title="点击在时光机开始计时" style="position:absolute;left:44px;right:6px;top:2px;padding:2px 6px;border-radius:4px;background:'+pc+'22;border-left:2px solid '+pc+';font-size:11px;color:var(--text);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+eh(t.name)+'</div>';
     });
