@@ -1722,6 +1722,24 @@ function renderTimeline(){
     }catch(err){}
   };
 
+  // 自身数据 key 变化 → 另一个 iframe/窗口操作了时光机，刷新内存状态
+  window.addEventListener('storage',function(e){
+    if(e.key===SK&&e.newValue&&e.newValue!==e.oldValue){
+      try{
+        var saved=JSON.parse(e.newValue);
+        if(saved&&typeof saved==='object'){
+          S.records=saved.records||[];
+          S.pending=saved.pending||[];
+          S.synced=saved.synced||[];
+          S.notes=saved.notes||[];
+          S.diary=saved.diary||{};
+          S.running=saved.running||null;
+          renderAll();renderTimeline();
+        }
+      }catch(err){}
+    }
+  });
+
   // 跨窗口桥监听：主系统清空/删除日程 → 同步时光机（在闭包内，可访问 dayKey/S）
   window.addEventListener('storage',function(e){
     if(e.key!=='hogwarts_tm_bridge'||!e.newValue)return;
