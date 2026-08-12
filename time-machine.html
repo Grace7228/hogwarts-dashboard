@@ -1490,7 +1490,13 @@ function renderTimeline(){
     html+='</div><div class="todo-main">';
     html+='<div class="todo-head"><b>'+(labels[bucket]||'待办')+'</b><button type="button" class="tl-chip" id="todoAdd">＋ 添加</button></div>';
     if(!items.length){
-      html+='<div class="todo-empty">这里空空的。<br>点右上角「＋ 添加」或用 ✎ 输入 t 待办</div>';
+      const hints=[];
+      if(bucket!=='open'&&(counts.open||0)>0)hints.push('未办 '+counts.open+' 项');
+      if(bucket!=='overdue'&&(counts.overdue||0)>0)hints.push('过期 '+counts.overdue+' 项');
+      if(bucket!=='today'&&(counts.today||0)>0)hints.push('今天 '+counts.today+' 项');
+      if(bucket!=='tomorrow'&&(counts.tomorrow||0)>0)hints.push('明天 '+counts.tomorrow+' 项');
+      if(bucket!=='star'&&(counts.star||0)>0)hints.push('加星 '+counts.star+' 项');
+      html+='<div class="todo-empty">当前「'+(labels[bucket]||'待办')+'」没有任务。<br>'+(hints.length?('左侧还有：'+hints.join(' · ')+'，点一下即可查看'):'点右上角「＋ 添加」或用 ✎ 输入 t 待办')+'</div>';
     } else {
       items.forEach(it=>{
         const pri=it.priority>=2?'<span class="pri">!! </span>':(it.priority===1?'<span class="pri">! </span>':'');
