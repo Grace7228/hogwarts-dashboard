@@ -1217,6 +1217,7 @@ function renderTimeline(){
     const dsCopy=$('dsCopy'); if(dsCopy) dsCopy.onclick=()=>copyTodaySummary();
     const dsEdit=$('dsEdit'); if(dsEdit) dsEdit.onclick=()=>editTodaySummary();
     const dsDel=$('dsDel'); if(dsDel) dsDel.onclick=()=>deleteTodaySummary();
+    const dsRf=$('dsRefresh'); if(dsRf) dsRf.onclick=()=>{renderTimeline();toast('🔄 摘要已刷新');};
     const dsOpen=$('dsOpen'); if(dsOpen) dsOpen.onclick=()=>openTodaySummary();
   }
 
@@ -1283,13 +1284,13 @@ function renderTimeline(){
     const now=new Date();
     lines.push(now.getFullYear()+'年'+(now.getMonth()+1)+'月'+now.getDate()+'日 周'+'日一二三四五六'[now.getDay()]);
     lines.push('');
-    const recs=S.records.filter(r=>dayKey(r.endMs)===k || dayKey(r.startMs)===k).sort((a,b)=>a.startMs-b.startMs).slice();
-    if(S.running) recs.push({name:S.running.name, tags:S.running.tags, startMs:S.running.startMs, endMs:Date.now(), live:true});
+    // 与时间线同源：timelineItems 统一转换（含进行中）
+    const recs=timelineItems(true).filter(it=>it.kind==='timer'&&(dayKey(it.at)===k||(it.end&&dayKey(it.end)===k))).sort((a,b)=>a.at-b.at);
     if(recs.length){
       lines.push('【计时】');
       recs.forEach(r=>{
-        let sMs=new Date(r.startMs).getTime();
-        let eMs=(r.endMs!=null)?new Date(r.endMs).getTime():Date.now();
+        let sMs=new Date(r.at).getTime();
+        let eMs=(r.end!=null)?new Date(r.end).getTime():Date.now();
         if(isNaN(sMs))sMs=Date.now();
         if(isNaN(eMs)||eMs<sMs)eMs=Date.now();
         lines.push(hm(sMs)+'-'+hm(eMs)+' '+(r.name||'')+(r.live?' (进行中)':''));
@@ -1324,7 +1325,7 @@ function renderTimeline(){
     const text=custom||buildTodaySummary();
     const short=text.split('\n').slice(0,24).join('\n');
     const delBtn=custom?' <button type="button" class="tl-chip" id="dsDel" style="color:#e08070">删除</button>':'';
-    return '<div class="day-sum"><div class="ds-h"><b>📔 今日摘要</b><span><button type="button" class="tl-chip" id="dsCopy">复制</button> <button type="button" class="tl-chip" id="dsOpen">展开</button> <button type="button" class="tl-chip" id="dsEdit">编辑</button>'+delBtn+'</span></div><pre>'+esc(short)+'</pre></div>';
+    return '<div class="day-sum"><div class="ds-h"><b>📔 今日摘要</b><span><button type="button" class="tl-chip" id="dsRefresh" title="重新生成">🔄</button> <button type="button" class="tl-chip" id="dsCopy">复制</button> <button type="button" class="tl-chip" id="dsOpen">展开</button> <button type="button" class="tl-chip" id="dsEdit">编辑</button>'+delBtn+'</span></div><pre>'+esc(short)+'</pre></div>';
   }
 
   async function copyTodaySummary(){
